@@ -19,10 +19,12 @@ int main(int argc, char * argv[])
         string password = "123";
         cout<<"Digite um pass: "<<endl;
         cin>>password;
-        unsigned int iterations = 1000000;
+        unsigned int iterations = 1000;
  
         AutoSeededX917RNG<AES> rng;
- 
+        /*      Gera uma seed usando o RNG proveniente do SO. 
+                AES? Seria o tipo de rng que ele vai gerar para a cryp?
+        */
         SecByteBlock iv(AES::BLOCKSIZE);
         rng.GenerateBlock(iv,iv.size());
  
@@ -63,7 +65,9 @@ int main(int argc, char * argv[])
         StringSource encryptor(message,true,
                 new StreamTransformationFilter(aesencryption, new HexEncoder( new StringSink(ciphertext)))
                 );
- 
+        cout << endl;
+        cout << "Mensagem: " << message << endl;
+        cout << endl;
         // hex encode salt and IV for "transport"
         string hexsalt, hexiv;
         ArraySource saltEncoder(pwsalt,pwsalt.size(), true, new HexEncoder(new StringSink(hexsalt)));
