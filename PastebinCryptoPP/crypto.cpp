@@ -17,7 +17,8 @@ int main(int argc, char * argv[])
         using namespace std;
         using namespace CryptoPP;
         string password = "123";
-        //cin>>password;
+        cout<<"Digite um pass: "<<endl;
+        cin>>password;
         unsigned int iterations = 1000000;
  
         AutoSeededX917RNG<AES> rng;

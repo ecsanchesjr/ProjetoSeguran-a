@@ -1,6 +1,5 @@
 {
-    "configurations": [
-        {
+    "configurations": [{
             "name": "Mac",
             "includePath": [
                 "/usr/include",
@@ -32,7 +31,8 @@
                 "/usr/include",
                 "/usr/include/x86_64-linux-gnu",
                 "${workspaceRoot}",
-                "/home/elss/Repositórios/ProjetoSeguranca/xmlAndCrypt"
+                "/usr/lib/gcc/x86_64-linux-gnu/5/include",
+                "/usr/local/include/cryptopp"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
