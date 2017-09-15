@@ -12,6 +12,8 @@
  
  using namespace CryptoPP;
  
+// MOSTRANDO PRO CARA 
+//FODA-SE
 int main(int argc, char * argv[])
 {
         using namespace std;
