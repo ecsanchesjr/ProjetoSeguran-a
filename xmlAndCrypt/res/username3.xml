@@ -5,8 +5,8 @@
 		<pass>pass1</pass>
 	</item>
 	<item id='2'>
-		<name>item2</name>
-		<login>login2</login>
-		<pass>pass2</pass>
+		<name>item4</name>
+		<login>new@login</login>
+		<pass>newPass</pass>
 	</item>
 </doc>

@@ -34,6 +34,9 @@ public:
   //deletar uma entrada para um usuário
   void deleteEntry(string &, string &);
 
+  //modificar uma entrada
+  void modifyEntry(string&,string&, string&, string& ,string="");
+
   //deletar um usuário
   void deleteUser(string &);
 

@@ -45,5 +45,14 @@ int main(){
       cout<<txt<<endl;
    }
 
+   itemName = "item2";
+   login = "new@login";
+   pass = "newPass";
+
+   objDAO.modifyEntry(itemName,login,pass,text);
+   objDAO.modifyEntry(itemName,login,pass,text,"item4");
+
+
+
    return(0);
 }

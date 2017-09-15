@@ -174,9 +174,46 @@ void DAO::deleteEntry(string &itemName,string &key){
          break;
       }
    }
-   cout<<foundNode<<endl;
    if(foundNode){
       root.remove_child(nodeToDelete);      
+      xmlToString(data,root);
+      objC->setData(data,key);
+   }
+}
+
+void DAO::modifyEntry(string &itemName,string &login, string &pass,string &key,string newItemName){
+   if(newItemName.compare("")==0){
+      newItemName = itemName;
+   }
+   string data = objC->getData(key);
+
+   pugi::xml_document doc;
+   pugi::xml_parse_result res = doc.load_string(data.c_str());
+
+   {
+      string result(res.description());
+      if (result.compare("No error") != 0)
+      {
+         return;
+      }
+   }
+
+   pugi::xml_node root = doc.child("doc");
+
+   pugi::xml_node nodeToMod;
+   bool foundNode = false;
+   for(pugi::xml_node node=root.child("item");node;node=node.next_sibling("item")){
+      string name = node.child("name").child_value();
+      if(name.compare(itemName) == 0){
+         nodeToMod = node;
+         foundNode = true;
+         break;
+      }
+   }
+   if(foundNode){
+      nodeToMod.child("name").text().set(newItemName.c_str());
+      nodeToMod.child("login").text().set(login.c_str());
+      nodeToMod.child("pass").text().set(pass.c_str());
       xmlToString(data,root);
       objC->setData(data,key);
    }
