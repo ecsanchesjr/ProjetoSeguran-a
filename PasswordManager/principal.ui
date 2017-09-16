@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>574</width>
-    <height>376</height>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,12 +36,16 @@
          <x>0</x>
          <y>0</y>
          <width>558</width>
-         <height>313</height>
+         <height>326</height>
         </rect>
        </property>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout"/>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetNoConstraint</enum>
+          </property>
+         </layout>
         </item>
        </layout>
       </widget>
