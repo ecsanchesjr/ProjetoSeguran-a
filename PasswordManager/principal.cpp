@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <iostream>
+#include <string>
 Principal::Principal(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Principal)
@@ -11,44 +12,75 @@ Principal::Principal(QWidget *parent) :
     for(int i=0;i<100;i++){
         QVBoxLayout *templ= new QVBoxLayout();
         QVBoxLayout *templ2= new QVBoxLayout();
-        QFrame *frame= new QFrame;
 
-        QLineEdit *lsite=new QLineEdit("Site do batata2");
-        lsite->setMaximumWidth(500);
-        templ->addWidget(lsite);
-        //Teste Commit
-        QLineEdit *lnick=new QLineEdit("Nick do batata");
-        lnick->setMaximumWidth(500);
-        templ->addWidget(lnick);
+        QString tempstr="Site do batata";
+        tempstr.append(QString::number(i));
+        templ->addWidget(criaCampo(tempstr,tempstr));
 
+        tempstr="Nick do batata";
+        tempstr.append(QString::number(i));
+        templ->addWidget(criaCampo(tempstr,tempstr));
 
-        QLineEdit *lpass=new QLineEdit("Senha do batata");
-        lpass->setMaximumWidth(500);
-        templ->addWidget(lpass);
+        tempstr="Senha do batata";
+        tempstr.append(QString::number(i));
+        templ->addWidget(criaCampo(tempstr,tempstr));
 
-        QPushButton *pbutton= new QPushButton("Go");
-        pbutton->setMaximumWidth(100);
-        templ->addWidget(pbutton);
+        tempstr="Go";
+        tempstr.append(QString::number(i));
+        templ->addWidget(criaBotao("Go",tempstr));
+
         templ->setAlignment(templ,Qt::AlignLeft);
         templ->setMargin(20);
-        frame->setLayout(templ);
-        frame->setFrameShape(QFrame::Box);
-        std::cout<<frame->frameShape()<<std::endl;
-        frame->setLineWidth(1);
-        frame->setMaximumWidth(500);
-        frame->setMaximumHeight(200);
-        templ2->addWidget(frame);
+
+        templ2->addWidget(criaFrame(templ));
         templ2->setMargin(10);
+
         ui->gridLayout_3->setMargin(3);
-        if(i%2==0){
-            ui->gridLayout_3->addLayout(templ2,i,0,Qt::AlignCenter);
-        }else{
-            ui->gridLayout_3->addLayout(templ2,i-1,1,Qt::AlignCenter);
-        }
+        fillBoxes(templ2,i);
     }
+}
+void Principal::fillBoxes(QVBoxLayout* qlayout, int i){
+    if(i%2==0){
+        ui->gridLayout_3->addLayout(qlayout,i,0,Qt::AlignCenter);
+    }else{
+        ui->gridLayout_3->addLayout(qlayout,i-1,1,Qt::AlignCenter);
+    }
+}
+
+QFrame* Principal::criaFrame(QVBoxLayout* qlayout){
+    QFrame *frame = new QFrame();
+    frame->setLayout(qlayout);
+    frame->setFrameShape(QFrame::Box);
+    frame->setLineWidth(1);
+    frame->setMaximumWidth(500);
+    frame->setMaximumHeight(200);
+    return frame;
+}
+
+QLineEdit* Principal::criaCampo(QString texto, QString nomeObj){
+    QLineEdit *line= new QLineEdit(texto);
+    line->setObjectName(nomeObj);
+    return line;
+}
+QPushButton* Principal::criaBotao(QString texto, QString nomeObj){
+    QPushButton* button=new QPushButton(texto);
+    button->setObjectName(nomeObj);
+    button->setCheckable(true);
+    connect(button, SIGNAL (clicked(bool)), this, SLOT (buttonHandler()));
+    button->setMaximumWidth(50);
+    return button;
 }
 
 Principal::~Principal()
 {
     delete ui;
+}
+
+void Principal::buttonHandler()
+{
+
+    QWidget *buttonWidget = qobject_cast<QWidget*>(sender());
+    if (!buttonWidget)
+        return;
+    std::cout<<((QPushButton*)buttonWidget)->objectName().toStdString()<<std::endl;
 }
