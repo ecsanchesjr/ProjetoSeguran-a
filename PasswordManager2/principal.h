@@ -6,6 +6,10 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <DAO.hpp>
 namespace Ui {
 class Principal;
 }
@@ -23,7 +27,11 @@ private:
     QLineEdit* criaCampo(QString texto, QString nomeObj);
     QPushButton *criaBotao(QString texto, QString nomeObj);
     QFrame* criaFrame(QVBoxLayout *qlayout);
-    void fillBoxes(QVBoxLayout*,int);
+    void fillBoxes(QVBoxLayout*,int);    
+    std::vector<QLineEdit*> sitesRefs;
+    std::vector<QLineEdit*> nicksRefs;
+    std::vector<QLineEdit*> senhasRefs;
+
 private slots:
     void buttonHandler();
 };

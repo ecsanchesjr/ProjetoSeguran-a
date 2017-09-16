@@ -1,10 +1,5 @@
 #include "principal.h"
 #include "ui_principal.h"
-#include <QPushButton>
-#include <QLineEdit>
-#include <iostream>
-#include <string>
-#include <DAO.hpp>
 Principal::Principal(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Principal)
@@ -15,21 +10,28 @@ Principal::Principal(QWidget *parent) :
     DAO dao(name,pass);
     int i=0;
     vector<pair<string,string>> infos =  dao.getNamesAndLogin(pass);
+
     for(pair<string,string> it : infos){
         QVBoxLayout *templ= new QVBoxLayout();
         QVBoxLayout *templ2= new QVBoxLayout();
 
         QString tempstr="Site do batata";
         tempstr.append(QString::number(i));
-        templ->addWidget(criaCampo(QString::fromStdString(it.first),tempstr));
+        QLineEdit* temp=criaCampo(QString::fromStdString(it.first),tempstr);
+        sitesRefs.push_back(temp);
+        templ->addWidget(temp);
 
         tempstr="Nick do batata";
         tempstr.append(QString::number(i));
-        templ->addWidget(criaCampo(QString::fromStdString(it.second),tempstr));
+        temp=criaCampo(QString::fromStdString(it.second),tempstr);
+        nicksRefs.push_back(temp);
+        templ->addWidget(temp);
 
         tempstr="Senha do batata";
         tempstr.append(QString::number(i));
-        templ->addWidget(criaCampo(tempstr,tempstr));
+        temp=criaCampo(tempstr,tempstr);
+        senhasRefs.push_back(temp);
+        templ->addWidget(temp);
 
         tempstr="Go";
         tempstr.append(QString::number(i));
@@ -89,5 +91,9 @@ void Principal::buttonHandler()
     QWidget *buttonWidget = qobject_cast<QWidget*>(sender());
     if (!buttonWidget)
         return;
-    std::cout<<((QPushButton*)buttonWidget)->objectName().toStdString()<<std::endl;
+    std::string straux=((QPushButton*)buttonWidget)->objectName().toStdString();
+    std::cout<<"Você cliclou no pane "<< straux.substr(2,2)<<endl;
+    std::cout<<"O texto no site desse pane é " <<sitesRefs[std::stoi(straux.substr(2,2))]->text().toStdString()<<std::endl;
+    std::cout<<"O texto no nick desse pane é " <<nicksRefs[std::stoi(straux.substr(2,2))]->text().toStdString()<<std::endl;
+    std::cout<<"O texto na senha desse pane é " <<senhasRefs[std::stoi(straux.substr(2,2))]->text().toStdString()<<std::endl;
 }
