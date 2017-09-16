@@ -25,10 +25,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        principal.cpp
+        principal.cpp \
+    pugi/pugixml.cpp \
+    Crypt.cpp \
+    DAO.cpp \
+    driver.cpp \
+    main.cpp \
+    principal.cpp
 
 HEADERS += \
-        principal.h
+        principal.h \
+    DAO.hpp \
+    Crypt.hpp \
+    pugi/pugiconfig.hpp \
+    pugi/pugixml.hpp \
+    Crypt.hpp \
+    DAO.hpp \
+    principal.h
 
 FORMS += \
         principal.ui

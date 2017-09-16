@@ -4,11 +4,15 @@
 #include <QLineEdit>
 #include <iostream>
 #include <string>
+#include <DAO.hpp>
 Principal::Principal(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Principal)
 {
     ui->setupUi(this);
+    std::string name="username2";
+    std::string pass="text";
+    DAO dao(name,pass);
     for(int i=0;i<100;i++){
         QVBoxLayout *templ= new QVBoxLayout();
         QVBoxLayout *templ2= new QVBoxLayout();
