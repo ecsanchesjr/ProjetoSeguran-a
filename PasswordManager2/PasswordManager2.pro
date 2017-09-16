@@ -38,9 +38,9 @@ HEADERS += \
     Crypt.hpp \
     pugi/pugiconfig.hpp \
     pugi/pugixml.hpp \
-    login.h
+    login.h \
+    addentry.h\
     /usr/local/include/cryptopp
-    addentry.h \
 
 SUBDIRS += \
     PasswordManager2.pro
