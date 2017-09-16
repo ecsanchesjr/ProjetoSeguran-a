@@ -11,10 +11,10 @@ Principal::Principal(QWidget *parent) :
     for(int i=0;i<10;i++){
         QVBoxLayout *templ= new QVBoxLayout();
 
-        QLineEdit *lsite=new QLineEdit("Site do batata");
+        QLineEdit *lsite=new QLineEdit("Site do batata2");
         lsite->setMaximumWidth(200);
         templ->addWidget(lsite);
-
+        //Teste Commit
         QLineEdit *lnick=new QLineEdit("Nick do batata");
         lnick->setMaximumWidth(200);
         templ->addWidget(lnick);
