@@ -22,6 +22,8 @@ public:
     explicit Principal(QWidget *parent = 0);
     void redrawAll();
     ~Principal();
+    std::string getUsername();
+    std::string getPassword();
 
 private:
     Ui::Principal *ui;
@@ -40,6 +42,8 @@ private:
     std::vector<QVBoxLayout*>paneRefs;
     void drawElements();
     void clearAll();
+    std::string username;
+    std::string password;
 
 private slots:
     void goHandler();

@@ -19,7 +19,7 @@ void addEntry::on_pushButton_clicked()
     std::cout<<"Site:" << ui->lineEdit->text().toStdString()<<std::endl;
     std::cout<<"Nick:" << ui->lineEdit_2->text().toStdString()<<std::endl;
     std::cout<<"Senha:" << ui->lineEdit_3->text().toStdString()<<std::endl;
-    std::string user = "username2";
+    std::string user = principalref->getUsername();
     std::string site=ui->lineEdit->text().toStdString();
     std::string nick=ui->lineEdit_2->text().toStdString();
     std::string senha=ui->lineEdit_3->text().toStdString();
@@ -27,4 +27,5 @@ void addEntry::on_pushButton_clicked()
     DAO dao(user,user);
     dao.createNewEntry(site,nick,senha,key);
     principalref->redrawAll();
+    this->hide();
 }

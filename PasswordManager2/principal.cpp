@@ -1,11 +1,16 @@
 #include "principal.h"
 #include "ui_principal.h"
+#include<login.h>
 #include <addentry.h>
 Principal::Principal(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Principal)
 {
     ui->setupUi(this);
+    username=((login*)parent)->getUsername();
+    password=((login*)parent)->getPassword();
+    std::cout<<username<<std::endl;
+    std::cout<<password<<std::endl;
     drawElements();
 }
 void Principal::clearAll(){
@@ -21,17 +26,15 @@ void Principal::clearAll(){
 }
 
 void Principal::drawElements(){
-    std::string name="username2";
-    std::string pass="text";
     paneRefs.clear();
     cFramesRefs.clear();
     bFramesRefs.clear();
     sitesRefs.clear();
     nicksRefs.clear();
     senhasRefs.clear();
-    DAO dao(name,pass);
+    DAO dao(username,password);
     int i=0; //Contador para auxiliar o preenchimento
-    vector<pair<string,string>> infos =  dao.getNamesAndLogin(pass);
+    vector<pair<string,string>> infos =  dao.getNamesAndLogin(password);
     for(pair<string,string> it : infos){
         //Layouts temporários para organização
         QVBoxLayout *templ= new QVBoxLayout(); //Layout dos campos
@@ -175,7 +178,7 @@ void Principal::removeHandler(){ //Action  ao clicar no botão remove
     std::cout<<"Você removeu o pane "<< straux.substr(4,4)<<endl;
     //Remove a entrada no arquivo
     std::string user="username2";
-    DAO dao(user,user);
+    DAO dao(username,password);
     std::string entrada=sitesRefs[std::stoi(straux.substr(4,4))]->text().toStdString();
     dao.deleteEntry(entrada,entrada);
     //Remove o pane
@@ -204,4 +207,11 @@ void Principal::on_pushButton_2_clicked()
     std::cout<<"Adicionar nova entrada"<<std::endl;
     addEntry* ae= new addEntry(this);
     ae->show();
+}
+
+std::string Principal::getUsername(){
+    return username;
+}
+std::string Principal::getPassword(){
+    return password;
 }
