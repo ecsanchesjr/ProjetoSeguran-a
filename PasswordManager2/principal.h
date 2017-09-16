@@ -25,15 +25,20 @@ public:
 private:
     Ui::Principal *ui;
     QLineEdit* criaCampo(QString texto, QString nomeObj);
-    QPushButton *criaBotao(QString texto, QString nomeObj);
+    QPushButton *criaBotao(QString texto, QString nomeObj,int typeCampo);
     QFrame* criaFrame(QVBoxLayout *qlayout);
-    void fillBoxes(QVBoxLayout*,int);    
+    QFrame* criaFrame(QHBoxLayout *qlayout);
+    void setCampos(QVBoxLayout*, pair<string,string>, int  i);
+    void setBotoes(QHBoxLayout*,int i);
+    void fillBoxes(QVBoxLayout*,int);
     std::vector<QLineEdit*> sitesRefs;
     std::vector<QLineEdit*> nicksRefs;
     std::vector<QLineEdit*> senhasRefs;
 
 private slots:
-    void buttonHandler();
+    void goHandler();
+    void editHandler();
+    void removeHandler();
 };
 
 #endif // PRINCIPAL_H
