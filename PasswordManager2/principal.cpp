@@ -25,8 +25,9 @@ Principal::Principal(QWidget *parent) :
         templ2->addWidget(criaFrame(templ)); //Adiciona o frame com os campos
         templ2->addWidget(criaFrame(templ3));//Adiciona o frame com os botões
         templ2->setMargin(10);
+        paneRefs.push_back(templ2);
 
-        ui->gridLayout_3->setMargin(10);
+        ui->gridLayout->setMargin(10);
         fillBoxes(templ2,i); //Adiciona os layouts criados no grid
         i++;
     }
@@ -65,9 +66,9 @@ void Principal::setCampos(QVBoxLayout* qlayout, pair<string,string> nickPass, in
 
 void Principal::fillBoxes(QVBoxLayout* qlayout, int i){
     if(i%2==0){
-        ui->gridLayout_3->addLayout(qlayout,i,0,Qt::AlignCenter);
+        ui->gridLayout->addLayout(qlayout,i,0,Qt::AlignCenter);
     }else{
-        ui->gridLayout_3->addLayout(qlayout,i-1,1,Qt::AlignCenter);
+        ui->gridLayout->addLayout(qlayout,i-1,1,Qt::AlignCenter);
     }
 }
 
@@ -78,6 +79,7 @@ QFrame* Principal::criaFrame(QVBoxLayout* qlayout){
     frame->setLineWidth(1);
     frame->setMaximumWidth(500);
     frame->setMaximumHeight(200);
+    cFramesRefs.push_back(frame);
     return frame;
 }
 QFrame* Principal::criaFrame(QHBoxLayout* qlayout){
@@ -87,6 +89,7 @@ QFrame* Principal::criaFrame(QHBoxLayout* qlayout){
     frame->setLineWidth(1);
     frame->setMaximumWidth(500);
     frame->setMaximumHeight(200);
+    bFramesRefs.push_back(frame);
     return frame;
 }
 QLineEdit* Principal::criaCampo(QString texto, QString nomeObj){
@@ -148,5 +151,14 @@ void Principal::removeHandler(){ //Action  ao clicar no botão remove
         return;
     std::string straux=((QPushButton*)buttonWidget)->objectName().toStdString();
     std::cout<<"Você removeu o pane "<< straux.substr(4,4)<<endl;
+    //Remove o pane
+    delete cFramesRefs[std::stoi(straux.substr(4,4))];
+    delete bFramesRefs[std::stoi(straux.substr(4,4))];
+    delete paneRefs[std::stoi(straux.substr(4,4))];
 }
 
+
+void Principal::on_pushButton_2_clicked()
+{
+    std::cout<<"Adicionar nova entrada"<<std::endl;
+}

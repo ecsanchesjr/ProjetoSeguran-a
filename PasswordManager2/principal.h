@@ -34,11 +34,15 @@ private:
     std::vector<QLineEdit*> sitesRefs;
     std::vector<QLineEdit*> nicksRefs;
     std::vector<QLineEdit*> senhasRefs;
+    std::vector<QFrame*> cFramesRefs;
+    std::vector<QFrame*> bFramesRefs;
+    std::vector<QVBoxLayout*>paneRefs;
 
 private slots:
     void goHandler();
     void editHandler();
     void removeHandler();
+    void on_pushButton_2_clicked();
 };
 
 #endif // PRINCIPAL_H
