@@ -13,17 +13,19 @@ Principal::Principal(QWidget *parent) :
     std::string name="username2";
     std::string pass="text";
     DAO dao(name,pass);
-    for(int i=0;i<100;i++){
+    int i=0;
+    vector<pair<string,string>> infos =  dao.getNamesAndLogin(pass);
+    for(pair<string,string> it : infos){
         QVBoxLayout *templ= new QVBoxLayout();
         QVBoxLayout *templ2= new QVBoxLayout();
 
         QString tempstr="Site do batata";
         tempstr.append(QString::number(i));
-        templ->addWidget(criaCampo(tempstr,tempstr));
+        templ->addWidget(criaCampo(QString::fromStdString(it.first),tempstr));
 
         tempstr="Nick do batata";
         tempstr.append(QString::number(i));
-        templ->addWidget(criaCampo(tempstr,tempstr));
+        templ->addWidget(criaCampo(QString::fromStdString(it.second),tempstr));
 
         tempstr="Senha do batata";
         tempstr.append(QString::number(i));
@@ -41,6 +43,7 @@ Principal::Principal(QWidget *parent) :
 
         ui->gridLayout_3->setMargin(3);
         fillBoxes(templ2,i);
+        i++;
     }
 }
 void Principal::fillBoxes(QVBoxLayout* qlayout, int i){
