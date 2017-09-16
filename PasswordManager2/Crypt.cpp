@@ -18,10 +18,12 @@ bool Crypt::isUserValid(){
    return(isValid);
 }
 
-string Crypt::getData(string &key) const{
+string Crypt::getData(string &key) const{ // retorna a string adiquirida a partir do arquivo xml
    if(isValid){
       ifstream inputStream("./res/"+fileName+".xml");
       string data((std::istreambuf_iterator<char>(inputStream)),(std::istreambuf_iterator<char>()));
+      // data ainda está encriptada
+
       return(data);
    }else{
       return("");
@@ -64,4 +66,45 @@ void Crypt::getDir(vector<string> &listOfFiles){
       }
    }
    closedir(dp);
+}
+
+bool Crypt::validateUser(string &user, string &key){
+    try{
+        decryptate(generateKey(key), readEncrypted(user));
+        isValid=true;
+    }catch(CryptoPP::Exception ex){
+        isValid=false;
+        cout << "Caiu na exceção " << endl;
+        std::cerr << ex.what() << endl;
+    }
+}
+
+string Crypt::readEncrypted(string &file){
+    ifstream inputStream("./res/"+fileName+".xml");
+    string data((std::istreambuf_iterator<char>(inputStream)),(std::istreambuf_iterator<char>()));
+    
+    return(data);
+}
+
+SecByteBlock Crypt::generateKey(string &key){
+    SecByteBlock derivedKey(keySize);
+
+    PKCS5_PBKDF2_HMAC<SHA256> kdf;
+    kdf.DeriveKey(derivedKey.data(), derivedKey.size(),
+    0x00, (byte *)key.data(), key.size(),
+    NULL, 0x00, iterations);
+
+    return(derivedKey);
+}
+
+string Crypt::decryptate(SecByteBlock derivedKey, string encryptedText){
+    string output;
+    EAX<AES>::Decryption decryptor;
+    decryptor.SetKeyWithIV(derivedKey.data(), keySize/2, derivedKey.data()+keySize/2, keySize/2);
+    
+    AuthenticatedDecryptionFilter df(decryptor, new StringSink(output));
+    df.Put((byte *)encryptedText.data(), encryptedText.size());
+    df.MessageEnd(); 
+
+    return(output);
 }
