@@ -3,9 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 #include "Crypt.hpp"
 #include "pugi/pugixml.hpp"
 
+using std::pair;
 using std::vector;
 using std::string;
 using std::ostream;
@@ -20,7 +22,7 @@ public:
   bool isKeyValid() const;
 
   //pegar o nome dos programas e sites que o usuário possui dados
-  vector<string> getNames(string &) const;
+  vector<pair<string,string>> getNamesAndLogin(string &) const;
 
   //pegar as informações do programa ou site escolhido
   vector<string> getEntry(string &,string &) const;

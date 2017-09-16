@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 #include "DAO.hpp"
 
 using namespace std;
@@ -35,14 +36,14 @@ int main(){
    pass = "pass3";
    objDAO.createNewEntry(itemName,login,pass,text);
 
-   for(string txt : objDAO.getNames(text)){
-      cout<<txt<<endl;
+   for(pair<string,string> reg : objDAO.getNamesAndLogin(text)){
+      cout<<"name: "<<reg.first<<" login: "<<reg.second<<endl;
    }
    
    objDAO.deleteEntry(itemName,text);
 
-   for(string txt : objDAO.getNames(text)){
-      cout<<txt<<endl;
+   for(pair<string,string> reg : objDAO.getNamesAndLogin(text)){
+      cout<<"name: "<<reg.first<<" login: "<<reg.second<<endl;
    }
 
    itemName = "item2";

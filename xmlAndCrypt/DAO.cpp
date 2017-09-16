@@ -12,10 +12,10 @@ bool DAO::isKeyValid() const
    return (isValid);
 }
 
-vector<string> DAO::getNames(string &key) const
+vector<pair<string,string>> DAO::getNamesAndLogin(string &key) const
 {
 
-   vector<string> list;
+   vector<pair<string,string>> list;
    string data = objC->getData(key);
 
    pugi::xml_document doc;
@@ -33,7 +33,8 @@ vector<string> DAO::getNames(string &key) const
 
    for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
    {
-      list.push_back(node.child("name").child_value());
+      pair<string,string> reg{node.child("name").child_value(),node.child("login").child_value()};
+      list.push_back(reg);
    }
    return (list);
 }
@@ -101,10 +102,10 @@ vector<vector<string>> DAO::getAllEntrys(string &key) const
 void DAO::createNewEntry(string &itemName, string &login, string &pass, string &key)
 {
    {
-      vector<string> allNames = getNames(key);
+      vector<pair<string,string>> allNames = getNamesAndLogin(key);
       bool alreadyExist = false;
-      for(string name : allNames){
-         if(name.compare(itemName) == 0){
+      for(pair<string,string> reg : allNames){
+         if(reg.first.compare(itemName) == 0){
             alreadyExist = true;
          }
       }
