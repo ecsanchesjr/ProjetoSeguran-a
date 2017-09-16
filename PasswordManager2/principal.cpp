@@ -1,12 +1,34 @@
 #include "principal.h"
 #include "ui_principal.h"
+#include <addentry.h>
 Principal::Principal(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Principal)
 {
     ui->setupUi(this);
+    drawElements();
+}
+void Principal::clearAll(){
+    int size=paneRefs.size();
+    for(int i=0;i<size;i++){
+        delete sitesRefs[i];
+        delete nicksRefs[i];
+        delete senhasRefs[i];
+        delete paneRefs[i];
+        delete cFramesRefs[i];
+        delete bFramesRefs[i];
+    }
+}
+
+void Principal::drawElements(){
     std::string name="username2";
     std::string pass="text";
+    paneRefs.clear();
+    cFramesRefs.clear();
+    bFramesRefs.clear();
+    sitesRefs.clear();
+    nicksRefs.clear();
+    senhasRefs.clear();
     DAO dao(name,pass);
     int i=0; //Contador para auxiliar o preenchimento
     vector<pair<string,string>> infos =  dao.getNamesAndLogin(pass);
@@ -32,6 +54,7 @@ Principal::Principal(QWidget *parent) :
         i++;
     }
 }
+
 void Principal::setBotoes(QHBoxLayout* qlayout, int i){
     //Criação dos botões
     QString tempstr="Pane";
@@ -126,7 +149,6 @@ Principal::~Principal()
 //Substituir corpo dos actions pelas ações com a cript + o xml
 void Principal::goHandler() //Action ao clicar no botão go
 {
-
     QWidget *buttonWidget = qobject_cast<QWidget*>(sender());
     if (!buttonWidget)
         return;
@@ -151,14 +173,35 @@ void Principal::removeHandler(){ //Action  ao clicar no botão remove
         return;
     std::string straux=((QPushButton*)buttonWidget)->objectName().toStdString();
     std::cout<<"Você removeu o pane "<< straux.substr(4,4)<<endl;
+    //Remove a entrada no arquivo
+    std::string user="username2";
+    DAO dao(user,user);
+    std::string entrada=sitesRefs[std::stoi(straux.substr(4,4))]->text().toStdString();
+    dao.deleteEntry(entrada,entrada);
     //Remove o pane
-    delete cFramesRefs[std::stoi(straux.substr(4,4))];
+    delete sitesRefs[std::stoi(straux.substr(4,4))];//Deleta o elemento
+    sitesRefs.erase(sitesRefs.begin()+std::stoi(straux.substr(4,4))); //Deleta a referencia do elemento no index
+    delete nicksRefs[std::stoi(straux.substr(4,4))];
+    nicksRefs.erase(nicksRefs.begin()+std::stoi(straux.substr(4,4)));
+    delete senhasRefs[std::stoi(straux.substr(4,4))];
+    senhasRefs.erase(senhasRefs.begin()+std::stoi(straux.substr(4,4)));
     delete bFramesRefs[std::stoi(straux.substr(4,4))];
+    bFramesRefs.erase(bFramesRefs.begin()+std::stoi(straux.substr(4,4)));
     delete paneRefs[std::stoi(straux.substr(4,4))];
+    paneRefs.erase(paneRefs.begin()+std::stoi(straux.substr(4,4)));
+    delete cFramesRefs[std::stoi(straux.substr(4,4))];
+    cFramesRefs.erase(cFramesRefs.begin()+std::stoi(straux.substr(4,4)));
+    redrawAll();//Redesenha a tela
 }
 
+void Principal::redrawAll(){
+    clearAll();
+    drawElements();
+}
 
 void Principal::on_pushButton_2_clicked()
 {
     std::cout<<"Adicionar nova entrada"<<std::endl;
+    addEntry* ae= new addEntry(this);
+    ae->show();
 }

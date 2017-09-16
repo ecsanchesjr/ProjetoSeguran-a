@@ -20,6 +20,7 @@ class Principal : public QMainWindow
 
 public:
     explicit Principal(QWidget *parent = 0);
+    void redrawAll();
     ~Principal();
 
 private:
@@ -37,6 +38,8 @@ private:
     std::vector<QFrame*> cFramesRefs;
     std::vector<QFrame*> bFramesRefs;
     std::vector<QVBoxLayout*>paneRefs;
+    void drawElements();
+    void clearAll();
 
 private slots:
     void goHandler();

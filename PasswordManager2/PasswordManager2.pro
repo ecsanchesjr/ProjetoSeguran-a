@@ -29,6 +29,7 @@ SOURCES += \
     principal.cpp \
     DAO.cpp \
     pugi/pugixml.cpp \
+    addentry.cpp
 
 HEADERS += \
     DAO.hpp \
@@ -36,11 +37,13 @@ HEADERS += \
     Crypt.hpp \
     pugi/pugiconfig.hpp \
     pugi/pugixml.hpp \
+    addentry.h
 
 SUBDIRS += \
     PasswordManager2.pro
 
 FORMS += \
-    principal.ui
+    principal.ui \
+    addentry.ui
 
 DISTFILES +=
