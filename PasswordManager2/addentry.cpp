@@ -28,8 +28,6 @@ void addEntry::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     this->hide();
-    
-    //memory leak aqui, precisamos deletar, mas ele fecha o programa todo, why?
-    //delete this;
+    delete ui;
 
 }

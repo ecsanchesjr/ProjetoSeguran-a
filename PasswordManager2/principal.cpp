@@ -10,8 +10,10 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     username = ((login *)parent)->getUsername();
     password = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();
+    //Apagar isso
     std::cout << username << std::endl;
     std::cout << password << std::endl;
+    //------------
     drawElements();
 }
 void Principal::clearAll()
@@ -173,6 +175,8 @@ QPushButton *Principal::criaBotao(QString texto, QString nomeObj, int typeCampo)
 
 Principal::~Principal()
 {
+    clearAll();
+    delete dao;
     delete ui;
 }
 //Substituir corpo dos actions pelas ações com a cript + o xml

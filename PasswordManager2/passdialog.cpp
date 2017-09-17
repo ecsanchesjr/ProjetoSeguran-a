@@ -78,7 +78,7 @@ void passDialog::modify()
 
         principalref->redrawAll();
         this->hide();
-        delete this;
+        delete ui;
     }
     catch (InvalidKey &ex)
     {
@@ -98,7 +98,7 @@ void passDialog::go()
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
 
         this->hide();
-        delete this;
+        delete ui;
     }
     catch (InvalidKey &ex)
     {
@@ -129,7 +129,7 @@ void passDialog::remove()
         (principalref->cFramesRefs).erase((principalref->cFramesRefs).begin() + std::stoi(straux.substr(4, 4)));
         principalref->redrawAll(); //Redesenha a tela
         this->hide();
-        delete this; //NÃO ESQUECER DE DELETAR SE USAR PONTEIRO, ELE NUNCA SAI DE ESCOPO
+        delete ui;//NÃO ESQUECER DE DELETAR SE USAR PONTEIRO, ELE NUNCA SAI DE ESCOPO
     }
     catch (InvalidKey &ex)
     {
