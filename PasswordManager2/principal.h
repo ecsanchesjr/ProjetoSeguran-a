@@ -30,6 +30,14 @@ public:
     std::string getPassword();
     DAO* getDao();
     pair<string, bool> askPassword();
+    int typeop;
+    std::vector<QLineEdit*> sitesRefs;
+    std::vector<QLineEdit*> nicksRefs;
+    std::vector<QLineEdit*> senhasRefs;
+    std::vector<QFrame*> cFramesRefs;
+    std::vector<QFrame*> bFramesRefs;
+    std::vector<QVBoxLayout*>paneRefs;
+    std::string indexPane;
     /* void displayInvalidPass(const string&); */
 
 private:
@@ -41,18 +49,11 @@ private:
     void setCampos(QVBoxLayout*, pair<string,string>, int  i);
     void setBotoes(QHBoxLayout*,int i);
     void fillBoxes(QVBoxLayout*,int);
-    std::vector<QLineEdit*> sitesRefs;
-    std::vector<QLineEdit*> nicksRefs;
-    std::vector<QLineEdit*> senhasRefs;
-    std::vector<QFrame*> cFramesRefs;
-    std::vector<QFrame*> bFramesRefs;
-    std::vector<QVBoxLayout*>paneRefs;
     void drawElements();
     void clearAll();
     std::string username;
     std::string password;
     DAO* dao= nullptr;
-
 private slots:
     void goHandler();
     void editHandler();

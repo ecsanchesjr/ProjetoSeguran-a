@@ -2,6 +2,7 @@
 #include "ui_principal.h"
 #include <login.h>
 #include <addentry.h>
+#include "passdialog.h"
 Principal::Principal(QWidget *parent) : QMainWindow(parent),
                                         ui(new Ui::Principal)
 {
@@ -209,41 +210,13 @@ void Principal::removeHandler()
     QWidget *buttonWidget = qobject_cast<QWidget *>(sender());
     if (!buttonWidget)
         return;
-    std::string straux = ((QPushButton *)buttonWidget)->objectName().toStdString();
-    std::cout << "Você removeu o pane " << straux.substr(4, 4) << endl;
+    indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
+    std::cout << "Você removeu o pane " << indexPane.substr(4, 4) << endl;
     //Remove a entrada no arquivo
-
-    std::string entrada = sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
-    returnQInput = askPassword();
-    if (returnQInput.second)
-    {
-        try
-        {
-            dao->deleteEntry(entrada, returnQInput.first);
-            //Remove o pane
-            delete sitesRefs[std::stoi(straux.substr(4, 4))];                    //Deleta o elemento
-            sitesRefs.erase(sitesRefs.begin() + std::stoi(straux.substr(4, 4))); //Deleta a referencia do elemento no index
-            delete nicksRefs[std::stoi(straux.substr(4, 4))];
-            nicksRefs.erase(nicksRefs.begin() + std::stoi(straux.substr(4, 4)));
-            delete senhasRefs[std::stoi(straux.substr(4, 4))];
-            senhasRefs.erase(senhasRefs.begin() + std::stoi(straux.substr(4, 4)));
-            delete bFramesRefs[std::stoi(straux.substr(4, 4))];
-            bFramesRefs.erase(bFramesRefs.begin() + std::stoi(straux.substr(4, 4)));
-            delete paneRefs[std::stoi(straux.substr(4, 4))];
-            paneRefs.erase(paneRefs.begin() + std::stoi(straux.substr(4, 4)));
-            delete cFramesRefs[std::stoi(straux.substr(4, 4))];
-            cFramesRefs.erase(cFramesRefs.begin() + std::stoi(straux.substr(4, 4)));
-            redrawAll(); //Redesenha a tela
-        }
-        catch (InvalidKey &ex)
-        {
-            QMessageBox messageBox;
-            messageBox.critical(0,"Error",ex.what());
-            messageBox.setFixedSize(500,200);
-        }
-    }
+    typeop=2;
+    passDialog* pD= new passDialog(this);
+    pD->show();
 }
-
 void Principal::redrawAll()
 {
     clearAll();
