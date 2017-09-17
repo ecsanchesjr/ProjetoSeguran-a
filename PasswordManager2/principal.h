@@ -6,10 +6,13 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QInputDialog>
 #include <vector>
 #include <iostream>
 #include <string>
 #include <DAO.hpp>
+#include <utility>
+
 namespace Ui {
 class Principal;
 }
@@ -25,6 +28,7 @@ public:
     std::string getUsername();
     std::string getPassword();
     DAO* getDao();
+    pair<string, bool> askPassword();
 
 private:
     Ui::Principal *ui;

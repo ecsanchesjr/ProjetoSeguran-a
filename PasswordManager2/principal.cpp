@@ -167,6 +167,13 @@ void Principal::goHandler() //Action ao clicar no botão go
     std::cout<<"O texto no site desse pane é " <<sitesRefs[std::stoi(straux.substr(4,4))]->text().toStdString()<<std::endl;
     std::cout<<"O texto no nick desse pane é " <<nicksRefs[std::stoi(straux.substr(4,4))]->text().toStdString()<<std::endl;
     std::cout<<"O texto na senha desse pane é " <<senhasRefs[std::stoi(straux.substr(4,4))]->text().toStdString()<<std::endl;
+
+    string key = "",name=sitesRefs[std::stoi(straux.substr(4,4))]->text().toStdString();
+    vector<string> entry = dao->getEntry(name,key);
+    for(string txt : entry){
+        cout<<txt<<endl;
+    }
+    cout<<endl;
 }
 
 void Principal::editHandler(){ //Action ao clicar no botão edit
@@ -225,4 +232,13 @@ std::string Principal::getPassword(){
 
 DAO *Principal::getDao(){
     return dao;
+}
+
+pair<string, bool> Principal::askPassword(){
+    pair<string, bool> output;
+    QInputDialog window;
+    QString key = window.getText(0, "Digite sua senha: ", "Senha: ", QLineEdit::Normal,"", &output.second); 
+    output.first = key.toStdString();
+    
+    return(output);
 }

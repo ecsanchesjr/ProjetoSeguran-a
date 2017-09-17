@@ -30,6 +30,7 @@ using CryptoPP::PKCS5_PBKDF2_HMAC;
 using CryptoPP::SHA256;
 using CryptoPP::EAX;
 using CryptoPP::AuthenticatedDecryptionFilter;
+using CryptoPP::AuthenticatedEncryptionFilter;
 using CryptoPP::byte;
 using CryptoPP::StringSink;
 
@@ -43,7 +44,7 @@ public:
    //procurar o arquivo
    bool isUserValid();
    //ler o arquivo
-   string getData(string&) const;
+   string getData(string&);
    //gravar o arquivo
    void setData(string&,string&);
 
@@ -57,8 +58,8 @@ public:
 
 private:
    string fileName;
-   const int keySize = AES::DEFAULT_KEYLENGTH;
-   const int iterations = 100;
+   const static int keySize = 2*AES::DEFAULT_KEYLENGTH;
+   const static int iterations = 100;
 
    void static getDir(vector<string>&);
 
@@ -66,16 +67,19 @@ private:
    bool validateUser(string&, string&);
 
    // ler arquivo encriptado
-   string readEncrypted(string&);
+   string static readData(string&);
 
    // gerar key derivada da senha do usuario
-   SecByteBlock generateKey(string&);
+   SecByteBlock static generateKey(string&);
 
    // retorna o texto decryptado, porém gera uma excecao em senha errada
-   string decryptate(SecByteBlock, string);
+   string static decryptate(SecByteBlock, string);
 
    // retorna se existe ou não usuário criado
    bool static userExists(string&);
+
+   // retorna a string encriptada
+   string static encryptate(SecByteBlock, string);
 };
 
 #endif

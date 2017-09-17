@@ -24,7 +24,13 @@ void login::on_pushButton_clicked()
         Principal *p = new Principal(this);
         p->show();
         this->hide();
-    }catch(UserNotFound &ex){
+    }
+    catch(UserNotFound &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
+    catch(InvalidKey &ex){
         QMessageBox messageBox;
         messageBox.critical(0,"Error",ex.what());
         messageBox.setFixedSize(500,200);
