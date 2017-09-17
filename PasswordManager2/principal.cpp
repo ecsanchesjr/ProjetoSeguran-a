@@ -2,6 +2,7 @@
 #include "ui_principal.h"
 #include<login.h>
 #include <addentry.h>
+#include <QMessageBox>
 Principal::Principal(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Principal)
@@ -32,29 +33,36 @@ void Principal::drawElements(){
     sitesRefs.clear();
     nicksRefs.clear();
     senhasRefs.clear();
-    DAO dao(username,password);
-    int i=0; //Contador para auxiliar o preenchimento
-    vector<pair<string,string>> infos =  dao.getNamesAndLogin(password);
-    for(pair<string,string> it : infos){
-        //Layouts temporários para organização
-        QVBoxLayout *templ= new QVBoxLayout(); //Layout dos campos
-        QVBoxLayout *templ2= new QVBoxLayout(); //Layout dos campos + botões
-        QHBoxLayout *templ3 = new QHBoxLayout(); //Layout dos botões
-        //Chamada para criar os campos
-        setCampos(templ,it,i);
-        //Criação dos botões
-        setBotoes(templ3,i);
-        templ->setAlignment(templ,Qt::AlignLeft); //Alinhamento a esquerda no layout temporário
-        templ->setMargin(20);
+    try{
+        DAO dao(username,password);
+        int i=0; //Contador para auxiliar o preenchimento
+        vector<pair<string,string>> infos =  dao.getNamesAndLogin(password);
+        for(pair<string,string> it : infos){
+            //Layouts temporários para organização
+            QVBoxLayout *templ= new QVBoxLayout(); //Layout dos campos
+            QVBoxLayout *templ2= new QVBoxLayout(); //Layout dos campos + botões
+            QHBoxLayout *templ3 = new QHBoxLayout(); //Layout dos botões
+            //Chamada para criar os campos
+            setCampos(templ,it,i);
+            //Criação dos botões
+            setBotoes(templ3,i);
+            templ->setAlignment(templ,Qt::AlignLeft); //Alinhamento a esquerda no layout temporário
+            templ->setMargin(20);
 
-        templ2->addWidget(criaFrame(templ)); //Adiciona o frame com os campos
-        templ2->addWidget(criaFrame(templ3));//Adiciona o frame com os botões
-        templ2->setMargin(10);
-        paneRefs.push_back(templ2);
+            templ2->addWidget(criaFrame(templ)); //Adiciona o frame com os campos
+            templ2->addWidget(criaFrame(templ3));//Adiciona o frame com os botões
+            templ2->setMargin(10);
+            paneRefs.push_back(templ2);
 
-        ui->gridLayout->setMargin(10);
-        fillBoxes(templ2,i); //Adiciona os layouts criados no grid
-        i++;
+            ui->gridLayout->setMargin(10);
+            fillBoxes(templ2,i); //Adiciona os layouts criados no grid
+            i++;
+        }
+    }catch(InvalidKey &ex){
+        ex.what();
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
     }
 }
 

@@ -4,7 +4,6 @@ DAO::DAO(string &user, string &key) : user(user)
 {
    //verifica se a chave descifra o arquivo do user
    objC = new Crypt(user, key);
-   isValid = objC->isUserValid();
 }
 
 bool DAO::isKeyValid() const

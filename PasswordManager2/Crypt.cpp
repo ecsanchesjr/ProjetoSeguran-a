@@ -2,42 +2,39 @@
 
 Crypt::Crypt(string &name,string &key){
    fileName = name;
+   bool userFound = false;
    vector<string> listOfFiles;
-   isValid=false;
    getDir(listOfFiles);
    
    for(string tmp : listOfFiles){
       if(tmp.compare(fileName+".xml")==0){
-         cout<<tmp<<endl;
-         isValid=true;
+         userFound = true;
       }
+   }
+
+   if(!userFound){
+        throw UserNofFoundEx;
    }
 }
 
-bool Crypt::isUserValid(){
-   return(isValid);
-}
-
 string Crypt::getData(string &key) const{ // retorna a string adiquirida a partir do arquivo xml
-   if(isValid){
+
       ifstream inputStream("./res/"+fileName+".xml");
       string data((std::istreambuf_iterator<char>(inputStream)),(std::istreambuf_iterator<char>()));
       // data ainda está encriptada
 
       return(data);
-   }else{
-      return("");
-   }
+
 }
 
 void Crypt::setData(string &data, string &key){
-   if(isValid){
+
       ofstream outputStream("./res/"+fileName+".xml");
       if(outputStream.is_open()){
          outputStream<<data;
          outputStream.close();
       }
-   }
+
 }
 
 
@@ -71,9 +68,9 @@ void Crypt::getDir(vector<string> &listOfFiles){
 bool Crypt::validateUser(string &user, string &key){
     try{
         decryptate(generateKey(key), readEncrypted(user));
-        isValid=true;
+
     }catch(CryptoPP::Exception ex){
-        isValid=false;
+
         cout << "Caiu na exceção " << endl;
         std::cerr << ex.what() << endl;
     }

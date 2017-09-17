@@ -39,7 +39,8 @@ HEADERS += \
     pugi/pugiconfig.hpp \
     pugi/pugixml.hpp \
     login.h \
-    addentry.h
+    addentry.h \
+    customexceptions.hpp
 
 SUBDIRS += \
     PasswordManager2.pro

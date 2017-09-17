@@ -15,7 +15,8 @@
 #include "eax.h"
 #include "hex.h"
 
-using namespace CryptoPP;
+
+#include "customexceptions.hpp"
 
 using std::vector;
 using std::string;
@@ -23,6 +24,14 @@ using std::cout;
 using std::endl;
 using std::ifstream;
 using std::ofstream;
+using CryptoPP::SecByteBlock;
+using CryptoPP::AES;
+using CryptoPP::PKCS5_PBKDF2_HMAC;
+using CryptoPP::SHA256;
+using CryptoPP::EAX;
+using CryptoPP::AuthenticatedDecryptionFilter;
+using CryptoPP::byte;
+using CryptoPP::StringSink;
 
 
 class Crypt{
@@ -48,7 +57,6 @@ public:
 
 private:
    string fileName;
-   bool isValid;
    const int keySize = AES::DEFAULT_KEYLENGTH;
    const int iterations = 100;
 
