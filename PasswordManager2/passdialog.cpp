@@ -96,7 +96,7 @@ void passDialog::go()
     try
     {
         std::string straux = principalref->indexPane;
-        std::string key = ui->lineEdit->text().toStdString(), name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
+        std::string key = ui->lineEdit->text().toStdString(), name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->objectName().toStdString();
         std::vector<std::string> entry = principalref->getDao()->getEntry(name, key);
         //atualiza o campo do password da entrada
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
@@ -115,7 +115,7 @@ void passDialog::remove()
     try
     {
         std::string straux = principalref->indexPane;
-        std::string entrada = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
+        std::string entrada = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->objectName().toStdString();
         std::string temppass = ui->lineEdit->text().toStdString();
         principalref->getDao()->deleteEntry(entrada, temppass);
         //Remove o pane
