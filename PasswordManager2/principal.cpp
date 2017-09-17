@@ -2,6 +2,7 @@
 #include "ui_principal.h"
 #include <login.h>
 #include <addentry.h>
+#include <QDesktopWidget>
 #include "passdialog.h"
 Principal::Principal(QWidget *parent) : QMainWindow(parent),
                                         ui(new Ui::Principal)
@@ -16,6 +17,13 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     std::cout << password << std::endl;
     //------------
     drawElements();
+    //Ajuste da tela
+    int width=this->frameGeometry().width();
+    int height=this->frameGeometry().height();
+    QDesktopWidget btt;
+    int screenWidth=btt.screen()->width();
+    int screenHeight=btt.screen()->height();
+    this->setGeometry((screenWidth/2) -(width/2),(screenHeight/2)-(height/2),width,height);
 }
 void Principal::clearAll()
 {

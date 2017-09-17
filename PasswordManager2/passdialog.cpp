@@ -1,5 +1,6 @@
 #include "passdialog.h"
 #include "ui_passdialog.h"
+#include <QDesktopWidget>
 passDialog::passDialog(QWidget *parent, int op) : QWidget(),
                                                   ui(new Ui::passDialog)
 {
@@ -21,6 +22,14 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
     else if(op==4){
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(deleteUser()));
     }
+    //Ajuste da tela
+    int width=this->frameGeometry().width();
+    int height=this->frameGeometry().height();
+    QDesktopWidget btt;
+    int screenWidth=btt.screen()->width();
+    int screenHeight=btt.screen()->height();
+    this->setGeometry((screenWidth/2) -(width/2),(screenHeight/2)-(height/2),width,height);
+
 }
 
 passDialog::passDialog(QWidget *parent,QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
@@ -33,6 +42,13 @@ passDialog::passDialog(QWidget *parent,QWidget *addEntryWin, string site, string
     this->nick = login;
     this->pass = pass;
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(newEntry()));
+    //Ajuste da tela
+    int width=this->frameGeometry().width();
+    int height=this->frameGeometry().height();
+    QDesktopWidget btt;
+    int screenWidth=btt.screen()->width();
+    int screenHeight=btt.screen()->height();
+    this->setGeometry((screenWidth/2) -(width/2),(screenHeight/2)-(height/2),width,height);
 }
 
 void passDialog::closeEvent(QCloseEvent *event)
