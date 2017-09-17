@@ -24,6 +24,7 @@ public:
     ~Principal();
     std::string getUsername();
     std::string getPassword();
+    DAO* getDao();
 
 private:
     Ui::Principal *ui;
@@ -44,6 +45,7 @@ private:
     void clearAll();
     std::string username;
     std::string password;
+    DAO* dao= nullptr;
 
 private slots:
     void goHandler();

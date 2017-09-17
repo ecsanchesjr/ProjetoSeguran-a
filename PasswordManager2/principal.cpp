@@ -10,6 +10,7 @@ Principal::Principal(QWidget *parent) :
     ui->setupUi(this);
     username=((login*)parent)->getUsername();
     password=((login*)parent)->getPassword();
+    dao=((login*)parent)->getDao();
     std::cout<<username<<std::endl;
     std::cout<<password<<std::endl;
     drawElements();
@@ -34,9 +35,8 @@ void Principal::drawElements(){
     nicksRefs.clear();
     senhasRefs.clear();
     try{
-        DAO dao(username,password);
         int i=0; //Contador para auxiliar o preenchimento
-        vector<pair<string,string>> infos =  dao.getNamesAndLogin(password);
+        vector<pair<string,string>> infos =  dao->getNamesAndLogin(password);
         for(pair<string,string> it : infos){
             //Layouts temporários para organização
             QVBoxLayout *templ= new QVBoxLayout(); //Layout dos campos
@@ -222,4 +222,8 @@ std::string Principal::getUsername(){
 }
 std::string Principal::getPassword(){
     return password;
+}
+
+DAO *Principal::getDao(){
+    return dao;
 }

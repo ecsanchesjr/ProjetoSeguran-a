@@ -29,3 +29,8 @@ std::string login::getPassword(){
     password=ui->lineEdit->text().toStdString();
     return password;
 }
+
+DAO* login::getDao(){
+    dao= new DAO(username,password);
+    return dao;
+}

@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <string>
 #include "principal.h"
+#include "DAO.hpp"
 namespace Ui {
 class login;
 }
@@ -17,7 +18,7 @@ public:
     ~login();
     std::string getUsername();
     std::string getPassword();
-
+    DAO* getDao(); //Utilizar para pegar a DAO
 private slots:
     void on_pushButton_clicked();
 
@@ -25,6 +26,7 @@ private:
     Ui::login *ui;
     std::string username;
     std::string password;
+    DAO* dao = nullptr;
 };
 
 #endif // LOGIN_H

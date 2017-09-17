@@ -24,8 +24,7 @@ void addEntry::on_pushButton_clicked()
     std::string nick=ui->lineEdit_2->text().toStdString();
     std::string senha=ui->lineEdit_3->text().toStdString();
     std::string key="";
-    DAO dao(user,user);
-    dao.createNewEntry(site,nick,senha,key);
+    principalref->getDao()->createNewEntry(site,nick,senha,key);
     principalref->redrawAll();
     this->hide();
 }
