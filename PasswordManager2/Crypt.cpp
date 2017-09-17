@@ -68,11 +68,10 @@ void Crypt::getDir(vector<string> &listOfFiles){
 bool Crypt::validateUser(string &user, string &key){
     try{
         decryptate(generateKey(key), readEncrypted(user));
-
+        return(true);
     }catch(CryptoPP::Exception ex){
-
         cout << "Caiu na exceção " << endl;
-        std::cerr << ex.what() << endl;
+        throw InvalidKey();
     }
 }
 
