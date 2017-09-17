@@ -58,8 +58,8 @@ void Principal::drawElements(){
             fillBoxes(templ2,i); //Adiciona os layouts criados no grid
             i++;
         }
-    }catch(InvalidKey &ex){
-        ex.what();
+    }catch(UserNotFound &ex){
+        cout<<ex.what()<<endl;
         QMessageBox messageBox;
         messageBox.critical(0,"Error",ex.what());
         messageBox.setFixedSize(500,200);
