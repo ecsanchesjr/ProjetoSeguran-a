@@ -10,6 +10,7 @@ login::login(QWidget *parent) :
         parent->close();
     }
     ui->setupUi(this);
+    ui->lineEdit->setEchoMode(QLineEdit::Password);
 }
 
 login::~login()
@@ -62,6 +63,8 @@ void login::on_pushButton_2_clicked()//Cria user
         getUsername();
         getPassword();
         dao->createNewUser(username,password);
+        QMessageBox gen;
+        gen.information(0,"Sucesso","Usuário criado com sucesso");
 
     }catch(DuplicatedUser &ex){
         QMessageBox messageBox;

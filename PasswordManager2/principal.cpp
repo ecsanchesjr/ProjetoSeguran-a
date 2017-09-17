@@ -10,6 +10,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     username = ((login *)parent)->getUsername();
     password = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();
+    ui->label->setText("Bem vindo " +QString::fromStdString(username));
     //Apagar isso
     std::cout << username << std::endl;
     std::cout << password << std::endl;
@@ -104,7 +105,7 @@ void Principal::setCampos(QVBoxLayout *qlayout, pair<string, string> nickPass, i
     //Criaçao do campo de senha
     tempstr = "SenhaPane";
     tempstr.append(QString::number(i));
-    temp = criaCampo("********", tempstr);
+    temp = criaCampo("Clique em GO", tempstr);
     senhasRefs.push_back(temp);
     qlayout->addWidget(temp);
 }

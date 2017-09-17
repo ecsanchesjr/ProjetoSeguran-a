@@ -4,6 +4,7 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
                                                   ui(new Ui::passDialog)
 {
     ui->setupUi(this);
+    ui->lineEdit->setEchoMode(QLineEdit::Password);
     principalref = (Principal *)parent;
     if (op == 1)
     {
