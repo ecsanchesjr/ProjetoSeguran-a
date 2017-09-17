@@ -88,6 +88,7 @@ void Principal::setCampos(QVBoxLayout *qlayout, pair<string, string> nickPass, i
     QString tempstr = "SitePane";
     tempstr.append(QString::number(i));
     QLineEdit *temp = criaCampo(QString::fromStdString(nickPass.first), tempstr);
+    temp->setReadOnly(true);
     sitesRefs.push_back(temp); //Armazena num vetor para indexação e acesso em tempo constante
     qlayout->addWidget(temp);  //Adiciona ao layout
 
@@ -101,7 +102,7 @@ void Principal::setCampos(QVBoxLayout *qlayout, pair<string, string> nickPass, i
     //Criaçao do campo de senha
     tempstr = "SenhaPane";
     tempstr.append(QString::number(i));
-    temp = criaCampo(tempstr, tempstr);
+    temp = criaCampo("********", tempstr);
     senhasRefs.push_back(temp);
     qlayout->addWidget(temp);
 }
@@ -180,19 +181,11 @@ void Principal::goHandler() //Action ao clicar no botão go
     QWidget *buttonWidget = qobject_cast<QWidget *>(sender());
     if (!buttonWidget)
         return;
-    std::string straux = ((QPushButton *)buttonWidget)->objectName().toStdString();
-    std::cout << "Você clicou no pane " << straux.substr(4, 4) << endl;
-    std::cout << "O texto no site desse pane é " << sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString() << std::endl;
-    std::cout << "O texto no nick desse pane é " << nicksRefs[std::stoi(straux.substr(4, 4))]->text().toStdString() << std::endl;
-    std::cout << "O texto na senha desse pane é " << senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString() << std::endl;
+    
+    indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
 
-    string key = "", name = sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
-    vector<string> entry = dao->getEntry(name, key);
-    for (string txt : entry)
-    {
-        cout << txt << endl;
-    }
-    cout << endl;
+    passDialog* pD= new passDialog(this,1);
+    pD->show();
 }
 
 void Principal::editHandler()
@@ -200,21 +193,22 @@ void Principal::editHandler()
     QWidget *buttonWidget = qobject_cast<QWidget *>(sender());
     if (!buttonWidget)
         return;
-    std::string straux = ((QPushButton *)buttonWidget)->objectName().toStdString();
-    std::cout << "Você editou o pane " << straux.substr(4, 4) << endl;
+
+    indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
+
+    passDialog *pD = new passDialog(this,3);
+    pD->show();
 }
 
 void Principal::removeHandler()
 { //Action  ao clicar no botão remove
-    pair<string, bool> returnQInput;
     QWidget *buttonWidget = qobject_cast<QWidget *>(sender());
     if (!buttonWidget)
         return;
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
     std::cout << "Você removeu o pane " << indexPane.substr(4, 4) << endl;
     //Remove a entrada no arquivo
-    typeop=2;
-    passDialog* pD= new passDialog(this);
+    passDialog* pD= new passDialog(this,2);
     pD->show();
 }
 void Principal::redrawAll()
@@ -244,19 +238,9 @@ DAO *Principal::getDao()
     return dao;
 }
 
-pair<string, bool> Principal::askPassword()
-{
-    pair<string, bool> output;
-    QInputDialog window;
-    QString key = window.getText(0, "Digite sua senha: ", "Senha: ", QLineEdit::Normal, "", &output.second);
-    output.first = key.toStdString();
-
-    return (output);
-}
-
-/* void displayInvalidPass(const string &error){
+ void Principal::displayInvalidPass(const string &error){
     QMessageBox messageBox;
     messageBox.critical(0,"Error",error.c_str());
     messageBox.setFixedSize(500,200);    
 }
- */
+

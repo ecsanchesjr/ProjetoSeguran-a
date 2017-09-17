@@ -30,7 +30,6 @@ public:
     std::string getPassword();
     DAO* getDao();
     pair<string, bool> askPassword();
-    int typeop;
     std::vector<QLineEdit*> sitesRefs;
     std::vector<QLineEdit*> nicksRefs;
     std::vector<QLineEdit*> senhasRefs;
@@ -38,7 +37,7 @@ public:
     std::vector<QFrame*> bFramesRefs;
     std::vector<QVBoxLayout*>paneRefs;
     std::string indexPane;
-    /* void displayInvalidPass(const string&); */
+    void displayInvalidPass(const string&);
 
 private:
     Ui::Principal *ui;

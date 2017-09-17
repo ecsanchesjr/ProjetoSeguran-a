@@ -5,6 +5,7 @@
 #include <iostream>
 #include <DAO.hpp>
 #include <principal.h>
+#include <QCloseEvent>
 namespace Ui {
 class addEntry;
 }
@@ -23,6 +24,7 @@ private slots:
 private:
     Ui::addEntry *ui;
     Principal* principalref;
+    void closeEvent(QCloseEvent*);
 };
 
 #endif // ADDENTRY_H

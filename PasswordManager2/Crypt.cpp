@@ -12,10 +12,10 @@ Crypt::Crypt(string &name, string &key)
         if (tmp.compare(fileName + ".xml") == 0)
         {
             userFound = true;
-        }
-        if (!validateUser(fileName, key))
-        {
-            throw InvalidKey();
+            if (!validateUser(fileName, key))
+            {
+                throw InvalidKey();
+            }
         }
     }
 
