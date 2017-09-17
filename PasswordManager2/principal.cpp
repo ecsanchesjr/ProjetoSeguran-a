@@ -2,7 +2,6 @@
 #include "ui_principal.h"
 #include<login.h>
 #include <addentry.h>
-#include <QMessageBox>
 Principal::Principal(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Principal)

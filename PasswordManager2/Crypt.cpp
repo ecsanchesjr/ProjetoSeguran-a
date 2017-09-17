@@ -13,7 +13,7 @@ Crypt::Crypt(string &name,string &key){
    }
 
    if(!userFound){
-        throw new UserNotFound();
+        throw UserNotFound();
    }
 }
 

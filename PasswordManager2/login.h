@@ -3,6 +3,7 @@
 
 #include <QFrame>
 #include <string>
+#include <QMessageBox>
 #include "principal.h"
 #include "DAO.hpp"
 namespace Ui {

@@ -1,5 +1,6 @@
 #include "login.h"
 #include "ui_login.h"
+#include "customexceptions.hpp"
 
 login::login(QWidget *parent) :
     QFrame(parent),
@@ -15,9 +16,19 @@ login::~login()
 
 void login::on_pushButton_clicked()
 {
-    Principal *p = new Principal(this);
-    p->show();
-    this->hide();
+
+    try{
+        getUsername();
+        getPassword();
+        dao= new DAO(username,password);
+        Principal *p = new Principal(this);
+        p->show();
+        this->hide();
+    }catch(UserNotFound &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
 }
 
 std::string login::getUsername(){
@@ -31,6 +42,5 @@ std::string login::getPassword(){
 }
 
 DAO* login::getDao(){
-    dao= new DAO(username,password);
     return dao;
 }
