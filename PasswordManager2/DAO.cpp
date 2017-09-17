@@ -9,6 +9,10 @@ DAO::DAO(string &user, string &key) : user(user)
 
 }
 
+DAO::~DAO(){
+    delete objC;
+}
+
 bool DAO::isKeyValid() const
 {
    return (isValid);

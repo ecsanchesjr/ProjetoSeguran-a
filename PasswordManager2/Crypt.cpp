@@ -1,18 +1,21 @@
 #include "Crypt.hpp"
 
+const string Crypt::fileExtension = ".lock";
+const string Crypt::dirName = "res";
+
 Crypt::Crypt(string &name, string &key)
 {
-    fileName = name;
+    userName = name;
     bool userFound = false;
     vector<string> listOfFiles;
     getDir(listOfFiles);
 
     for (string tmp : listOfFiles)
     {
-        if (tmp.compare(fileName + ".xml") == 0)
+        if (tmp.compare(userName + fileExtension) == 0)
         {
             userFound = true;
-            if (!validateUser(fileName, key))
+            if (!validateUser(userName, key))
             {
                 throw InvalidKey();
             }
@@ -27,9 +30,9 @@ Crypt::Crypt(string &name, string &key)
 
 string Crypt::getData(string &key)
 { // retorna a string adiquirida a partir do arquivo xml
-    if (validateUser(fileName, key))
+    if (validateUser(userName, key))
     {
-        ifstream inputStream("./res/" + fileName + ".xml");
+        ifstream inputStream("./"+dirName+"/" + userName + fileExtension);
         string data((std::istreambuf_iterator<char>(inputStream)), (std::istreambuf_iterator<char>()));
         // data ainda está encriptada
         data = decryptate(generateKey(key), data);
@@ -44,7 +47,7 @@ string Crypt::getData(string &key)
 void Crypt::setData(string &data, string &key)
 {
 
-    ofstream outputStream("./res/" + fileName + ".xml");
+    ofstream outputStream("./"+dirName+"/" + userName + fileExtension);
     if (outputStream.is_open())
     {
         data = encryptate(generateKey(key), data);
@@ -56,16 +59,19 @@ void Crypt::setData(string &data, string &key)
 void Crypt::deleteUser(string &key)
 {
     //se a chave for válida
-    string file = "./res/" + fileName + ".xml";
-    remove(file.c_str());
+    if(validateUser(userName,key)){
+        string file = "./"+dirName+"/" + userName + fileExtension;
+        remove(file.c_str());
+    }
 }
 
 void Crypt::createData(string &user, string &data, string &key)
 {
-    if (opendir("./res") == nullptr)
+    string dir = "./"+dirName+"/",cmd = "mkdir "+dirName;
+    if (opendir(dir.c_str()) == nullptr)
     {
-        system("mkdir res");
-        ofstream newFile("./res/" + user + ".xml");
+        system(cmd.c_str());
+        ofstream newFile("./"+dirName+"/" + user + fileExtension);
         data = encryptate(generateKey(key), data);
         newFile << data;
         newFile.close();
@@ -74,7 +80,7 @@ void Crypt::createData(string &user, string &data, string &key)
     {
         if (!userExists(user))
         {
-            ofstream newFile("./res/" + user + ".xml");
+            ofstream newFile("./"+dirName+"/" + user + fileExtension);
             data = encryptate(generateKey(key), data);
             newFile << data;
             newFile.close();
@@ -90,7 +96,7 @@ void Crypt::getDir(vector<string> &listOfFiles)
 {
     DIR *dp;
     struct dirent *dirp;
-    string dir = "./res";
+    string dir = "./"+dirName;
 
     if ((dp = opendir(dir.c_str())) == NULL)
     {
@@ -121,7 +127,7 @@ bool Crypt::validateUser(string &user, string &key)
 
 string Crypt::readData(string &file)
 {
-    ifstream inputStream("./res/" + file + ".xml");
+    ifstream inputStream("./"+dirName+"/" + file + fileExtension);
     string data((std::istreambuf_iterator<char>(inputStream)), (std::istreambuf_iterator<char>()));
 
     return (data);
@@ -172,7 +178,7 @@ bool Crypt::userExists(string &userFile)
 
     for (string c : list)
     {
-        if (c.compare(userFile + ".xml") == 0)
+        if (c.compare(userFile + fileExtension) == 0)
             return (true);
     }
     return (false);

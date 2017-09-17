@@ -17,6 +17,7 @@ class DAO{
 public:
   //iniciaza a classe e seta o user
   DAO(string &, string &);
+  ~DAO();
 
   //verifica se a senha do user está correta
   bool isKeyValid() const;

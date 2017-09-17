@@ -57,7 +57,9 @@ public:
 
 
 private:
-   string fileName;
+   string userName;
+   const static string fileExtension;
+   const static string dirName;
    const static int keySize = 2*AES::DEFAULT_KEYLENGTH;
    const static int iterations = 100;
 
