@@ -47,8 +47,15 @@ DAO* login::getDao(){
 
 void login::on_pushButton_2_clicked()//Cria user
 {
-    std::cout <<"Criar user" <<std::endl;
-    getUsername();
-    getPassword();
-    dao->createNewUser(username,password);
+    try{
+        std::cout <<"Criar user" <<std::endl;
+        getUsername();
+        getPassword();
+        dao->createNewUser(username,password);
+
+    }catch(DuplicatedUser &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
 }

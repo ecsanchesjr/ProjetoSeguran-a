@@ -60,7 +60,7 @@ private:
    const int keySize = AES::DEFAULT_KEYLENGTH;
    const int iterations = 100;
 
-   void getDir(vector<string>&);
+   void static getDir(vector<string>&);
 
    // validar a senha do usuario 
    bool validateUser(string&, string&);
@@ -73,6 +73,9 @@ private:
 
    // retorna o texto decryptado, porém gera uma excecao em senha errada
    string decryptate(SecByteBlock, string);
+
+   // retorna se existe ou não usuário criado
+   bool static userExists(string&);
 };
 
 #endif

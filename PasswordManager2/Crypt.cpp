@@ -37,7 +37,6 @@ void Crypt::setData(string &data, string &key){
 
 }
 
-
 void Crypt::deleteUser(string &key){
    //se a chave for válida
    string file = "./res/"+fileName+".xml";
@@ -45,9 +44,22 @@ void Crypt::deleteUser(string &key){
 }
 
 void Crypt::createData(string &user, string &data, string &key){
-   ofstream newFile("./res/"+user+".xml");
-   newFile<<data;
-   newFile.close();
+    if(opendir("./res")==nullptr){
+        system("mkdir res");
+        ofstream newFile("./res/"+user+".xml");
+        newFile<<data;
+        newFile.close();
+    }else{
+        if(!userExists(user)){
+            ofstream newFile("./res/"+user+".xml");
+            newFile<<data;
+            newFile.close();
+        }else{
+            throw DuplicatedUser();
+        }
+    }
+
+    
 }
 
 void Crypt::getDir(vector<string> &listOfFiles){
@@ -103,4 +115,15 @@ string Crypt::decryptate(SecByteBlock derivedKey, string encryptedText){
     df.MessageEnd(); 
 
     return(output);
+}
+
+bool Crypt::userExists(string &userFile){
+    vector<string> list;
+    getDir(list);
+
+    for(string c : list){
+        if(c.compare(userFile+".xml") == 0)
+            return(true);
+    }
+    return(false);
 }

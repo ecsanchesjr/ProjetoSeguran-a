@@ -17,4 +17,11 @@ public:
     }
 };
 
+class DuplicatedUser : public std::exception{
+public:
+    virtual const char* what() const throw(){
+        return "User Already Exist";
+    }
+};
+
 #endif // CUSTOMEXCEPTIONS_H
