@@ -88,10 +88,8 @@ void Principal::setBotoes(QHBoxLayout *qlayout, int i)
 void Principal::setCampos(QVBoxLayout *qlayout, pair<string, string> nickPass, int i)
 {
     //Criação do campo do site
-    QString tempstr = "SitePane";
-    tempstr.append(QString::number(i));
-    QLineEdit *temp = criaCampo(QString::fromStdString(nickPass.first), tempstr);
-    temp->setReadOnly(true);
+    QString tempstr = "";
+    QLineEdit *temp = criaCampo(QString::fromStdString(nickPass.first), QString::fromStdString(nickPass.first));
     sitesRefs.push_back(temp); //Armazena num vetor para indexação e acesso em tempo constante
     qlayout->addWidget(temp);  //Adiciona ao layout
 

@@ -74,11 +74,12 @@ void passDialog::modify()
         std::string straux = principalref->indexPane;
 
         std::string key = ui->lineEdit->text().toStdString(),
-                    name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
+                    name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->objectName().toStdString(),
                     login = principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
-                    pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
+                    pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
+                    newname = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
 
-        principalref->getDao()->modifyEntry(name, login, pass, key);
+        principalref->getDao()->modifyEntry(name, login, pass, key,newname);
 
         principalref->redrawAll();
         this->hide();
@@ -97,10 +98,9 @@ void passDialog::go()
         std::string straux = principalref->indexPane;
         std::string key = ui->lineEdit->text().toStdString(), name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
         std::vector<std::string> entry = principalref->getDao()->getEntry(name, key);
-
         //atualiza o campo do password da entrada
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
-
+        std::cout<<(principalref->sitesRefs)[std::stoi(straux.substr(4, 4))]->objectName().toStdString()<<std::endl;
         this->hide();
         delete ui;
     }
