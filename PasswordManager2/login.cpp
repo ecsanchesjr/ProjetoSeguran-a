@@ -3,14 +3,18 @@
 #include "customexceptions.hpp"
 
 login::login(QWidget *parent) :
-    QFrame(parent),
+    QFrame(),
     ui(new Ui::login)
-{
+{   if(parent==0){
+    }else{
+        parent->close();
+    }
     ui->setupUi(this);
 }
 
 login::~login()
 {
+    exit(0);
     delete ui;
 }
 

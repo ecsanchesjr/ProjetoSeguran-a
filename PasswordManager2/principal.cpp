@@ -178,6 +178,7 @@ Principal::~Principal()
     clearAll();
     delete dao;
     delete ui;
+    exit(0);
 }
 //Substituir corpo dos actions pelas ações com a cript + o xml
 void Principal::goHandler() //Action ao clicar no botão go
@@ -248,3 +249,12 @@ DAO *Principal::getDao()
     messageBox.setFixedSize(500,200);    
 }
 
+
+void Principal::on_pushButton_clicked()
+{
+    clearAll();
+    delete dao;
+    login* lg= new login(this);
+    lg->show();
+    delete ui;
+}

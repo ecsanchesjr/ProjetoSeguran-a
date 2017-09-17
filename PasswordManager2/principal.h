@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <DAO.hpp>
+#include <login.h>
 #include <utility>
 
 namespace Ui {
@@ -58,6 +59,7 @@ private slots:
     void editHandler();
     void removeHandler();
     void on_pushButton_2_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // PRINCIPAL_H
