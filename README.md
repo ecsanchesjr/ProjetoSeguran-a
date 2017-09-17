@@ -10,5 +10,11 @@ O projeto consiste na implementação de um gerenciador de senhas básico.
 
 O projeto será implementado utilizando a linguagem de programação C++, utilizando Qt para o desenvolvimento da GUI.
 
+## Dependências do projeto 
+
+* Biblioteca [Crypto++](https://github.com/weidai11/cryptopp) devidamente instalada no seu dispositivo;
+* Qt 5.9;
+* Biblioteca Pugi, porém está no repositório.
+
 # EM ANDAMENTO
 
