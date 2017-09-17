@@ -18,9 +18,7 @@ addEntry::~addEntry()
 
 void addEntry::on_pushButton_clicked()
 {
-    cout << "EOQ ANTES " << endl;
     pair<string, bool> returnQInput=principalref->askPassword();
-    cout << "EOQ DEPOIS " << endl;
     if(returnQInput.second){
         std::cout<<"Site:" << ui->lineEdit->text().toStdString()<<std::endl;
         std::cout<<"Nick:" << ui->lineEdit_2->text().toStdString()<<std::endl;
@@ -30,9 +28,15 @@ void addEntry::on_pushButton_clicked()
         std::string nick=ui->lineEdit_2->text().toStdString();
         std::string senha=ui->lineEdit_3->text().toStdString();
         std::string key=returnQInput.first;
-        principalref->getDao()->createNewEntry(site,nick,senha,key);
-        principalref->redrawAll();
-        this->hide();
+        try{
+            principalref->getDao()->createNewEntry(site,nick,senha,key);
+            principalref->redrawAll();
+            this->hide();
+        }catch(InvalidKey &ex){
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error",ex.what());
+            messageBox.setFixedSize(500,200);
+        }
     }else{
         // nothing
     }

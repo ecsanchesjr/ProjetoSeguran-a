@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QInputDialog>
+#include <QMessageBox>
 #include <vector>
 #include <iostream>
 #include <string>
@@ -29,6 +30,7 @@ public:
     std::string getPassword();
     DAO* getDao();
     pair<string, bool> askPassword();
+    /* void displayInvalidPass(const string&); */
 
 private:
     Ui::Principal *ui;
