@@ -44,3 +44,11 @@ std::string login::getPassword(){
 DAO* login::getDao(){
     return dao;
 }
+
+void login::on_pushButton_2_clicked()//Cria user
+{
+    std::cout <<"Criar user" <<std::endl;
+    getUsername();
+    getPassword();
+    dao->createNewUser(username,password);
+}
