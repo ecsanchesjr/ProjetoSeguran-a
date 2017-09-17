@@ -103,7 +103,8 @@ void Principal::setCampos(QVBoxLayout *qlayout, pair<string, string> nickPass, i
     //Criaçao do campo de senha
     tempstr = "SenhaPane";
     tempstr.append(QString::number(i));
-    temp = criaCampo("Clique em GO", tempstr);
+    temp = criaCampo("", tempstr);
+    temp->setPlaceholderText("Clique em GO");
     senhasRefs.push_back(temp);
     qlayout->addWidget(temp);
 }
