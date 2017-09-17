@@ -222,7 +222,7 @@ void Principal::redrawAll()
     drawElements();
 }
 
-void Principal::on_pushButton_2_clicked()
+void Principal::on_pushButton_2_clicked() //Adicionar nova entrada
 {
     std::cout << "Adicionar nova entrada" << std::endl;
     addEntry *ae = new addEntry(this);
@@ -250,11 +250,17 @@ DAO *Principal::getDao()
 }
 
 
-void Principal::on_pushButton_clicked()
+void Principal::on_pushButton_clicked() //Sair
 {
     clearAll();
     delete dao;
     login* lg= new login(this);
     lg->show();
     delete ui;
+}
+
+void Principal::on_pushButton_3_clicked() //Deletar o usuário
+{
+    passDialog *pD= new passDialog(this,4);
+    pD->show();
 }

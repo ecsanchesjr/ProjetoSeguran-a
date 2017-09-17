@@ -17,6 +17,9 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
     {
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(modify()));
     }
+    else if(op==4){
+        connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(deleteUser()));
+    }
 }
 
 passDialog::passDialog(QWidget *parent,QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
@@ -26,7 +29,7 @@ passDialog::passDialog(QWidget *parent,QWidget *addEntryWin, string site, string
     principalref = (Principal *)parent;
     addEntryPtr = (addEntry *)addEntryWin;
     this->site = site;
-    this->login = login;
+    this->nick = login;
     this->pass = pass;
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(newEntry()));
 }
@@ -50,7 +53,7 @@ void passDialog::newEntry()
     
         std::string key = ui->lineEdit->text().toStdString();
         
-        principalref->getDao()->createNewEntry(site, login, pass, key);
+        principalref->getDao()->createNewEntry(site, nick, pass, key);
         principalref->redrawAll();
         
         addEntryPtr->hide();
@@ -133,6 +136,25 @@ void passDialog::remove()
     }
     catch (InvalidKey &ex)
     {
+        principalref->displayInvalidPass(ex.what());
+    }
+}
+
+void passDialog::deleteUser(){
+    std::cout<<"Delete user"<<std::endl;
+    std::string passTemp =  ui->lineEdit->text().toStdString();
+    try{
+        principalref->getDao()->deleteUser(passTemp);
+        std::cout<<"User deletado com sucesso!"<<std::endl;
+        QMessageBox* qbox= new QMessageBox;
+        qbox->information(this,"Usuário Deletado","Usuário deletado com sucesso");
+        delete qbox;
+        login *lg = new login(principalref);
+        lg->show();
+        this->hide();
+        delete ui;
+    }
+    catch(InvalidKey &ex){
         principalref->displayInvalidPass(ex.what());
     }
 }

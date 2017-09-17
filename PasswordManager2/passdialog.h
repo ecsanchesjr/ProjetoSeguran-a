@@ -5,6 +5,7 @@
 #include <principal.h>
 #include "addentry.h"
 #include <QCloseEvent>
+#include <login.h>
 namespace Ui {
 class passDialog;
 }
@@ -23,12 +24,13 @@ private:
     Ui::passDialog *ui;
     Principal* principalref;
     addEntry *addEntryPtr;
-    std::string site,login,pass;
+    std::string site,nick,pass;
 private slots:
     void remove();
     void modify();
     void go();
     void newEntry();
+    void deleteUser();
     void closeEvent(QCloseEvent*);
 
 };
