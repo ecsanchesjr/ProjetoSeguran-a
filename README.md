@@ -12,7 +12,7 @@ O projeto será implementado utilizando a linguagem de programação C++, utiliz
 
 ## Dependências do projeto 
 
-* Biblioteca Crypto++ devidamente instalada no seu dispositivo;
+* Biblioteca [Crypto++](https://github.com/weidai11/cryptopp) devidamente instalada no seu dispositivo;
 * Qt 5.9;
 * Biblioteca Pugi, porém está no repositório.
 
