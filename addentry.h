@@ -4,8 +4,8 @@
 #include <QFrame>
 #include <iostream>
 #include <DAO.hpp>
-#include <principal.h>
 #include <QCloseEvent>
+class Principal;
 namespace Ui {
 class addEntry;
 }

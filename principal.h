@@ -14,7 +14,8 @@
 #include <DAO.hpp>
 #include <login.h>
 #include <utility>
-
+#include <passdialog.h>
+class passDialog;
 namespace Ui {
 class Principal;
 }
@@ -39,6 +40,7 @@ public:
     std::vector<QVBoxLayout*>paneRefs;
     std::string indexPane;
     void displayErrorMessage(const string&);
+    passDialog *pD = nullptr;
 
 private:
     Ui::Principal *ui;
@@ -61,6 +63,7 @@ private slots:
     void on_pushButton_2_clicked();
     void on_pushButton_clicked();
     void on_pushButton_3_clicked();
+    void closeEvent(QCloseEvent *);
 };
 
 #endif // PRINCIPAL_H

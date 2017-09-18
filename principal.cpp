@@ -3,7 +3,6 @@
 #include <login.h>
 #include <addentry.h>
 #include <QDesktopWidget>
-#include "passdialog.h"
 
 Principal::Principal(QWidget *parent) : QMainWindow(parent),
                                         ui(new Ui::Principal)
@@ -184,8 +183,10 @@ QPushButton *Principal::criaBotao(QString texto, QString nomeObj, int typeCampo)
 
 Principal::~Principal()
 {
+    std::cout<<"Xablau"<<std::endl;
     clearAll();
     delete dao;
+    delete pD;
     delete ui;
     exit(0);
 }
@@ -197,8 +198,8 @@ void Principal::goHandler() //Action ao clicar no botão go
         return;
 
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
-
-    passDialog *pD = new passDialog(this, 1);
+    delete pD;
+    pD = new passDialog(this, 1);
     pD->show();
 }
 
@@ -209,8 +210,8 @@ void Principal::editHandler()
         return;
 
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
-
-    passDialog *pD = new passDialog(this, 3);
+    delete pD;
+    pD = new passDialog(this, 3);
     pD->show();
 }
 
@@ -222,7 +223,8 @@ void Principal::removeHandler()
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
     std::cout << "Você removeu o pane " << indexPane.substr(4, 4) << endl;
     //Remove a entrada no arquivo
-    passDialog *pD = new passDialog(this, 2);
+    delete pD;
+    pD = new passDialog(this, 2);
     pD->show();
 }
 void Principal::redrawAll()
@@ -263,9 +265,10 @@ void Principal::on_pushButton_clicked() //Sair
 {
     clearAll();
     delete dao;
+    delete pD;
+    pD=nullptr;
     login *lg = new login(this);
     lg->show();
-    delete ui;
 }
 
 void Principal::on_pushButton_3_clicked() //Deletar o usuário
@@ -273,3 +276,12 @@ void Principal::on_pushButton_3_clicked() //Deletar o usuário
     passDialog *pD = new passDialog(this, 4);
     pD->show();
 }
+
+void Principal::closeEvent(QCloseEvent *event)
+{
+    std::cout<<"Xablauzinho"<<std::endl;
+    event->ignore();
+    this->hide();
+    delete pD;
+}
+

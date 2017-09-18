@@ -62,7 +62,7 @@ void passDialog::closeEvent(QCloseEvent *event)
 
 passDialog::~passDialog()
 {
-    delete ui;
+
 }
 
 void passDialog::newEntry()
