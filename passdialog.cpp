@@ -33,9 +33,10 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
 }
 
 passDialog::passDialog(QWidget *parent,QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
-                                                                                  ui(new Ui::passDialog)
+    ui(new Ui::passDialog)
 {
     ui->setupUi(this);
+    ui->lineEdit->setEchoMode(QLineEdit::Password);
     principalref = (Principal *)parent;
     addEntryPtr = (addEntry *)addEntryWin;
     this->site = site;
