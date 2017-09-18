@@ -38,7 +38,7 @@ public:
     std::vector<QFrame*> bFramesRefs;
     std::vector<QVBoxLayout*>paneRefs;
     std::string indexPane;
-    void displayInvalidPass(const string&);
+    void displayErrorMessage(const string&);
 
 private:
     Ui::Principal *ui;

@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string>Template do Nome</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>

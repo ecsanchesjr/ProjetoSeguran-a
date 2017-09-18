@@ -32,7 +32,7 @@ string Crypt::getData(string &key)
 { // retorna a string adiquirida a partir do arquivo xml
     if (validateUser(userName, key))
     {
-        ifstream inputStream("./"+dirName+"/" + userName + fileExtension);
+        ifstream inputStream("./" + dirName + "/" + userName + fileExtension);
         string data((std::istreambuf_iterator<char>(inputStream)), (std::istreambuf_iterator<char>()));
         // data ainda está encriptada
         data = decryptate(generateKey(key), data);
@@ -47,7 +47,7 @@ string Crypt::getData(string &key)
 void Crypt::setData(string &data, string &key)
 {
 
-    ofstream outputStream("./"+dirName+"/" + userName + fileExtension);
+    ofstream outputStream("./" + dirName + "/" + userName + fileExtension);
     if (outputStream.is_open())
     {
         data = encryptate(generateKey(key), data);
@@ -59,19 +59,20 @@ void Crypt::setData(string &data, string &key)
 void Crypt::deleteUser(string &key)
 {
     //se a chave for válida
-    if(validateUser(userName,key)){
-        string file = "./"+dirName+"/" + userName + fileExtension;
+    if (validateUser(userName, key))
+    {
+        string file = "./" + dirName + "/" + userName + fileExtension;
         remove(file.c_str());
     }
 }
 
 void Crypt::createData(string &user, string &data, string &key)
 {
-    string dir = "./"+dirName+"/",cmd = "mkdir "+dirName;
+    string dir = "./" + dirName + "/", cmd = "mkdir " + dirName;
     if (opendir(dir.c_str()) == nullptr)
     {
         system(cmd.c_str());
-        ofstream newFile("./"+dirName+"/" + user + fileExtension);
+        ofstream newFile("./" + dirName + "/" + user + fileExtension);
         data = encryptate(generateKey(key), data);
         newFile << data;
         newFile.close();
@@ -80,7 +81,7 @@ void Crypt::createData(string &user, string &data, string &key)
     {
         if (!userExists(user))
         {
-            ofstream newFile("./"+dirName+"/" + user + fileExtension);
+            ofstream newFile("./" + dirName + "/" + user + fileExtension);
             data = encryptate(generateKey(key), data);
             newFile << data;
             newFile.close();
@@ -96,7 +97,7 @@ void Crypt::getDir(vector<string> &listOfFiles)
 {
     DIR *dp;
     struct dirent *dirp;
-    string dir = "./"+dirName;
+    string dir = "./" + dirName;
 
     if ((dp = opendir(dir.c_str())) == NULL)
     {
@@ -127,7 +128,7 @@ bool Crypt::validateUser(string &user, string &key)
 
 string Crypt::readData(string &file)
 {
-    ifstream inputStream("./"+dirName+"/" + file + fileExtension);
+    ifstream inputStream("./" + dirName + "/" + file + fileExtension);
     string data((std::istreambuf_iterator<char>(inputStream)), (std::istreambuf_iterator<char>()));
 
     return (data);

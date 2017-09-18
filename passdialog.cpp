@@ -1,6 +1,7 @@
 #include "passdialog.h"
 #include "ui_passdialog.h"
 #include <QDesktopWidget>
+
 passDialog::passDialog(QWidget *parent, int op) : QWidget(),
                                                   ui(new Ui::passDialog)
 {
@@ -19,21 +20,21 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
     {
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(modify()));
     }
-    else if(op==4){
+    else if (op == 4)
+    {
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(deleteUser()));
     }
     //Ajuste da tela
-    int width=this->frameGeometry().width();
-    int height=this->frameGeometry().height();
+    int width = this->frameGeometry().width();
+    int height = this->frameGeometry().height();
     QDesktopWidget btt;
-    int screenWidth=btt.screen()->width();
-    int screenHeight=btt.screen()->height();
-    this->setGeometry((screenWidth/2) -(width/2),(screenHeight/2)-(height/2),width,height);
-
+    int screenWidth = btt.screen()->width();
+    int screenHeight = btt.screen()->height();
+    this->setGeometry((screenWidth / 2) - (width / 2), (screenHeight / 2) - (height / 2), width, height);
 }
 
-passDialog::passDialog(QWidget *parent,QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
-    ui(new Ui::passDialog)
+passDialog::passDialog(QWidget *parent, QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
+                                                                                                        ui(new Ui::passDialog)
 {
     ui->setupUi(this);
     ui->lineEdit->setEchoMode(QLineEdit::Password);
@@ -44,12 +45,12 @@ passDialog::passDialog(QWidget *parent,QWidget *addEntryWin, string site, string
     this->pass = pass;
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(newEntry()));
     //Ajuste da tela
-    int width=this->frameGeometry().width();
-    int height=this->frameGeometry().height();
+    int width = this->frameGeometry().width();
+    int height = this->frameGeometry().height();
     QDesktopWidget btt;
-    int screenWidth=btt.screen()->width();
-    int screenHeight=btt.screen()->height();
-    this->setGeometry((screenWidth/2) -(width/2),(screenHeight/2)-(height/2),width,height);
+    int screenWidth = btt.screen()->width();
+    int screenHeight = btt.screen()->height();
+    this->setGeometry((screenWidth / 2) - (width / 2), (screenHeight / 2) - (height / 2), width, height);
 }
 
 void passDialog::closeEvent(QCloseEvent *event)
@@ -66,21 +67,28 @@ passDialog::~passDialog()
 
 void passDialog::newEntry()
 {
-    try{
+    try
+    {
         std::string straux = principalref->indexPane;
-    
+
         std::string key = ui->lineEdit->text().toStdString();
-        
+
         principalref->getDao()->createNewEntry(site, nick, pass, key);
         principalref->redrawAll();
-        
+
         addEntryPtr->hide();
         delete addEntryPtr;
 
         this->hide();
         delete this;
-    }catch(InvalidKey &ex){
-        principalref->displayInvalidPass(ex.what());
+    }
+    catch (InvalidKey &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
     }
 }
 
@@ -96,7 +104,7 @@ void passDialog::modify()
                     pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
                     newname = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
 
-        principalref->getDao()->modifyEntry(name, login, pass, key,newname);
+        principalref->getDao()->modifyEntry(name, login, pass, key, newname);
 
         principalref->redrawAll();
         this->hide();
@@ -104,7 +112,11 @@ void passDialog::modify()
     }
     catch (InvalidKey &ex)
     {
-        principalref->displayInvalidPass(ex.what());
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
     }
 }
 
@@ -117,13 +129,17 @@ void passDialog::go()
         std::vector<std::string> entry = principalref->getDao()->getEntry(name, key);
         //atualiza o campo do password da entrada
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
-        std::cout<<(principalref->sitesRefs)[std::stoi(straux.substr(4, 4))]->objectName().toStdString()<<std::endl;
+        std::cout << (principalref->sitesRefs)[std::stoi(straux.substr(4, 4))]->objectName().toStdString() << std::endl;
         this->hide();
         delete ui;
     }
     catch (InvalidKey &ex)
     {
-        principalref->displayInvalidPass(ex.what());
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
     }
 }
 
@@ -150,29 +166,40 @@ void passDialog::remove()
         (principalref->cFramesRefs).erase((principalref->cFramesRefs).begin() + std::stoi(straux.substr(4, 4)));
         principalref->redrawAll(); //Redesenha a tela
         this->hide();
-        delete ui;//NÃO ESQUECER DE DELETAR SE USAR PONTEIRO, ELE NUNCA SAI DE ESCOPO
+        delete ui; //NÃO ESQUECER DE DELETAR SE USAR PONTEIRO, ELE NUNCA SAI DE ESCOPO
     }
     catch (InvalidKey &ex)
     {
-        principalref->displayInvalidPass(ex.what());
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
     }
 }
 
-void passDialog::deleteUser(){
-    std::cout<<"Delete user"<<std::endl;
-    std::string passTemp =  ui->lineEdit->text().toStdString();
-    try{
+void passDialog::deleteUser()
+{
+    std::cout << "Delete user" << std::endl;
+    std::string passTemp = ui->lineEdit->text().toStdString();
+    try
+    {
         principalref->getDao()->deleteUser(passTemp);
-        std::cout<<"User deletado com sucesso!"<<std::endl;
-        QMessageBox* qbox= new QMessageBox;
-        qbox->information(this,"Usuário Deletado","Usuário deletado com sucesso");
+        std::cout << "User deletado com sucesso!" << std::endl;
+        QMessageBox *qbox = new QMessageBox;
+        qbox->information(this, "Usuário Deletado", "Usuário deletado com sucesso");
         delete qbox;
         login *lg = new login(principalref);
         lg->show();
         this->hide();
         delete ui;
     }
-    catch(InvalidKey &ex){
-        principalref->displayInvalidPass(ex.what());
+    catch (InvalidKey &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
     }
 }

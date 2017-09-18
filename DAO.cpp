@@ -67,32 +67,39 @@ vector<pair<string, string>> DAO::getNamesAndLogin(string &key) const
 
 vector<string> DAO::getEntry(string &name, string &key) const
 {
-    vector<string> entry;
-    string data = objC->getData(key);
-
-    pugi::xml_document doc;
-    pugi::xml_parse_result res = doc.load_string(data.c_str());
-
+    if (key.length() != 0)
     {
-        string result(res.description());
-        if (result.compare("No error") != 0)
+        vector<string> entry;
+        string data = objC->getData(key);
+
+        pugi::xml_document doc;
+        pugi::xml_parse_result res = doc.load_string(data.c_str());
+
         {
-            return (entry);
+            string result(res.description());
+            if (result.compare("No error") != 0)
+            {
+                return (entry);
+            }
         }
+
+        pugi::xml_node root = doc.child("doc");
+
+        for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
+        {
+            if (((string)node.child("name").child_value()).compare(name) == 0)
+            {
+                entry.push_back(node.child("name").child_value());
+                entry.push_back(node.child("login").child_value());
+                entry.push_back(node.child("pass").child_value());
+            }
+        }
+        return (entry);
     }
-
-    pugi::xml_node root = doc.child("doc");
-
-    for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
+    else
     {
-        if (((string)node.child("name").child_value()).compare(name) == 0)
-        {
-            entry.push_back(node.child("name").child_value());
-            entry.push_back(node.child("login").child_value());
-            entry.push_back(node.child("pass").child_value());
-        }
+        throw EmptyInputField();
     }
-    return (entry);
 }
 
 vector<vector<string>> DAO::getAllEntrys(string &key) const
@@ -127,141 +134,169 @@ vector<vector<string>> DAO::getAllEntrys(string &key) const
 
 void DAO::createNewEntry(string &itemName, string &login, string &pass, string &key)
 {
+    if (key.length() != 0)
     {
-        vector<pair<string, string>> allNames = getNamesAndLogin(key);
-        bool alreadyExist = false;
-        for (pair<string, string> reg : allNames)
         {
-            if (reg.first.compare(itemName) == 0)
+            vector<pair<string, string>> allNames = getNamesAndLogin(key);
+            bool alreadyExist = false;
+            for (pair<string, string> reg : allNames)
             {
-                alreadyExist = true;
+                if (reg.first.compare(itemName) == 0)
+                {
+                    alreadyExist = true;
+                }
+            }
+            if (alreadyExist)
+            {
+                return;
             }
         }
-        if (alreadyExist)
+        string data = objC->getData(key);
+        int lastId{0};
+        pugi::xml_document doc;
+        pugi::xml_parse_result res = doc.load_string(data.c_str());
+
         {
-            return;
+            string result(res.description());
+            if (result.compare("No error") != 0)
+            {
+                return;
+            }
         }
-    }
-    string data = objC->getData(key);
-    int lastId{0};
-    pugi::xml_document doc;
-    pugi::xml_parse_result res = doc.load_string(data.c_str());
 
-    {
-        string result(res.description());
-        if (result.compare("No error") != 0)
+        pugi::xml_node root = doc.child("doc");
+
+        for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
         {
-            return;
+            lastId = node.attribute("id").as_int();
         }
-    }
 
-    pugi::xml_node root = doc.child("doc");
+        root.append_child("item").append_attribute("id") = lastId + 1;
 
-    for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
-    {
-        lastId = node.attribute("id").as_int();
-    }
-
-    root.append_child("item").append_attribute("id") = lastId + 1;
-
-    for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
-    {
-        if (node.attribute("id").as_int() == lastId + 1)
+        for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
         {
-            node.append_child("name").append_child(pugi::node_pcdata).set_value(itemName.c_str());
-            node.append_child("login").append_child(pugi::node_pcdata).set_value(login.c_str());
-            node.append_child("pass").append_child(pugi::node_pcdata).set_value(pass.c_str());
+            if (node.attribute("id").as_int() == lastId + 1)
+            {
+                node.append_child("name").append_child(pugi::node_pcdata).set_value(itemName.c_str());
+                node.append_child("login").append_child(pugi::node_pcdata).set_value(login.c_str());
+                node.append_child("pass").append_child(pugi::node_pcdata).set_value(pass.c_str());
+            }
         }
+
+        xmlToString(data, doc.child("doc"));
+
+        objC->setData(data, key);
     }
-
-    xmlToString(data, doc.child("doc"));
-
-    objC->setData(data, key);
+    else
+    {
+        throw EmptyInputField();
+    }
 }
 
 void DAO::deleteEntry(string &itemName, string &key)
 {
-    string data = objC->getData(key);
-
-    pugi::xml_document doc;
-    pugi::xml_parse_result res = doc.load_string(data.c_str());
-
+    if (key.length() != 0)
     {
-        string result(res.description());
-        if (result.compare("No error") != 0)
+        string data = objC->getData(key);
+
+        pugi::xml_document doc;
+        pugi::xml_parse_result res = doc.load_string(data.c_str());
+
         {
-            return;
+            string result(res.description());
+            if (result.compare("No error") != 0)
+            {
+                return;
+            }
+        }
+
+        pugi::xml_node root = doc.child("doc");
+
+        pugi::xml_node nodeToDelete;
+        bool foundNode = false;
+        for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
+        {
+            string name = node.child("name").child_value();
+            if (name.compare(itemName) == 0)
+            {
+                nodeToDelete = node;
+                foundNode = true;
+                break;
+            }
+        }
+        if (foundNode)
+        {
+            root.remove_child(nodeToDelete);
+            xmlToString(data, root);
+            objC->setData(data, key);
         }
     }
-
-    pugi::xml_node root = doc.child("doc");
-
-    pugi::xml_node nodeToDelete;
-    bool foundNode = false;
-    for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
+    else
     {
-        string name = node.child("name").child_value();
-        if (name.compare(itemName) == 0)
-        {
-            nodeToDelete = node;
-            foundNode = true;
-            break;
-        }
-    }
-    if (foundNode)
-    {
-        root.remove_child(nodeToDelete);
-        xmlToString(data, root);
-        objC->setData(data, key);
+        throw EmptyInputField();
     }
 }
 
 void DAO::modifyEntry(string &itemName, string &login, string &pass, string &key, string newItemName)
 {
-    if (newItemName.compare("") == 0)
+    if (key.length() != 0)
     {
-        newItemName = itemName;
-    }
-    string data = objC->getData(key);
-
-    pugi::xml_document doc;
-    pugi::xml_parse_result res = doc.load_string(data.c_str());
-
-    {
-        string result(res.description());
-        if (result.compare("No error") != 0)
+        if (newItemName.compare("") == 0)
         {
-            return;
+            newItemName = itemName;
+        }
+        string data = objC->getData(key);
+
+        pugi::xml_document doc;
+        pugi::xml_parse_result res = doc.load_string(data.c_str());
+
+        {
+            string result(res.description());
+            if (result.compare("No error") != 0)
+            {
+                return;
+            }
+        }
+
+        pugi::xml_node root = doc.child("doc");
+
+        pugi::xml_node nodeToMod;
+        bool foundNode = false;
+        for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
+        {
+            string name = node.child("name").child_value();
+            if (name.compare(itemName) == 0)
+            {
+                nodeToMod = node;
+                foundNode = true;
+                break;
+            }
+        }
+        if (foundNode)
+        {
+            nodeToMod.child("name").text().set(newItemName.c_str());
+            nodeToMod.child("login").text().set(login.c_str());
+            nodeToMod.child("pass").text().set(pass.c_str());
+            xmlToString(data, root);
+            objC->setData(data, key);
         }
     }
-
-    pugi::xml_node root = doc.child("doc");
-
-    pugi::xml_node nodeToMod;
-    bool foundNode = false;
-    for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
+    else
     {
-        string name = node.child("name").child_value();
-        if (name.compare(itemName) == 0)
-        {
-            nodeToMod = node;
-            foundNode = true;
-            break;
-        }
-    }
-    if (foundNode)
-    {
-        nodeToMod.child("name").text().set(newItemName.c_str());
-        nodeToMod.child("login").text().set(login.c_str());
-        nodeToMod.child("pass").text().set(pass.c_str());
-        xmlToString(data, root);
-        objC->setData(data, key);
+        throw EmptyInputField();
     }
 }
 
 void DAO::deleteUser(string &key)
 {
-    objC->deleteUser(key);
+    if (key.length() != 0)
+    {
+        objC->deleteUser(key);
+    }
+    else
+    {
+        throw EmptyInputField();
+    }
 }
 
 void DAO::xmlToString(string &data, pugi::xml_node root)

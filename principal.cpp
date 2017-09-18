@@ -4,6 +4,7 @@
 #include <addentry.h>
 #include <QDesktopWidget>
 #include "passdialog.h"
+
 Principal::Principal(QWidget *parent) : QMainWindow(parent),
                                         ui(new Ui::Principal)
 {
@@ -11,19 +12,19 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     username = ((login *)parent)->getUsername();
     password = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();
-    ui->label->setText("Bem vindo " +QString::fromStdString(username));
+    ui->label->setText("Bem vindo " + QString::fromStdString(username));
     //Apagar isso
     std::cout << username << std::endl;
     std::cout << password << std::endl;
     //------------
     drawElements();
     //Ajuste da tela
-    int width=this->frameGeometry().width();
-    int height=this->frameGeometry().height();
+    int width = this->frameGeometry().width();
+    int height = this->frameGeometry().height();
     QDesktopWidget btt;
-    int screenWidth=btt.screen()->width();
-    int screenHeight=btt.screen()->height();
-    this->setGeometry((screenWidth/2) -(width/2),(screenHeight/2)-(height/2),width,height);
+    int screenWidth = btt.screen()->width();
+    int screenHeight = btt.screen()->height();
+    this->setGeometry((screenWidth / 2) - (width / 2), (screenHeight / 2) - (height / 2), width, height);
 }
 void Principal::clearAll()
 {
@@ -112,7 +113,7 @@ void Principal::setCampos(QVBoxLayout *qlayout, pair<string, string> nickPass, i
     tempstr = "SenhaPane";
     tempstr.append(QString::number(i));
     temp = criaCampo("", tempstr);
-    temp->setPlaceholderText("Clique em GO");
+    temp->setPlaceholderText("Press the GO button to see password");
     senhasRefs.push_back(temp);
     qlayout->addWidget(temp);
 }
@@ -194,10 +195,10 @@ void Principal::goHandler() //Action ao clicar no botão go
     QWidget *buttonWidget = qobject_cast<QWidget *>(sender());
     if (!buttonWidget)
         return;
-    
+
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
 
-    passDialog* pD= new passDialog(this,1);
+    passDialog *pD = new passDialog(this, 1);
     pD->show();
 }
 
@@ -209,7 +210,7 @@ void Principal::editHandler()
 
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
 
-    passDialog *pD = new passDialog(this,3);
+    passDialog *pD = new passDialog(this, 3);
     pD->show();
 }
 
@@ -221,7 +222,7 @@ void Principal::removeHandler()
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
     std::cout << "Você removeu o pane " << indexPane.substr(4, 4) << endl;
     //Remove a entrada no arquivo
-    passDialog* pD= new passDialog(this,2);
+    passDialog *pD = new passDialog(this, 2);
     pD->show();
 }
 void Principal::redrawAll()
@@ -251,24 +252,24 @@ DAO *Principal::getDao()
     return dao;
 }
 
- void Principal::displayInvalidPass(const string &error){
+void Principal::displayErrorMessage(const string &error)
+{
     QMessageBox messageBox;
-    messageBox.critical(0,"Error",error.c_str());
-    messageBox.setFixedSize(500,200);    
+    messageBox.critical(0, "Error", error.c_str());
+    messageBox.setFixedSize(500, 200);
 }
-
 
 void Principal::on_pushButton_clicked() //Sair
 {
     clearAll();
     delete dao;
-    login* lg= new login(this);
+    login *lg = new login(this);
     lg->show();
     delete ui;
 }
 
 void Principal::on_pushButton_3_clicked() //Deletar o usuário
 {
-    passDialog *pD= new passDialog(this,4);
+    passDialog *pD = new passDialog(this, 4);
     pD->show();
 }

@@ -2,24 +2,28 @@
 #include "ui_login.h"
 #include "customexceptions.hpp"
 #include <QDesktopWidget>
-#include<QPoint>
-login::login(QWidget *parent) :
-    QFrame(),
-    ui(new Ui::login)
-{   if(parent==0){
-    }else{
+#include <QPoint>
+
+login::login(QWidget *parent) : QFrame(),
+                                ui(new Ui::login)
+{
+    if (parent == 0)
+    {
+    }
+    else
+    {
         parent->close();
     }
 
     ui->setupUi(this);
     ui->lineEdit->setEchoMode(QLineEdit::Password);
     //Ajuste da tela
-    int width=this->frameGeometry().width();
-    int height=this->frameGeometry().height();
+    int width = this->frameGeometry().width();
+    int height = this->frameGeometry().height();
     QDesktopWidget btt;
-    int screenWidth=btt.screen()->width();
-    int screenHeight=btt.screen()->height();
-    this->setGeometry((screenWidth/2) -(width/2),(screenHeight/2)-(height/2),width,height);
+    int screenWidth = btt.screen()->width();
+    int screenHeight = btt.screen()->height();
+    this->setGeometry((screenWidth / 2) - (width / 2), (screenHeight / 2) - (height / 2), width, height);
 }
 
 login::~login()
@@ -31,83 +35,96 @@ login::~login()
 void login::on_pushButton_clicked()
 {
 
-    try{
+    try
+    {
         getUsername();
         getPassword();
-        dao= new DAO(username,password);
+        dao = new DAO(username, password);
         Principal *p = new Principal(this);
         p->show();
         this->hide();
     }
-    catch(UserNotFound &ex){
+    catch (UserNotFound &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
-    catch(InvalidKey &ex){
+    catch (InvalidKey &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
-    catch(EmptyInputField &ex){
+    catch (EmptyInputField &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
-    catch(InvalidUserLength &ex){
+    catch (InvalidUserLength &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
-    catch(InvalidKeyLength &ex){
+    catch (InvalidKeyLength &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
 }
 
-std::string login::getUsername(){
-    username=ui->lineEdit_2->text().toStdString();
+std::string login::getUsername()
+{
+    username = ui->lineEdit_2->text().toStdString();
     return username;
 }
 
-std::string login::getPassword(){
-    password=ui->lineEdit->text().toStdString();
+std::string login::getPassword()
+{
+    password = ui->lineEdit->text().toStdString();
     return password;
 }
 
-DAO* login::getDao(){
+DAO *login::getDao()
+{
     return dao;
 }
 
-void login::on_pushButton_2_clicked()//Cria user
+void login::on_pushButton_2_clicked() //Cria user
 {
-    try{
+    try
+    {
         getUsername();
         getPassword();
-        dao->createNewUser(username,password);
+        dao->createNewUser(username, password);
         QMessageBox gen;
-        gen.information(0,"Sucesso","Usuário criado com sucesso");
-
+        gen.information(0, "Sucesso", "Usuário criado com sucesso");
     }
-    catch(DuplicatedUser &ex){
+    catch (DuplicatedUser &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
-    catch(EmptyInputField &ex){
+    catch (EmptyInputField &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
-    catch(InvalidUserLength &ex){
+    catch (InvalidUserLength &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
-    catch(InvalidKeyLength &ex){
+    catch (InvalidKeyLength &ex)
+    {
         QMessageBox messageBox;
-        messageBox.critical(0,"Error",ex.what());
-        messageBox.setFixedSize(500,200);
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
 }
