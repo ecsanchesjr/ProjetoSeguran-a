@@ -62,7 +62,6 @@ void passDialog::closeEvent(QCloseEvent *event)
 
 passDialog::~passDialog()
 {
-
 }
 
 void passDialog::newEntry()
@@ -127,8 +126,13 @@ void passDialog::go()
         std::string straux = principalref->indexPane;
         std::string key = ui->lineEdit->text().toStdString(), name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->objectName().toStdString();
         std::vector<std::string> entry = principalref->getDao()->getEntry(name, key);
+        //atualiza o site da entrada
+        principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[0]));
+        //atualiza o nick da entrada
+        principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[1]));
         //atualiza o campo do password da entrada
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
+
         std::cout << (principalref->sitesRefs)[std::stoi(straux.substr(4, 4))]->objectName().toStdString() << std::endl;
         this->hide();
         delete ui;
