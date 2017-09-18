@@ -46,6 +46,8 @@ public:
   //criar um novo arquivo para um novo usuário
   void static createNewUser(string &,string &);
 
+  // alterar a senha do usuário
+  void changeUserKey(string&, string&);
 private:
   string user;
   Crypt *objC;

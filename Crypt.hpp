@@ -15,7 +15,6 @@
 #include "eax.h"
 #include "hex.h"
 
-
 #include "customexceptions.hpp"
 
 using std::vector;
@@ -34,54 +33,54 @@ using CryptoPP::AuthenticatedEncryptionFilter;
 using CryptoPP::byte;
 using CryptoPP::StringSink;
 
+class Crypt
+{
 
-class Crypt{
+  public:
+    Crypt(string &, string &);
 
-public:
+    //procurar o arquivo
+    bool isUserValid();
+    //ler o arquivo
+    string getData(string &);
+    //gravar o arquivo
+    void setData(string &, string &);
 
-   Crypt(string&,string&);
+    //deletar usuário se a senha for correta
+    void deleteUser(string &);
 
-   //procurar o arquivo
-   bool isUserValid();
-   //ler o arquivo
-   string getData(string&);
-   //gravar o arquivo
-   void setData(string&,string&);
+    //criar um novo arquivo
+    void static createData(string &, string &, string &);
 
-   //deletar usuário se a senha for correta
-   void deleteUser(string&);
+    // mudar senha do usuário
+    void changeKey(string &, string &);
 
-   //criar um novo arquivo
-   void static createData(string& ,string& ,string&);
+  private:
+    string userName;
+    const static string fileExtension;
+    const static string dirName;
+    const static int keySize = 2 * AES::DEFAULT_KEYLENGTH;
+    const static int iterations = 100;
 
+    void static getDir(vector<string> &);
 
+    // validar a senha do usuario
+    bool validateUser(string &, string &);
 
-private:
-   string userName;
-   const static string fileExtension;
-   const static string dirName;
-   const static int keySize = 2*AES::DEFAULT_KEYLENGTH;
-   const static int iterations = 100;
+    // ler arquivo encriptado
+    string static readData(string &);
 
-   void static getDir(vector<string>&);
+    // gerar key derivada da senha do usuario
+    SecByteBlock static generateKey(string &);
 
-   // validar a senha do usuario 
-   bool validateUser(string&, string&);
+    // retorna o texto decryptado, porém gera uma excecao em senha errada
+    string static decryptate(SecByteBlock, string);
 
-   // ler arquivo encriptado
-   string static readData(string&);
+    // retorna se existe ou não usuário criado
+    bool static userExists(string &);
 
-   // gerar key derivada da senha do usuario
-   SecByteBlock static generateKey(string&);
-
-   // retorna o texto decryptado, porém gera uma excecao em senha errada
-   string static decryptate(SecByteBlock, string);
-
-   // retorna se existe ou não usuário criado
-   bool static userExists(string&);
-
-   // retorna a string encriptada
-   string static encryptate(SecByteBlock, string);
+    // retorna a string encriptada
+    string static encryptate(SecByteBlock, string);
 };
 
 #endif

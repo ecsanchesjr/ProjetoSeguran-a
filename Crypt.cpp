@@ -184,3 +184,15 @@ bool Crypt::userExists(string &userFile)
     }
     return (false);
 }
+
+void Crypt::changeKey(string &newKey, string &key)
+{
+    if (validateUser(userName, key))
+    {
+        encryptate(generateKey(newKey), getData(key));
+    }
+    else
+    {
+        throw InvalidKey();
+    }
+}

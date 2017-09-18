@@ -347,3 +347,22 @@ void DAO::createNewUser(string &user, string &key)
         throw EmptyInputField();
     }
 }
+
+void DAO::changeUserKey(string &newKey, string &key)
+{
+    if (key.length() != 0 && newKey.length() != 0)
+    {
+        if (newKey.length() >= 4 && newKey.length() <= 20)
+        {
+            objC->changeKey(newKey, key);
+        }
+        else
+        {
+            throw InvalidKeyLength();
+        }
+    }
+    else
+    {
+        throw EmptyInputField();
+    }
+}
