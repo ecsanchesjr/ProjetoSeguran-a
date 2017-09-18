@@ -49,6 +49,21 @@ void login::on_pushButton_clicked()
         messageBox.critical(0,"Error",ex.what());
         messageBox.setFixedSize(500,200);
     }
+    catch(EmptyInputField &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
+    catch(InvalidUserLength &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
+    catch(InvalidKeyLength &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
 }
 
 std::string login::getUsername(){
@@ -68,14 +83,29 @@ DAO* login::getDao(){
 void login::on_pushButton_2_clicked()//Cria user
 {
     try{
-        std::cout <<"Criar user" <<std::endl;
         getUsername();
         getPassword();
         dao->createNewUser(username,password);
         QMessageBox gen;
         gen.information(0,"Sucesso","Usuário criado com sucesso");
 
-    }catch(DuplicatedUser &ex){
+    }
+    catch(DuplicatedUser &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
+    catch(EmptyInputField &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
+    catch(InvalidUserLength &ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error",ex.what());
+        messageBox.setFixedSize(500,200);
+    }
+    catch(InvalidKeyLength &ex){
         QMessageBox messageBox;
         messageBox.critical(0,"Error",ex.what());
         messageBox.setFixedSize(500,200);
