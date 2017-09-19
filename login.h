@@ -22,6 +22,7 @@ public:
     std::string getPassword();
     DAO* getDao(); //Utilizar para pegar a DAO
     Principal* principalRef=nullptr;
+    bool goingToClose=false;
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();

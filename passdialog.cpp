@@ -55,14 +55,12 @@ passDialog::passDialog(QWidget *parent, QWidget *addEntryWin, string site, strin
 
 void passDialog::closeEvent(QCloseEvent *event)
 {
-    std::cout<<"Dando Close na pass dialog"<<std::endl;
     event->ignore();
     this->hide();
 }
 
 passDialog::~passDialog()
 {
-    std::cout<<"Fechando PassDialog"<<std::endl;
 }
 
 void passDialog::newEntry()

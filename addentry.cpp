@@ -19,8 +19,7 @@ addEntry::addEntry(QWidget *parent) : QFrame(),
 
 addEntry::~addEntry()
 {
-    std::cout<<"Encerrando addEntry"<<std::endl;
-   // delete
+
 }
 
 void addEntry::on_pushButton_clicked()
@@ -45,5 +44,7 @@ void addEntry::closeEvent(QCloseEvent *event)
     std::cout<<"Fechando add entry"<<std::endl;
     event->ignore();
     this->hide();
-    principalref->pD->hide();
+    if(principalref->pD!=nullptr){
+        principalref->pD->hide();
+    }
 }

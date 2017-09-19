@@ -29,22 +29,25 @@ login::login(QWidget *parent) : QFrame(),
 
 login::~login()
 {
-    std::cout<<"Encerrando o programa a partir da login"<<std::endl;
-    delete ui;
+    std::cout<<"Destruindo  a login"<<std::endl;
+    if(principalRef!=nullptr){
+        principalRef->closeFromLogin();
+    }
+    if(goingToClose){
+        delete principalRef;
+        std::cout<<"Encerrando completamente"<<std::endl;
+        exit(5);
+    }
 }
 
 void login::closeEvent(QCloseEvent *event){
+    goingToClose=true;
     std::cout<<"Encerrando o programa a partir da login via close"<<std::endl;
     event->ignore();
-    std::cout<<"Antes de encerrar1"<<std::endl;
-    std::cout<<principalRef<<std::endl;
     if(principalRef!=nullptr){
-        std::cout<<"Entrei na merda"<<std::endl;
         principalRef->closeFromLogin();
     }
-    std::cout<<"Antes de encerrar"<<std::endl;
-    delete principalRef;
-    exit(5);
+    delete this;
 }
 
 void login::on_pushButton_clicked()
