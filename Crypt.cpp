@@ -84,8 +84,12 @@ void Crypt::writeData(string &data, string &key, string &userName)
 
 void Crypt::setData(string &data, string &key)
 {
-    writeData(data, key, userName);
-    lastState = readData(userName);
+    if(validateUser(userName, key)){
+        writeData(data, key, userName);
+        lastState = readData(userName);
+    }else{
+        throw InvalidKey();
+    }
 }
 
 void Crypt::deleteUser(string &key)
@@ -153,6 +157,7 @@ bool Crypt::validateUser(string &user, string &key)
     {
         throw InvalidKey();
     }
+    return(false);
 }
 
 vector<string> Crypt::readData(string &file)
@@ -251,7 +256,9 @@ void Crypt::changeKey(string &newKey, string &key)
     if (validateUser(userName, key))
     {
         string data = getData(key);
-        setData(data,newKey);
+        writeData(data,newKey, userName);
+        key="";
+        lastState = readData(userName);
     }
     else
     {
@@ -262,7 +269,7 @@ void Crypt::changeKey(string &newKey, string &key)
 bool Crypt::validateIntegrity(vector<string> data)
 {
     hash<string> hash;
-    string hashText = "", txt = "";
+    string hashText = "", txt = "", hashDiskText = "";
 
     ifstream input2("./" + dirName + "/" + userName + fileExtension);
     int i = 0;
@@ -271,15 +278,19 @@ bool Crypt::validateIntegrity(vector<string> data)
         if (i != 0)
         {
             hashText.append(txt);
+        }else{
+            hashDiskText.append(txt);
         }
         i++;
     }
 
     size_t hashNow = hash(hashText);
     size_t hashLast;
-    istringstream sstream(data[0]);
+    size_t hashDisk;
+    istringstream sstream(data[0]), sstream1(hashDiskText);
     sstream >> hashLast;
-    if (hashLast == hashNow)
+    sstream1 >> hashDisk;
+    if (hashLast == hashNow && hashLast == hashDisk && hashDisk == hashNow)
     {
         return (true);
     }

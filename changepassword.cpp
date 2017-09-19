@@ -2,6 +2,7 @@
 #include "ui_changepassword.h"
 #include <QDesktopWidget>
 #include <iostream>
+
 ChangePassword::ChangePassword(QWidget *parent) :
     QWidget(),
     ui(new Ui::ChangePassword)

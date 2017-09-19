@@ -335,6 +335,6 @@ void Principal::on_pushButton_4_clicked()//Altera a senha
 {
     std::cout<<"Alterar Senha"<<std::endl;
     delete cP;
-    cP =new ChangePassword(this);
+    cP = new ChangePassword(this);
     cP->show();
 }
