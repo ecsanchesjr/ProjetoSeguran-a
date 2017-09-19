@@ -16,8 +16,10 @@
 #include <utility>
 #include "passdialog.h"
 #include "addentry.h"
+#include "login.h"
 class passDialog;
 class addEntry;
+class login;
 namespace Ui {
 class Principal;
 }
@@ -44,6 +46,8 @@ public:
     void displayErrorMessage(const string&);
     passDialog *pD = nullptr;
     addEntry *ae= nullptr;
+    void closeFromLogin();
+    login* loginref;
 private:
     Ui::Principal *ui;
     QLineEdit* criaCampo(QString texto, QString nomeObj);

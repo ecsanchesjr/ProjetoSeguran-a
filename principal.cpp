@@ -11,6 +11,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     username = ((login *)parent)->getUsername();
     password = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();
+    loginref=((login *)parent);
     cout << "Meu deus" << endl;
     ui->label->setText("Bem vindo " + QString::fromStdString(username));
     //Apagar isso
@@ -185,12 +186,13 @@ QPushButton *Principal::criaBotao(QString texto, QString nomeObj, int typeCampo)
 
 Principal::~Principal()
 {
-    std::cout<<"Xablau"<<std::endl;
+    std::cout<<"Destruindo Principal 1"<<std::endl;
     clearAll();
     delete dao;
     delete pD;
     delete ui;
-    exit(0);
+    std::cout<<"Destruindo Principal 2"<<std::endl;
+
 }
 //Substituir corpo dos actions pelas ações com a cript + o xml
 void Principal::goHandler() //Action ao clicar no botão go
@@ -291,7 +293,18 @@ void Principal::closeEvent(QCloseEvent *event)
     pD=nullptr;
     delete ae;
     ae=nullptr;
+    delete loginref;
     delete this;
     exit(1);
+}
+
+void Principal::closeFromLogin()
+{
+    std::cout<<"Closing From Login"<<std::endl;
+    this->hide();
+    delete pD;
+    pD=nullptr;
+    delete ae;
+    ae=nullptr;
 }
 

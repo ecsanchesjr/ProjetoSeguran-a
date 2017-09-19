@@ -12,7 +12,8 @@ login::login(QWidget *parent) : QFrame(),
     }
     else
     {
-        parent->close();
+        principalRef=((Principal*)parent);
+        ((Principal*)parent)->closeFromLogin();
     }
 
     ui->setupUi(this);
@@ -29,8 +30,21 @@ login::login(QWidget *parent) : QFrame(),
 login::~login()
 {
     std::cout<<"Encerrando o programa a partir da login"<<std::endl;
-    exit(2);
     delete ui;
+}
+
+void login::closeEvent(QCloseEvent *event){
+    std::cout<<"Encerrando o programa a partir da login via close"<<std::endl;
+    event->ignore();
+    std::cout<<"Antes de encerrar1"<<std::endl;
+    std::cout<<principalRef<<std::endl;
+    if(principalRef!=nullptr){
+        std::cout<<"Entrei na merda"<<std::endl;
+        principalRef->closeFromLogin();
+    }
+    std::cout<<"Antes de encerrar"<<std::endl;
+    delete principalRef;
+    exit(5);
 }
 
 void login::on_pushButton_clicked()

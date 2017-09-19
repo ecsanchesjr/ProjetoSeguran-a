@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "principal.h"
 #include "DAO.hpp"
+class Principal;
 namespace Ui {
 class login;
 }
@@ -20,10 +21,11 @@ public:
     std::string getUsername();
     std::string getPassword();
     DAO* getDao(); //Utilizar para pegar a DAO
+    Principal* principalRef=nullptr;
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
+    void closeEvent(QCloseEvent *);
 
 private:
     Ui::login *ui;
