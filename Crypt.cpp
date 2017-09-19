@@ -254,8 +254,7 @@ void Crypt::changeKey(string &newKey, string &key)
 bool Crypt::validateIntegrity(vector<string> data)
 {
     hash<string> hash;
-    ifstream input("./" + dirName + "/" + userName + fileExtension);
-    string hashText="";
+    string hashText="",txt="";
     getline(input,hashText);
     cout<<"last state"<<endl;
     for(string s : lastState){
@@ -263,8 +262,14 @@ bool Crypt::validateIntegrity(vector<string> data)
     }
     ifstream input2("./" + dirName + "/" + userName + fileExtension);
     cout<<"now"<<endl;
-    while(getline(input2,hashText)){
-        cout<<hashText<<endl;
+    int i=0
+    while(getline(input2,txt)){
+        cout<<txt<<endl;
+        cout<<"uma linha"<<endl;
+        if(i!=0){
+            hashText.append(txt);
+        }
+        i++;
     }
 
     size_t hashNow = hash(hashText);
