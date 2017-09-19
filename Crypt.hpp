@@ -89,7 +89,9 @@ class Crypt
     // validar a integridade do arquivo do usuário
     bool validateIntegrity(vector<string>);
 
+    string static encodeTo64(string);
 
+    string static decodeFrom64(string);
 };
 
 #endif

@@ -1,5 +1,7 @@
 #include "Crypt.hpp"
 
+#include "basen.hpp"
+
 const string Crypt::fileExtension = ".lock";
 const string Crypt::dirName = "res";
 
@@ -9,13 +11,13 @@ Crypt::Crypt(string &name, string &key)
     bool userFound = false;
     vector<string> listOfFiles;
     getDir(listOfFiles);
-
     for (string tmp : listOfFiles)
     {
         if (tmp.compare(userName + fileExtension) == 0)
         {
             userFound = true;
             lastState = readData(userName);
+            cout<<endl;
             if (!validateUser(userName, key))
             {
                 throw InvalidKey();
@@ -49,6 +51,7 @@ string Crypt::getData(string &key)
                 }
                 else
                 {
+                    temp = decodeFrom64(temp);
                     aux.append(temp);
                 }
                 i++;
@@ -75,6 +78,7 @@ void Crypt::setData(string &data, string &key)
     if (outputStream.is_open())
     {
         data = encryptate(generateKey(key), data);
+        data = encodeTo64(data);
         outputStream << hash<string>{}(data);
         outputStream << "\n";
         outputStream << data;
@@ -107,6 +111,7 @@ void Crypt::createData(string &user, string &data, string &key)
         system(cmd.c_str());
         ofstream newFile("./" + dirName + "/" + user + fileExtension);
         data = encryptate(generateKey(key), data);
+        data = encodeTo64(data);
         newFile << hash<string>{}(data);
         newFile << "\n";
         newFile << data;
@@ -118,6 +123,7 @@ void Crypt::createData(string &user, string &data, string &key)
         {
             ofstream newFile("./" + dirName + "/" + user + fileExtension);
             data = encryptate(generateKey(key), data);
+            data = encodeTo64(data);
             newFile << hash<string>{}(data);
             newFile << "\n";
             newFile << data;
@@ -180,6 +186,7 @@ vector<string> Crypt::readData(string &file)
         }
         else
         {
+            temp = decodeFrom64(temp);
             aux.append(temp);
         }
         i++;
@@ -196,7 +203,7 @@ SecByteBlock Crypt::generateKey(string &key)
     kdf.DeriveKey(derivedKey.data(), derivedKey.size(),
                   0x00, (byte *)key.data(), key.size(),
                   NULL, 0x00, iterations);
-
+    
     return (derivedKey);
 }
 
@@ -209,7 +216,6 @@ string Crypt::decryptate(SecByteBlock derivedKey, string encryptedText)
     AuthenticatedDecryptionFilter df(decryptor, new StringSink(output));
     df.Put((byte *)encryptedText.data(), encryptedText.size());
     df.MessageEnd();
-
     return (output);
 }
 
@@ -224,6 +230,22 @@ string Crypt::encryptate(SecByteBlock derivedKey, string dataText)
     ef.MessageEnd();
 
     return (output);
+}
+
+string Crypt::encodeTo64(string strangeText){
+    string encodedText="";
+
+    bn::encode_b64(strangeText.begin(),strangeText.end(),std::back_inserter(encodedText));
+
+    return(encodedText);
+}
+
+string Crypt::decodeFrom64(string encodedText){
+    string strangeText="";
+
+    bn::decode_b64(encodedText.begin(),encodedText.end(),std::back_inserter(strangeText));
+
+    return(strangeText);
 }
 
 bool Crypt::userExists(string &userFile)
