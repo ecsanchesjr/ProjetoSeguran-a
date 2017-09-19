@@ -39,6 +39,12 @@ void Principal::clearAll()
         delete cFramesRefs[i];
         delete bFramesRefs[i];
     }
+    paneRefs.clear();
+    cFramesRefs.clear();
+    bFramesRefs.clear();
+    sitesRefs.clear();
+    nicksRefs.clear();
+    senhasRefs.clear();
 }
 
 void Principal::drawElements()
