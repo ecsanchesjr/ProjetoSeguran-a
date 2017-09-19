@@ -92,6 +92,8 @@ class Crypt
     string static encodeTo64(string);
 
     string static decodeFrom64(string);
+
+    void static writeData(string&, string&, string&);
 };
 
 #endif
