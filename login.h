@@ -23,6 +23,7 @@ public:
     DAO* getDao(); //Utilizar para pegar a DAO
     Principal* principalRef=nullptr;
     bool goingToClose=false;
+    void clearFields();
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();

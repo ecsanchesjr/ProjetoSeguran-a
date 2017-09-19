@@ -112,6 +112,13 @@ DAO *login::getDao()
     return dao;
 }
 
+void login::clearFields()
+{
+    ui->lineEdit->clear();
+    ui->lineEdit_2->clear();
+    ui->lineEdit_2->setFocus();
+}
+
 void login::on_pushButton_2_clicked() //Cria user
 {
     try

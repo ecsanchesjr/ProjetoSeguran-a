@@ -194,8 +194,8 @@ void passDialog::deleteUser()
         QMessageBox *qbox = new QMessageBox;
         qbox->information(this, "Usuário Deletado", "Usuário deletado com sucesso");
         delete qbox;
-        login *lg = new login(principalref);
-        lg->show();
+        principalref->loginref->show();
+        principalref->hide();
         this->hide();
     }
     catch (InvalidKey &ex)

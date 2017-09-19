@@ -13,6 +13,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     dao = ((login *)parent)->getDao();
     loginref=((login *)parent);
     loginref->principalRef=this;
+    loginref->clearFields();
     ui->label->setText("Bem vindo " + QString::fromStdString(username));
     //Apagar isso
     std::cout << username << std::endl;
@@ -287,7 +288,8 @@ void Principal::on_pushButton_clicked() //Sair
 
 void Principal::on_pushButton_3_clicked() //Deletar o usuário
 {
-    passDialog *pD = new passDialog(this, 4);
+    delete pD;
+    pD = new passDialog(this, 4);
     pD->show();
 }
 
