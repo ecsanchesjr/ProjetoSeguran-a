@@ -17,7 +17,7 @@ Crypt::Crypt(string &name, string &key)
         {
             userFound = true;
             lastState = readData(userName);
-            cout<<endl;
+            cout << endl;
             if (!validateUser(userName, key))
             {
                 throw InvalidKey();
@@ -65,7 +65,7 @@ string Crypt::getData(string &key)
     }
 }
 
-void Crypt::setData(string &data, string &key)
+void Crypt::writeData(string &data, string &key, string &userName)
 {
     ofstream outputStream("./" + dirName + "/" + userName + fileExtension);
     if (outputStream.is_open())
@@ -75,8 +75,13 @@ void Crypt::setData(string &data, string &key)
         outputStream << hash<string>{}(data);
         outputStream << "\n";
         outputStream << data;
-        outputStream.close();
     }
+    outputStream.close();
+}
+
+void Crypt::setData(string &data, string &key)
+{
+    writeData(data, key, userName);
     lastState = readData(userName);
 }
 
@@ -95,25 +100,13 @@ void Crypt::createData(string &user, string &data, string &key)
     if (opendir(dir.c_str()) == nullptr)
     {
         system(cmd.c_str());
-        ofstream newFile("./" + dirName + "/" + user + fileExtension);
-        data = encryptate(generateKey(key), data);
-        data = encodeTo64(data);
-        newFile << hash<string>{}(data);
-        newFile << "\n";
-        newFile << data;
-        newFile.close();
+        writeData(data, key, user);
     }
     else
     {
         if (!userExists(user))
         {
-            ofstream newFile("./" + dirName + "/" + user + fileExtension);
-            data = encryptate(generateKey(key), data);
-            data = encodeTo64(data);
-            newFile << hash<string>{}(data);
-            newFile << "\n";
-            newFile << data;
-            newFile.close();
+            writeData(data, key, user);
         }
         else
         {
@@ -146,7 +139,8 @@ bool Crypt::validateUser(string &user, string &key)
 {
     try
     {
-        if(!validateIntegrity(lastState)){
+        if (!validateIntegrity(lastState))
+        {
             throw FileIntegrityNotAssure();
         }
         decryptate(generateKey(key), readData(user)[1]);
@@ -189,7 +183,7 @@ SecByteBlock Crypt::generateKey(string &key)
     kdf.DeriveKey(derivedKey.data(), derivedKey.size(),
                   0x00, (byte *)key.data(), key.size(),
                   NULL, 0x00, iterations);
-    
+
     return (derivedKey);
 }
 
@@ -218,20 +212,22 @@ string Crypt::encryptate(SecByteBlock derivedKey, string dataText)
     return (output);
 }
 
-string Crypt::encodeTo64(string strangeText){
-    string encodedText="";
+string Crypt::encodeTo64(string strangeText)
+{
+    string encodedText = "";
 
-    bn::encode_b64(strangeText.begin(),strangeText.end(),std::back_inserter(encodedText));
+    bn::encode_b64(strangeText.begin(), strangeText.end(), std::back_inserter(encodedText));
 
-    return(encodedText);
+    return (encodedText);
 }
 
-string Crypt::decodeFrom64(string encodedText){
-    string strangeText="";
+string Crypt::decodeFrom64(string encodedText)
+{
+    string strangeText = "";
 
-    bn::decode_b64(encodedText.begin(),encodedText.end(),std::back_inserter(strangeText));
+    bn::decode_b64(encodedText.begin(), encodedText.end(), std::back_inserter(strangeText));
 
-    return(strangeText);
+    return (strangeText);
 }
 
 bool Crypt::userExists(string &userFile)
@@ -262,12 +258,14 @@ void Crypt::changeKey(string &newKey, string &key)
 bool Crypt::validateIntegrity(vector<string> data)
 {
     hash<string> hash;
-    string hashText="",txt="";
+    string hashText = "", txt = "";
 
     ifstream input2("./" + dirName + "/" + userName + fileExtension);
-    int i=0;
-    while(getline(input2,txt)){
-        if(i!=0){
+    int i = 0;
+    while (getline(input2, txt))
+    {
+        if (i != 0)
+        {
             hashText.append(txt);
         }
         i++;
@@ -277,9 +275,12 @@ bool Crypt::validateIntegrity(vector<string> data)
     size_t hashLast;
     istringstream sstream(data[0]);
     sstream >> hashLast;
-    if(hashLast == hashNow){
-        return(true);
-    }else{
-        return(false);
+    if (hashLast == hashNow)
+    {
+        return (true);
+    }
+    else
+    {
+        return (false);
     }
 }
