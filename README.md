@@ -33,6 +33,7 @@ O projeto será implementado utilizando a linguagem de programação C++, utiliz
 * Biblioteca [Crypto++](https://github.com/weidai11/cryptopp) devidamente instalada no seu dispositivo;
 * Qt 5.9;
 * Biblioteca [pugixml](https://github.com/zeux/pugixml), porém está no repositório.
+* Biblioteca [base-n](https://github.com/azawadzki/base-n), porém está no repositório.
 
 # EM ANDAMENTO
 
