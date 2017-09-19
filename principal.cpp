@@ -274,6 +274,7 @@ void Principal::on_pushButton_clicked() //Sair
     delete ae;
     pD=nullptr;
     ae=nullptr;
+    dao=nullptr;
     login *lg = new login(this);
     lg->show();
 }
