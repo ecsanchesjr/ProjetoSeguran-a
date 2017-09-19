@@ -31,6 +31,13 @@ public:
     }
 };
 
+class DuplicatedEntry : public std::exception{
+public:
+    virtual const char* what() const throw(){
+        return "Entry with the same name already exist";
+    }   
+};
+
 class InvalidKeyLength : public std::exception{
 public:
     virtual const char* what() const throw(){
