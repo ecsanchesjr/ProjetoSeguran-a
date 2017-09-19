@@ -36,3 +36,6 @@
 /build-PasswordManager2-Desktop-Debug
 build-PasswordManager2-Desktop-Debug/
 .directory
+
+
+*.pro.user.*
