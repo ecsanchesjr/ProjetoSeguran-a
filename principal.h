@@ -21,6 +21,7 @@
 class passDialog;
 class addEntry;
 class login;
+class ChangePassword;
 namespace Ui {
 class Principal;
 }

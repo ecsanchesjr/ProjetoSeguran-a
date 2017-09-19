@@ -203,6 +203,7 @@ Principal::~Principal()
     delete dao;
     delete pD;
     delete ui;
+    delete cP;
     std::cout<<"Destruindo Principal "<<std::endl;
 
 }
@@ -334,6 +335,6 @@ void Principal::on_pushButton_4_clicked()//Altera a senha
 {
     std::cout<<"Alterar Senha"<<std::endl;
     delete cP;
-    cP =new ChangePassword();
+    cP =new ChangePassword(this);
     cP->show();
 }
