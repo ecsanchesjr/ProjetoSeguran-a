@@ -31,13 +31,16 @@ Crypt::Crypt(string &name, string &key)
 
 string Crypt::getData(string &key)
 { // retorna a string adiquirida a partir do arquivo xml
+    cout<<"entrei na getData"<<endl;
     if (validateUser(userName, key))
     {
         vector<string> data;
         {
             string temp, aux;
             int i = 0;
+            cout<<"vai abrir o arquivo"<<endl;
             ifstream inputStream("./" + dirName + "/" + userName + fileExtension);
+            cout<<"abriu o arquivo "<<inputStream.is_open()<<endl;
             while (getline(inputStream, temp))
             {
                 if (i == 0)
@@ -53,19 +56,21 @@ string Crypt::getData(string &key)
             data.push_back(aux);
         }
         // data ainda está encriptada
+        cout<<"chegou na decryptate"<<endl;
         data[1] = decryptate(generateKey(key), data[1]);
-
+        cout<<"sai da getData pelo return"<<endl;
         return (data[1]);
     }
     else
     {
+        cout<<"sai da getData pelo throw"<<endl;
         throw InvalidKey();
     }
 }
 
 void Crypt::setData(string &data, string &key)
 {
-
+    cout<<"entrei no set data"<<endl;
     ofstream outputStream("./" + dirName + "/" + userName + fileExtension);
     if (outputStream.is_open())
     {
@@ -76,6 +81,12 @@ void Crypt::setData(string &data, string &key)
         outputStream.close();
     }
     lastState = readData(userName);
+    
+    cout<<"last state atualizado!"<<endl;
+    for(string s : lastState){
+        cout<<s<<endl;
+    }
+    cout<<"sai do set data set data"<<endl;
 }
 
 void Crypt::deleteUser(string &key)
@@ -243,11 +254,24 @@ void Crypt::changeKey(string &newKey, string &key)
 bool Crypt::validateIntegrity(vector<string> data)
 {
     hash<string> hash;
-    size_t hashTrans = hash(data[1]);
-    size_t hashCode;
+    ifstream input("./" + dirName + "/" + userName + fileExtension);
+    string hashText="";
+    getline(input,hashText);
+    cout<<"last state"<<endl;
+    for(string s : lastState){
+        cout<<s<<endl;
+    }
+    ifstream input2("./" + dirName + "/" + userName + fileExtension);
+    cout<<"now"<<endl;
+    while(getline(input2,hashText)){
+        cout<<hashText<<endl;
+    }
+
+    size_t hashNow = hash(hashText);
+    size_t hashLast;
     istringstream sstream(data[0]);
-    sstream >> hashCode;
-    if(hashTrans == hashCode){
+    sstream >> hashLast;
+    if(hashLast == hashNow){
         return(true);
     }else{
         return(false);
