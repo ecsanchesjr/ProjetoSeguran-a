@@ -4,6 +4,9 @@
 
 const string Crypt::fileExtension = ".lock";
 const string Crypt::dirName = "res";
+const string Crypt::dirBackup = ".backup";
+const int Crypt::keySize = 6 * AES::DEFAULT_KEYLENGTH;
+const int Crypt::iterations = 1000;
 
 Crypt::Crypt(string &name, string &key)
 {

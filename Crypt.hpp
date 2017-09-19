@@ -63,8 +63,9 @@ class Crypt
     vector<string> lastState;
     const static string fileExtension;
     const static string dirName;
-    const static int keySize = 2 * AES::DEFAULT_KEYLENGTH;
-    const static int iterations = 100;
+    const static string dirBackup;
+    const static int keySize;
+    const static int iterations;
 
     void static getDir(vector<string> &);
 
