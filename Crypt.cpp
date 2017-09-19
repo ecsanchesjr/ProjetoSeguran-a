@@ -250,7 +250,8 @@ void Crypt::changeKey(string &newKey, string &key)
 {
     if (validateUser(userName, key))
     {
-        encryptate(generateKey(newKey), getData(key));
+        string data = getData(key);
+        setData(data,newKey);
     }
     else
     {
