@@ -14,8 +14,10 @@
 #include <DAO.hpp>
 #include <login.h>
 #include <utility>
-#include <passdialog.h>
+#include "passdialog.h"
+#include "addentry.h"
 class passDialog;
+class addEntry;
 namespace Ui {
 class Principal;
 }
@@ -41,7 +43,7 @@ public:
     std::string indexPane;
     void displayErrorMessage(const string&);
     passDialog *pD = nullptr;
-
+    addEntry *ae= nullptr;
 private:
     Ui::Principal *ui;
     QLineEdit* criaCampo(QString texto, QString nomeObj);

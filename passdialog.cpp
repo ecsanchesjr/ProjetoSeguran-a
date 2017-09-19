@@ -36,9 +36,9 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
 passDialog::passDialog(QWidget *parent, QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
                                                                                                         ui(new Ui::passDialog)
 {
+     principalref = (Principal *)parent;
     ui->setupUi(this);
     ui->lineEdit->setEchoMode(QLineEdit::Password);
-    principalref = (Principal *)parent;
     addEntryPtr = (addEntry *)addEntryWin;
     this->site = site;
     this->nick = login;
@@ -55,13 +55,14 @@ passDialog::passDialog(QWidget *parent, QWidget *addEntryWin, string site, strin
 
 void passDialog::closeEvent(QCloseEvent *event)
 {
+    std::cout<<"Dando Close na pass dialog"<<std::endl;
     event->ignore();
     this->hide();
-    delete ui;
 }
 
 passDialog::~passDialog()
 {
+    std::cout<<"Fechando PassDialog"<<std::endl;
 }
 
 void passDialog::newEntry()
@@ -76,10 +77,9 @@ void passDialog::newEntry()
         principalref->redrawAll();
 
         addEntryPtr->hide();
-        delete addEntryPtr;
-
+        delete principalref->ae;
+        principalref->ae=nullptr;
         this->hide();
-        delete this;
     }
     catch (InvalidKey &ex)
     {
@@ -196,7 +196,6 @@ void passDialog::deleteUser()
         login *lg = new login(principalref);
         lg->show();
         this->hide();
-        delete ui;
     }
     catch (InvalidKey &ex)
     {

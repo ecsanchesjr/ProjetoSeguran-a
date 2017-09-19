@@ -28,7 +28,8 @@ login::login(QWidget *parent) : QFrame(),
 
 login::~login()
 {
-    exit(0);
+    std::cout<<"Encerrando o programa a partir da login"<<std::endl;
+    exit(2);
     delete ui;
 }
 

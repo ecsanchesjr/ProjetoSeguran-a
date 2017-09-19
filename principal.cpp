@@ -235,8 +235,9 @@ void Principal::redrawAll()
 
 void Principal::on_pushButton_2_clicked() //Adicionar nova entrada
 {
-    std::cout << "Adicionar nova entrada" << std::endl;
-    addEntry *ae = new addEntry(this);
+    delete ae;
+    ae=nullptr;
+    ae = new addEntry(this);
     ae->show();
 }
 
@@ -266,7 +267,9 @@ void Principal::on_pushButton_clicked() //Sair
     clearAll();
     delete dao;
     delete pD;
+    delete ae;
     pD=nullptr;
+    ae=nullptr;
     login *lg = new login(this);
     lg->show();
 }
@@ -283,5 +286,10 @@ void Principal::closeEvent(QCloseEvent *event)
     event->ignore();
     this->hide();
     delete pD;
+    pD=nullptr;
+    delete ae;
+    ae=nullptr;
+    delete this;
+    exit(1);
 }
 

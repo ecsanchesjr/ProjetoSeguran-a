@@ -5,6 +5,8 @@
 #include <iostream>
 #include <DAO.hpp>
 #include <QCloseEvent>
+#include "passdialog.h"
+class passDialog;
 class Principal;
 namespace Ui {
 class addEntry;
@@ -24,6 +26,7 @@ private slots:
 private:
     Ui::addEntry *ui;
     Principal* principalref;
+    passDialog *pD=nullptr;
     void closeEvent(QCloseEvent*);
 };
 

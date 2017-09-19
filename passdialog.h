@@ -2,10 +2,9 @@
 #define PASSDIALOG_H
 
 #include <QWidget>
-#include "addentry.h"
 #include <QCloseEvent>
 #include <login.h>
-
+class addEntry;
 class Principal;
 namespace Ui
 {

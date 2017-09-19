@@ -1,6 +1,5 @@
 #include "addentry.h"
 #include "ui_addentry.h"
-#include "passdialog.h"
 #include <utility>
 #include <QDesktopWidget>
 
@@ -20,18 +19,20 @@ addEntry::addEntry(QWidget *parent) : QFrame(),
 
 addEntry::~addEntry()
 {
-    delete ui;
+    std::cout<<"Encerrando addEntry"<<std::endl;
+   // delete
 }
 
 void addEntry::on_pushButton_clicked()
 {
     if (ui->lineEdit->text().toStdString().length() != 0 && ui->lineEdit_2->text().toStdString().length() != 0 && ui->lineEdit_3->text().toStdString().length() != 0)
     {
-        passDialog *pD = new passDialog(principalref, this,
+        delete principalref->pD;
+        principalref->pD = new passDialog(principalref, this,
                                         ui->lineEdit->text().toStdString(),
                                         ui->lineEdit_2->text().toStdString(),
                                         ui->lineEdit_3->text().toStdString());
-        pD->show();
+        principalref->pD->show();
     }
     else
     {
@@ -41,7 +42,8 @@ void addEntry::on_pushButton_clicked()
 
 void addEntry::closeEvent(QCloseEvent *event)
 {
+    std::cout<<"Fechando add entry"<<std::endl;
     event->ignore();
     this->hide();
-    delete ui;
+    principalref->pD->hide();
 }
