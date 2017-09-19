@@ -19,7 +19,7 @@ addEntry::addEntry(QWidget *parent) : QFrame(),
 
 addEntry::~addEntry()
 {
-
+    delete ui;
 }
 
 void addEntry::on_pushButton_clicked()

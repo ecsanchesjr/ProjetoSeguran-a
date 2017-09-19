@@ -31,7 +31,8 @@ SOURCES += \
     pugi/pugixml.cpp \
     addentry.cpp \
     login.cpp \
-    passdialog.cpp
+    passdialog.cpp \
+    changepassword.cpp
 
 HEADERS += \
     DAO.hpp \
@@ -42,7 +43,8 @@ HEADERS += \
     login.h \
     addentry.h \
     customexceptions.hpp \
-    passdialog.h
+    passdialog.h \
+    changepassword.h
 
 SUBDIRS += \
     PasswordManager2.pro
@@ -51,7 +53,8 @@ FORMS += \
     principal.ui \
     addentry.ui \
     login.ui \
-    passdialog.ui
+    passdialog.ui \
+    changepassword.ui
 
 DISTFILES +=
 

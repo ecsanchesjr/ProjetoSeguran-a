@@ -17,6 +17,7 @@
 #include "passdialog.h"
 #include "addentry.h"
 #include "login.h"
+#include "changepassword.h"
 class passDialog;
 class addEntry;
 class login;
@@ -45,6 +46,7 @@ public:
     std::string indexPane;
     void displayErrorMessage(const string&);
     passDialog *pD = nullptr;
+    ChangePassword *cP = nullptr;
     addEntry *ae= nullptr;
     void closeFromLogin();
     login* loginref;

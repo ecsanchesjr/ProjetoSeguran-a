@@ -35,6 +35,7 @@ login::~login()
     }
     if(goingToClose){
         delete principalRef;
+        delete ui;
         std::cout<<"Encerrando completamente"<<std::endl;
         exit(5);
     }

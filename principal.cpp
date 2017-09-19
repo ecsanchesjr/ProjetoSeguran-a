@@ -196,7 +196,7 @@ Principal::~Principal()
     clearAll();
     delete dao;
     delete pD;
-    //delete ui;
+    delete ui;
     std::cout<<"Destruindo Principal "<<std::endl;
 
 }
@@ -278,9 +278,11 @@ void Principal::on_pushButton_clicked() //Sair
     delete dao;
     delete pD;
     delete ae;
+    delete cP;
     pD=nullptr;
     ae=nullptr;
     dao=nullptr;
+    cP=nullptr;
     loginref->show();
     this->hide();
 
@@ -301,6 +303,8 @@ void Principal::closeEvent(QCloseEvent *event)
     pD=nullptr;
     delete ae;
     ae=nullptr;
+    delete cP;
+    cP=nullptr;
     loginref->goingToClose=true;
     delete loginref;
 }
@@ -312,10 +316,15 @@ void Principal::closeFromLogin()
     pD=nullptr;
     delete ae;
     ae=nullptr;
+    delete cP;
+    cP=nullptr;
 }
 
 
-void Principal::on_pushButton_4_clicked()
+void Principal::on_pushButton_4_clicked()//Altera a senha
 {
     std::cout<<"Alterar Senha"<<std::endl;
+    delete cP;
+    cP =new ChangePassword();
+    cP->show();
 }
