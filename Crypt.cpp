@@ -15,6 +15,7 @@ Crypt::Crypt(string &name, string &key)
         if (tmp.compare(userName + fileExtension) == 0)
         {
             userFound = true;
+            lastState = readData(userName);
             if (!validateUser(userName, key))
             {
                 throw InvalidKey();
@@ -53,6 +54,7 @@ string Crypt::getData(string &key)
         }
         // data ainda está encriptada
         data[1] = decryptate(generateKey(key), data[1]);
+
         return (data[1]);
     }
     else
@@ -73,6 +75,7 @@ void Crypt::setData(string &data, string &key)
         outputStream << data;
         outputStream.close();
     }
+    lastState = readData(userName);
 }
 
 void Crypt::deleteUser(string &key)
@@ -140,7 +143,7 @@ bool Crypt::validateUser(string &user, string &key)
 {
     try
     {
-        if(!validateIntegrity(readData(user))){
+        if(!validateIntegrity(lastState)){
             throw FileIntegrityNotAssure();
         }
         decryptate(generateKey(key), readData(user)[1]);
@@ -171,7 +174,6 @@ vector<string> Crypt::readData(string &file)
         i++;
     }
     data.push_back(aux);
-
     return (data);
 }
 

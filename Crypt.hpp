@@ -60,6 +60,7 @@ class Crypt
 
   private:
     string userName;
+    vector<string> lastState;
     const static string fileExtension;
     const static string dirName;
     const static int keySize = 2 * AES::DEFAULT_KEYLENGTH;
