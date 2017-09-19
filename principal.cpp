@@ -13,7 +13,6 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     dao = ((login *)parent)->getDao();
     loginref=((login *)parent);
     loginref->principalRef=this;
-    cout << "Meu deus" << endl;
     ui->label->setText("Bem vindo " + QString::fromStdString(username));
     //Apagar isso
     std::cout << username << std::endl;
