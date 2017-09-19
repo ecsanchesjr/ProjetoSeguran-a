@@ -134,6 +134,16 @@ vector<vector<string>> DAO::getAllEntrys(string &key) const
 
 void DAO::createNewEntry(string &itemName, string &login, string &pass, string &key)
 {
+
+    {
+            vector<pair<string,string>> entrys = getNamesAndLogin(key);
+            for(pair<string,string> p : entrys){
+                if(p.first.compare(itemName)==0){
+                    throw DuplicatedEntry();
+                }
+            }
+    }
+
     if (key.length() != 0)
     {
         {
@@ -239,6 +249,17 @@ void DAO::deleteEntry(string &itemName, string &key)
 
 void DAO::modifyEntry(string &itemName, string &login, string &pass, string &key, string newItemName)
 {
+    {
+        if(newItemName.compare(itemName)!=0){
+            vector<pair<string,string>> entrys = getNamesAndLogin(key);
+            for(pair<string,string> p : entrys){
+                if(p.first.compare(newItemName)==0){
+                    throw DuplicatedEntry();
+                }
+            }
+        }
+    }
+    
     if (key.length()!=0)
     {
         string data = objC->getData(key);

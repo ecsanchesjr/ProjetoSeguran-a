@@ -86,6 +86,8 @@ void passDialog::newEntry()
     catch (EmptyInputField &ex)
     {
         principalref->displayErrorMessage(ex.what());
+    }catch(DuplicatedEntry &ex){
+        principalref->displayErrorMessage(ex.what());
     }
 }
 
@@ -112,6 +114,8 @@ void passDialog::modify()
     }
     catch (EmptyInputField &ex)
     {
+        principalref->displayErrorMessage(ex.what());
+    }catch(DuplicatedEntry &ex){
         principalref->displayErrorMessage(ex.what());
     }
 }
