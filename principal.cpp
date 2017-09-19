@@ -34,11 +34,17 @@ void Principal::clearAll()
     for (int i = 0; i < size; i++)
     {
         delete sitesRefs[i];
+        sitesRefs[i]=nullptr;
         delete nicksRefs[i];
+        nicksRefs[i]=nullptr;
         delete senhasRefs[i];
+        senhasRefs[i]=nullptr;
         delete paneRefs[i];
+        paneRefs[i]=nullptr;
         delete cFramesRefs[i];
+        cFramesRefs[i]=nullptr;
         delete bFramesRefs[i];
+        bFramesRefs[i]=nullptr;
     }
     paneRefs.clear();
     cFramesRefs.clear();
@@ -59,7 +65,7 @@ void Principal::drawElements()
     try
     {
         int i = 0; //Contador para auxiliar o preenchimento
-        cout << "get names and login" << endl;
+        //cout << "get names and login" << endl;
         vector<pair<string, string>> infos = dao->getNamesAndLogin(password);
         for (pair<string, string> it : infos)
         {
@@ -239,8 +245,11 @@ void Principal::removeHandler()
 }
 void Principal::redrawAll()
 {
+    std::cout<<"Merda antes de limpar"<<std::endl;
     clearAll();
+    std::cout<<"Merda depois de limpar"<<std::endl;
     drawElements();
+    std::cout<<"Depois de desenhar"<<std::endl;
 }
 
 void Principal::on_pushButton_2_clicked() //Adicionar nova entrada

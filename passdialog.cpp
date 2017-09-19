@@ -61,6 +61,7 @@ void passDialog::closeEvent(QCloseEvent *event)
 
 passDialog::~passDialog()
 {
+    principalref->pD=nullptr;
     delete ui;
 }
 
@@ -97,17 +98,14 @@ void passDialog::modify()
     try
     {
         std::string straux = principalref->indexPane;
-
         std::string key = ui->lineEdit->text().toStdString(),
                     name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->objectName().toStdString(),
                     login = principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
                     pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
                     newname = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
         principalref->getDao()->modifyEntry(name, login, pass, key, newname);
-
         principalref->redrawAll();
         this->hide();
-        delete ui;
     }
     catch (InvalidKey &ex)
     {
@@ -137,7 +135,6 @@ void passDialog::go()
 
         std::cout << (principalref->sitesRefs)[std::stoi(straux.substr(4, 4))]->objectName().toStdString() << std::endl;
         this->hide();
-        delete ui;
     }
     catch (InvalidKey &ex)
     {
@@ -172,7 +169,6 @@ void passDialog::remove()
         (principalref->cFramesRefs).erase((principalref->cFramesRefs).begin() + std::stoi(straux.substr(4, 4)));
         principalref->redrawAll(); //Redesenha a tela
         this->hide();
-        delete ui; //NÃO ESQUECER DE DELETAR SE USAR PONTEIRO, ELE NUNCA SAI DE ESCOPO
     }
     catch (InvalidKey &ex)
     {
