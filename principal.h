@@ -70,6 +70,7 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_3_clicked();
     void closeEvent(QCloseEvent *);
+    void on_pushButton_4_clicked();
 };
 
 #endif // PRINCIPAL_H

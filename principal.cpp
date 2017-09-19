@@ -314,3 +314,8 @@ void Principal::closeFromLogin()
     ae=nullptr;
 }
 
+
+void Principal::on_pushButton_4_clicked()
+{
+    std::cout<<"Alterar Senha"<<std::endl;
+}
