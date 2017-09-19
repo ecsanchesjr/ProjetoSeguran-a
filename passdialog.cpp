@@ -100,7 +100,6 @@ void passDialog::modify()
                     login = principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
                     pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
                     newname = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
-
         principalref->getDao()->modifyEntry(name, login, pass, key, newname);
 
         principalref->redrawAll();

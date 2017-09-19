@@ -239,12 +239,8 @@ void DAO::deleteEntry(string &itemName, string &key)
 
 void DAO::modifyEntry(string &itemName, string &login, string &pass, string &key, string newItemName)
 {
-    if (key.length() != 0)
+    if (key.length()!=0)
     {
-        if (newItemName.compare("") == 0)
-        {
-            newItemName = itemName;
-        }
         string data = objC->getData(key);
 
         pugi::xml_document doc;
@@ -274,9 +270,15 @@ void DAO::modifyEntry(string &itemName, string &login, string &pass, string &key
         }
         if (foundNode)
         {
-            nodeToMod.child("name").text().set(newItemName.c_str());
-            nodeToMod.child("login").text().set(login.c_str());
-            nodeToMod.child("pass").text().set(pass.c_str());
+            if(newItemName.length()!=0 && login.length()!=0){
+                nodeToMod.child("name").text().set(newItemName.c_str());
+                nodeToMod.child("login").text().set(login.c_str());
+            }else{
+                throw EmptyInputField();
+            }
+            if(!pass.length()==0){
+                nodeToMod.child("pass").text().set(pass.c_str());
+            }
             xmlToString(data, root);
             objC->setData(data, key);
         }
