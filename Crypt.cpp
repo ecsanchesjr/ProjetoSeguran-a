@@ -255,14 +255,13 @@ bool Crypt::validateIntegrity(vector<string> data)
 {
     hash<string> hash;
     string hashText="",txt="";
-    getline(input,hashText);
     cout<<"last state"<<endl;
     for(string s : lastState){
         cout<<s<<endl;
     }
     ifstream input2("./" + dirName + "/" + userName + fileExtension);
     cout<<"now"<<endl;
-    int i=0
+    int i=0;
     while(getline(input2,txt)){
         cout<<txt<<endl;
         cout<<"uma linha"<<endl;
@@ -271,11 +270,20 @@ bool Crypt::validateIntegrity(vector<string> data)
         }
         i++;
     }
+    /* cout<<"hash text"<<endl;
+    cout<<hashText<<endl;
+    hashText.erase( std::remove(hashText.begin(), hashText.end(), '\r'), hashText.end() );
+
+    cout<<"hash text"<<endl;
+    cout<<hashText<<endl; */
 
     size_t hashNow = hash(hashText);
+    cout<<hashNow<<endl;
     size_t hashLast;
     istringstream sstream(data[0]);
     sstream >> hashLast;
+    cout<<"compare foda-se: "<<hashText.compare(data[0])<<endl;
+    cout<<hashLast<<endl;
     if(hashLast == hashNow){
         return(true);
     }else{

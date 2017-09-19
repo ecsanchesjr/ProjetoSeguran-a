@@ -301,22 +301,22 @@ void DAO::deleteUser(string &key)
 
 void DAO::xmlToString(string &data, pugi::xml_node root)
 {
-    data = "<doc>\n";
+    data = "<doc>";
     for (pugi::xml_node node = root.child("item"); node; node = node.next_sibling("item"))
     {
-        data += "\t<item id='";
+        data += "<item id='";
         data += node.attribute("id").value();
-        data += "'>\n";
-        data += "\t\t<name>";
+        data += "'>";
+        data += "<name>";
         data += node.child("name").child_value();
-        data += "</name>\n";
-        data += "\t\t<login>";
+        data += "</name>";
+        data += "<login>";
         data += node.child("login").child_value();
-        data += "</login>\n";
-        data += "\t\t<pass>";
+        data += "</login>";
+        data += "<pass>";
         data += node.child("pass").child_value();
-        data += "</pass>\n";
-        data += "\t</item>\n";
+        data += "</pass>";
+        data += "</item>";
     }
     data += "</doc>";
 }
