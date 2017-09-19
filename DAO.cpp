@@ -330,6 +330,7 @@ void DAO::createNewUser(string &user, string &key)
             if (key.length() >= 6 && key.length() <= 20)
             { // key entre 4 a 20 caracteres
                 string data = "<doc></doc>";
+                cout << "BATATA" << endl;
                 Crypt::createData(user, data, key);
             }
             else

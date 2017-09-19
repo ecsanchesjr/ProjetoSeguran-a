@@ -11,6 +11,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     username = ((login *)parent)->getUsername();
     password = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();
+    cout << "Meu deus" << endl;
     ui->label->setText("Bem vindo " + QString::fromStdString(username));
     //Apagar isso
     std::cout << username << std::endl;
@@ -50,6 +51,7 @@ void Principal::drawElements()
     try
     {
         int i = 0; //Contador para auxiliar o preenchimento
+        cout << "get names and login" << endl;
         vector<pair<string, string>> infos = dao->getNamesAndLogin(password);
         for (pair<string, string> it : infos)
         {

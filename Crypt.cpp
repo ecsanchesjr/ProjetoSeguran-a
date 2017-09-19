@@ -32,11 +32,28 @@ string Crypt::getData(string &key)
 { // retorna a string adiquirida a partir do arquivo xml
     if (validateUser(userName, key))
     {
-        ifstream inputStream("./" + dirName + "/" + userName + fileExtension);
-        string data((std::istreambuf_iterator<char>(inputStream)), (std::istreambuf_iterator<char>()));
+        vector<string> data;
+        {
+            string temp, aux;
+            int i = 0;
+            ifstream inputStream("./" + dirName + "/" + userName + fileExtension);
+            while (getline(inputStream, temp))
+            {
+                if (i == 0)
+                {
+                    data.push_back(temp);
+                }
+                else
+                {
+                    aux.append(temp);
+                }
+                i++;
+            }
+            data.push_back(aux);
+        }
         // data ainda está encriptada
-        data = decryptate(generateKey(key), data);
-        return (data);
+        data[1] = decryptate(generateKey(key), data[1]);
+        return (data[1]);
     }
     else
     {
@@ -51,6 +68,8 @@ void Crypt::setData(string &data, string &key)
     if (outputStream.is_open())
     {
         data = encryptate(generateKey(key), data);
+        outputStream << hash<string>{}(data);
+        outputStream << "\n";
         outputStream << data;
         outputStream.close();
     }
@@ -74,6 +93,8 @@ void Crypt::createData(string &user, string &data, string &key)
         system(cmd.c_str());
         ofstream newFile("./" + dirName + "/" + user + fileExtension);
         data = encryptate(generateKey(key), data);
+        newFile << hash<string>{}(data);
+        newFile << "\n";
         newFile << data;
         newFile.close();
     }
@@ -83,6 +104,8 @@ void Crypt::createData(string &user, string &data, string &key)
         {
             ofstream newFile("./" + dirName + "/" + user + fileExtension);
             data = encryptate(generateKey(key), data);
+            newFile << hash<string>{}(data);
+            newFile << "\n";
             newFile << data;
             newFile.close();
         }
@@ -117,7 +140,10 @@ bool Crypt::validateUser(string &user, string &key)
 {
     try
     {
-        decryptate(generateKey(key), readData(user));
+        if(!validateIntegrity(readData(user))){
+            throw FileIntegrityNotAssure();
+        }
+        decryptate(generateKey(key), readData(user)[1]);
         return (true);
     }
     catch (CryptoPP::Exception ex)
@@ -126,10 +152,25 @@ bool Crypt::validateUser(string &user, string &key)
     }
 }
 
-string Crypt::readData(string &file)
+vector<string> Crypt::readData(string &file)
 {
+    vector<string> data;
+    string temp, aux("");
+    int i = 0;
     ifstream inputStream("./" + dirName + "/" + file + fileExtension);
-    string data((std::istreambuf_iterator<char>(inputStream)), (std::istreambuf_iterator<char>()));
+    while (getline(inputStream, temp))
+    {
+        if (i == 0)
+        {
+            data.push_back(temp);
+        }
+        else
+        {
+            aux.append(temp);
+        }
+        i++;
+    }
+    data.push_back(aux);
 
     return (data);
 }
@@ -194,5 +235,19 @@ void Crypt::changeKey(string &newKey, string &key)
     else
     {
         throw InvalidKey();
+    }
+}
+
+bool Crypt::validateIntegrity(vector<string> data)
+{
+    hash<string> hash;
+    size_t hashTrans = hash(data[1]);
+    size_t hashCode;
+    istringstream sstream(data[0]);
+    sstream >> hashCode;
+    if(hashTrans == hashCode){
+        return(true);
+    }else{
+        return(false);
     }
 }

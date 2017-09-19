@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "aes.h"
 #include "sha.h"
@@ -23,6 +24,8 @@ using std::cout;
 using std::endl;
 using std::ifstream;
 using std::ofstream;
+using std::hash;
+using std::istringstream;
 using CryptoPP::SecByteBlock;
 using CryptoPP::AES;
 using CryptoPP::PKCS5_PBKDF2_HMAC;
@@ -68,7 +71,7 @@ class Crypt
     bool validateUser(string &, string &);
 
     // ler arquivo encriptado
-    string static readData(string &);
+    vector<string> static readData(string &);
 
     // gerar key derivada da senha do usuario
     SecByteBlock static generateKey(string &);
@@ -81,6 +84,11 @@ class Crypt
 
     // retorna a string encriptada
     string static encryptate(SecByteBlock, string);
+
+    // validar a integridade do arquivo do usuário
+    bool validateIntegrity(vector<string>);
+
+
 };
 
 #endif

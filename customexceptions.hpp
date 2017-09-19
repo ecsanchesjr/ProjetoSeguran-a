@@ -45,4 +45,13 @@ public:
     }
 };
 
+class FileIntegrityNotAssure : public std::exception{
+public:
+    virtual const char* what() const throw(){
+        return "File Integrity Not Assure!";
+    }
+};
+
+
+
 #endif // CUSTOMEXCEPTIONS_H
