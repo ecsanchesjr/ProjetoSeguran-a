@@ -20,7 +20,7 @@ ChangePassword::ChangePassword(QWidget *parent) :
 
 ChangePassword::~ChangePassword()
 {
-    std::cout<<"Deletando change Password"<<std::endl;
+    std::cout<<"Destruindo change Password"<<std::endl;
     delete ui;
 }
 
@@ -39,6 +39,9 @@ void ChangePassword::on_pushButton_clicked()
     std::cout<<newKey<<std::endl;
     try{
         principalref->getDao()->changeUserKey(newKey,currentKey);
+        QMessageBox qbox;
+        qbox.information(0,"Sucesso","Senha alterada com sucesso");
+        this->hide();
 
     }
     catch(InvalidKeyLength &ex){

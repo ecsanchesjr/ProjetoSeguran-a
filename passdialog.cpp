@@ -61,6 +61,7 @@ void passDialog::closeEvent(QCloseEvent *event)
 
 passDialog::~passDialog()
 {
+    std::cout<<"Destruindo PassDialog"<<std::endl;
     principalref->pD=nullptr;
     delete ui;
 }
