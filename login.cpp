@@ -58,8 +58,9 @@ void login::on_pushButton_clicked()
         getUsername();
         getPassword();
         dao = new DAO(username, password);
-        Principal *p = new Principal(this);
-        p->show();
+        delete principalRef;
+        principalRef = new Principal(this);
+        principalRef->show();
         this->hide();
     }
     catch (UserNotFound &ex)
