@@ -30,3 +30,25 @@ void ChangePassword::closeEvent(QCloseEvent *event)
     this->hide();
 
 }
+
+void ChangePassword::on_pushButton_clicked()
+{
+    std::string currentKey= ui->lineEdit->text().toStdString();
+    std::string newKey=ui->lineEdit_2->text().toStdString();
+    std::cout<<currentKey<<std::endl;
+    std::cout<<newKey<<std::endl;
+    try{
+        principalref->getDao()->changeUserKey(newKey,currentKey);
+
+    }
+    catch(InvalidKeyLength &ex){
+         principalref->displayErrorMessage(ex.what());
+    }
+    catch(InvalidKey &ex){
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch(EmptyInputField &ex){
+        principalref->displayErrorMessage(ex.what());
+    }
+}
+

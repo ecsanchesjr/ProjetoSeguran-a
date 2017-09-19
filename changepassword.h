@@ -23,6 +23,7 @@ private:
 
 private slots:
     void closeEvent(QCloseEvent *);
+    void on_pushButton_clicked();
 };
 
 #endif // CHANGEPASSWORD_H
