@@ -11,8 +11,8 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     username = ((login *)parent)->getUsername();
     password = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();
-    loginref=((login *)parent);
-    loginref->principalRef=this;
+    loginref = ((login *)parent);
+    loginref->principalRef = this;
     loginref->clearFields();
     ui->label->setText("Bem vindo " + QString::fromStdString(username));
     //Apagar isso
@@ -34,17 +34,17 @@ void Principal::clearAll()
     for (int i = 0; i < size; i++)
     {
         delete sitesRefs[i];
-        sitesRefs[i]=nullptr;
+        sitesRefs[i] = nullptr;
         delete nicksRefs[i];
-        nicksRefs[i]=nullptr;
+        nicksRefs[i] = nullptr;
         delete senhasRefs[i];
-        senhasRefs[i]=nullptr;
+        senhasRefs[i] = nullptr;
         delete paneRefs[i];
-        paneRefs[i]=nullptr;
+        paneRefs[i] = nullptr;
         delete cFramesRefs[i];
-        cFramesRefs[i]=nullptr;
+        cFramesRefs[i] = nullptr;
         delete bFramesRefs[i];
-        bFramesRefs[i]=nullptr;
+        bFramesRefs[i] = nullptr;
     }
     paneRefs.clear();
     cFramesRefs.clear();
@@ -96,6 +96,10 @@ void Principal::drawElements()
         QMessageBox messageBox;
         messageBox.critical(0, "Error", ex.what());
         messageBox.setFixedSize(500, 200);
+    }
+    catch (FileIntegrityNotAssured &ex)
+    {
+        displayErrorMessage(ex.what());
     }
 }
 
@@ -204,8 +208,7 @@ Principal::~Principal()
     delete pD;
     delete ui;
     delete cP;
-    std::cout<<"Destruindo Principal "<<std::endl;
-
+    std::cout << "Destruindo Principal " << std::endl;
 }
 //Substituir corpo dos actions pelas ações com a cript + o xml
 void Principal::goHandler() //Action ao clicar no botão go
@@ -246,17 +249,17 @@ void Principal::removeHandler()
 }
 void Principal::redrawAll()
 {
-    std::cout<<"Merda antes de limpar"<<std::endl;
+    std::cout << "Merda antes de limpar" << std::endl;
     clearAll();
-    std::cout<<"Merda depois de limpar"<<std::endl;
+    std::cout << "Merda depois de limpar" << std::endl;
     drawElements();
-    std::cout<<"Depois de desenhar"<<std::endl;
+    std::cout << "Depois de desenhar" << std::endl;
 }
 
 void Principal::on_pushButton_2_clicked() //Adicionar nova entrada
 {
     delete ae;
-    ae=nullptr;
+    ae = nullptr;
     ae = new addEntry(this);
     ae->show();
 }
@@ -289,13 +292,12 @@ void Principal::on_pushButton_clicked() //Sair
     delete pD;
     delete ae;
     delete cP;
-    pD=nullptr;
-    ae=nullptr;
-    dao=nullptr;
-    cP=nullptr;
+    pD = nullptr;
+    ae = nullptr;
+    dao = nullptr;
+    cP = nullptr;
     loginref->show();
     this->hide();
-
 }
 
 void Principal::on_pushButton_3_clicked() //Deletar o usuário
@@ -305,7 +307,8 @@ void Principal::on_pushButton_3_clicked() //Deletar o usuário
     pD->show();
 }
 
-void Principal::setPassword(string pass){
+void Principal::setPassword(string pass)
+{
     this->password = pass;
 }
 
@@ -314,12 +317,12 @@ void Principal::closeEvent(QCloseEvent *event)
     event->ignore();
     this->hide();
     delete pD;
-    pD=nullptr;
+    pD = nullptr;
     delete ae;
-    ae=nullptr;
+    ae = nullptr;
     delete cP;
-    cP=nullptr;
-    loginref->goingToClose=true;
+    cP = nullptr;
+    loginref->goingToClose = true;
     delete loginref;
 }
 
@@ -327,17 +330,16 @@ void Principal::closeFromLogin()
 {
     this->hide();
     delete pD;
-    pD=nullptr;
+    pD = nullptr;
     delete ae;
-    ae=nullptr;
+    ae = nullptr;
     delete cP;
-    cP=nullptr;
+    cP = nullptr;
 }
 
-
-void Principal::on_pushButton_4_clicked()//Altera a senha
+void Principal::on_pushButton_4_clicked() //Altera a senha
 {
-    std::cout<<"Alterar Senha"<<std::endl;
+    std::cout << "Alterar Senha" << std::endl;
     delete cP;
     cP = new ChangePassword(this);
     cP->show();

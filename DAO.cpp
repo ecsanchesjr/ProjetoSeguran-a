@@ -136,12 +136,14 @@ void DAO::createNewEntry(string &itemName, string &login, string &pass, string &
 {
 
     {
-            vector<pair<string,string>> entrys = getNamesAndLogin(key);
-            for(pair<string,string> p : entrys){
-                if(p.first.compare(itemName)==0){
-                    throw DuplicatedEntry();
-                }
+        vector<pair<string, string>> entrys = getNamesAndLogin(key);
+        for (pair<string, string> p : entrys)
+        {
+            if (p.first.compare(itemName) == 0)
+            {
+                throw DuplicatedEntry();
             }
+        }
     }
 
     if (key.length() != 0)
@@ -250,17 +252,20 @@ void DAO::deleteEntry(string &itemName, string &key)
 void DAO::modifyEntry(string &itemName, string &login, string &pass, string &key, string newItemName)
 {
     {
-        if(newItemName.compare(itemName)!=0){
-            vector<pair<string,string>> entrys = getNamesAndLogin(key);
-            for(pair<string,string> p : entrys){
-                if(p.first.compare(newItemName)==0){
+        if (newItemName.compare(itemName) != 0)
+        {
+            vector<pair<string, string>> entrys = getNamesAndLogin(key);
+            for (pair<string, string> p : entrys)
+            {
+                if (p.first.compare(newItemName) == 0)
+                {
                     throw DuplicatedEntry();
                 }
             }
         }
     }
-    
-    if (key.length()!=0)
+
+    if (key.length() != 0)
     {
         string data = objC->getData(key);
 
@@ -291,13 +296,17 @@ void DAO::modifyEntry(string &itemName, string &login, string &pass, string &key
         }
         if (foundNode)
         {
-            if(newItemName.length()!=0 && login.length()!=0){
+            if (newItemName.length() != 0 && login.length() != 0)
+            {
                 nodeToMod.child("name").text().set(newItemName.c_str());
                 nodeToMod.child("login").text().set(login.c_str());
-            }else{
+            }
+            else
+            {
                 throw EmptyInputField();
             }
-            if(!pass.length()==0){
+            if (!pass.length() == 0)
+            {
                 nodeToMod.child("pass").text().set(pass.c_str());
             }
             xmlToString(data, root);

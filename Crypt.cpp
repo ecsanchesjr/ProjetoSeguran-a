@@ -80,14 +80,18 @@ void Crypt::writeData(string &data, string &key, string &userName)
         outputStream << data;
     }
     outputStream.close();
+    backupUserData(userName);
 }
 
 void Crypt::setData(string &data, string &key)
 {
-    if(validateUser(userName, key)){
+    if (validateUser(userName, key))
+    {
         writeData(data, key, userName);
         lastState = readData(userName);
-    }else{
+    }
+    else
+    {
         throw InvalidKey();
     }
 }
@@ -148,7 +152,7 @@ bool Crypt::validateUser(string &user, string &key)
     {
         if (!validateIntegrity(lastState))
         {
-            throw FileIntegrityNotAssure();
+            throw FileIntegrityNotAssured();
         }
         decryptate(generateKey(key), readData(user)[1]);
         return (true);
@@ -157,7 +161,7 @@ bool Crypt::validateUser(string &user, string &key)
     {
         throw InvalidKey();
     }
-    return(false);
+    return (false);
 }
 
 vector<string> Crypt::readData(string &file)
@@ -256,8 +260,7 @@ void Crypt::changeKey(string &newKey, string &key)
     if (validateUser(userName, key))
     {
         string data = getData(key);
-        writeData(data,newKey, userName);
-        key="";
+        writeData(data, newKey, userName);
         lastState = readData(userName);
     }
     else
@@ -278,7 +281,9 @@ bool Crypt::validateIntegrity(vector<string> data)
         if (i != 0)
         {
             hashText.append(txt);
-        }else{
+        }
+        else
+        {
             hashDiskText.append(txt);
         }
         i++;
@@ -298,4 +303,27 @@ bool Crypt::validateIntegrity(vector<string> data)
     {
         return (false);
     }
+}
+
+void Crypt::backupUserData(string &userName)
+{
+    cout << "escreveu" << endl;
+
+    string dir = "./" + dirBackup + "/", cmd = "mkdir " + dirBackup;
+    if (opendir(dir.c_str()) == nullptr)
+    {
+        system(cmd.c_str());
+    }
+
+    ifstream inputStream("./" + dirName + "/" + userName + fileExtension);
+    ofstream outputStream("./" + dirBackup + "/" + userName + fileExtension);
+
+    istreambuf_iterator<char> beginSource(inputStream);
+    istreambuf_iterator<char> endSource;
+    ostreambuf_iterator<char> beginDestination(outputStream);
+
+    copy(beginSource, endSource, beginDestination);
+
+    inputStream.close();
+    outputStream.close();
 }

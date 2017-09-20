@@ -26,6 +26,8 @@ using std::ifstream;
 using std::ofstream;
 using std::hash;
 using std::istringstream;
+using std::istreambuf_iterator;
+using std::ostreambuf_iterator;
 using CryptoPP::SecByteBlock;
 using CryptoPP::AES;
 using CryptoPP::PKCS5_PBKDF2_HMAC;
@@ -95,6 +97,10 @@ class Crypt
     string static decodeFrom64(string);
 
     void static writeData(string&, string&, string&);
+
+    // método para gerar um backup do arquivo de usuário
+    void static backupUserData(string&);
+
 };
 
 #endif

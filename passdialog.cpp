@@ -36,7 +36,7 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
 passDialog::passDialog(QWidget *parent, QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
                                                                                                         ui(new Ui::passDialog)
 {
-     principalref = (Principal *)parent;
+    principalref = (Principal *)parent;
     ui->setupUi(this);
     ui->lineEdit->setEchoMode(QLineEdit::Password);
     addEntryPtr = (addEntry *)addEntryWin;
@@ -61,8 +61,8 @@ void passDialog::closeEvent(QCloseEvent *event)
 
 passDialog::~passDialog()
 {
-    std::cout<<"Destruindo PassDialog"<<std::endl;
-    principalref->pD=nullptr;
+    std::cout << "Destruindo PassDialog" << std::endl;
+    principalref->pD = nullptr;
     delete ui;
 }
 
@@ -79,7 +79,7 @@ void passDialog::newEntry()
 
         addEntryPtr->hide();
         delete principalref->ae;
-        principalref->ae=nullptr;
+        principalref->ae = nullptr;
         this->hide();
     }
     catch (InvalidKey &ex)
@@ -89,7 +89,13 @@ void passDialog::newEntry()
     catch (EmptyInputField &ex)
     {
         principalref->displayErrorMessage(ex.what());
-    }catch(DuplicatedEntry &ex){
+    }
+    catch (DuplicatedEntry &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (FileIntegrityNotAssured &ex)
+    {
         principalref->displayErrorMessage(ex.what());
     }
 }
@@ -115,7 +121,13 @@ void passDialog::modify()
     catch (EmptyInputField &ex)
     {
         principalref->displayErrorMessage(ex.what());
-    }catch(DuplicatedEntry &ex){
+    }
+    catch (DuplicatedEntry &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (FileIntegrityNotAssured &ex)
+    {
         principalref->displayErrorMessage(ex.what());
     }
 }
@@ -142,6 +154,10 @@ void passDialog::go()
         principalref->displayErrorMessage(ex.what());
     }
     catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (FileIntegrityNotAssured &ex)
     {
         principalref->displayErrorMessage(ex.what());
     }
@@ -179,6 +195,10 @@ void passDialog::remove()
     {
         principalref->displayErrorMessage(ex.what());
     }
+    catch (FileIntegrityNotAssured &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
 }
 
 void passDialog::deleteUser()
@@ -201,6 +221,10 @@ void passDialog::deleteUser()
         principalref->displayErrorMessage(ex.what());
     }
     catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (FileIntegrityNotAssured &ex)
     {
         principalref->displayErrorMessage(ex.what());
     }

@@ -52,10 +52,10 @@ public:
     }
 };
 
-class FileIntegrityNotAssure : public std::exception{
+class FileIntegrityNotAssured : public std::exception{
 public:
     virtual const char* what() const throw(){
-        return "File Integrity Not Assure!";
+        return "File Integrity Not Assured!";
     }
 };
 

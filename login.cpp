@@ -12,8 +12,8 @@ login::login(QWidget *parent) : QFrame(),
     }
     else
     {
-        principalRef=((Principal*)parent);
-        ((Principal*)parent)->closeFromLogin();
+        principalRef = ((Principal *)parent);
+        ((Principal *)parent)->closeFromLogin();
     }
 
     ui->setupUi(this);
@@ -29,23 +29,27 @@ login::login(QWidget *parent) : QFrame(),
 
 login::~login()
 {
-    std::cout<<"Destruindo  a login"<<std::endl;
-    if(principalRef!=nullptr){
+    std::cout << "Destruindo  a login" << std::endl;
+    if (principalRef != nullptr)
+    {
         principalRef->closeFromLogin();
     }
-    if(goingToClose){
+    if (goingToClose)
+    {
         delete principalRef;
         delete ui;
-        std::cout<<"Encerrando completamente"<<std::endl;
+        std::cout << "Encerrando completamente" << std::endl;
         exit(5);
     }
 }
 
-void login::closeEvent(QCloseEvent *event){
-    goingToClose=true;
-    std::cout<<"Encerrando o programa a partir da login via close"<<std::endl;
+void login::closeEvent(QCloseEvent *event)
+{
+    goingToClose = true;
+    std::cout << "Encerrando o programa a partir da login via close" << std::endl;
     event->ignore();
-    if(principalRef!=nullptr){
+    if (principalRef != nullptr)
+    {
         principalRef->closeFromLogin();
     }
     delete this;
@@ -93,6 +97,11 @@ void login::on_pushButton_clicked()
         QMessageBox messageBox;
         messageBox.critical(0, "Error", ex.what());
         messageBox.setFixedSize(500, 200);
+    }
+    catch (FileIntegrityNotAssured &ex)
+    {
+        // TODO
+        //principalref->displayErrorMessage(ex.what());
     }
 }
 
@@ -153,5 +162,10 @@ void login::on_pushButton_2_clicked() //Cria user
         QMessageBox messageBox;
         messageBox.critical(0, "Error", ex.what());
         messageBox.setFixedSize(500, 200);
+    }
+    catch (FileIntegrityNotAssured &ex)
+    {
+        // TODO
+        //principalref->displayErrorMessage(ex.what());
     }
 }
