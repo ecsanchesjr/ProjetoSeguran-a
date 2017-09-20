@@ -1,4 +1,4 @@
-#include "passdialog.h"
+#include "headers/passdialog.h"
 #include "ui_passdialog.h"
 #include <QDesktopWidget>
 

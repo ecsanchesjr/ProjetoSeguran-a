@@ -1,4 +1,4 @@
-#include "addentry.h"
+#include "headers/addentry.h"
 #include "ui_addentry.h"
 #include <utility>
 #include <QDesktopWidget>

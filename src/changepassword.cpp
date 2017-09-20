@@ -1,4 +1,4 @@
-#include "changepassword.h"
+#include "headers/changepassword.h"
 #include "ui_changepassword.h"
 #include <QDesktopWidget>
 #include <iostream>

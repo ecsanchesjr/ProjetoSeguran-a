@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QCloseEvent>
-#include <login.h>
+#include <headers/login.h>
 class addEntry;
 class Principal;
 namespace Ui

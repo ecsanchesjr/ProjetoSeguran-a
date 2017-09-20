@@ -1,5 +1,5 @@
-#include "principal.h"
-#include "login.h"
+#include "headers/principal.h"
+#include "headers/login.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
