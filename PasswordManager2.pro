@@ -23,38 +23,40 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 QMAKE_CXXFLAGS += -std=c++11
+
 SOURCES += \
-    Crypt.cpp \
-    main.cpp \
-    principal.cpp \
-    DAO.cpp \
-    pugi/pugixml.cpp \
-    addentry.cpp \
-    login.cpp \
-    passdialog.cpp \
-    changepassword.cpp
+    src/Crypt.cpp \
+    src/main.cpp \
+    src/principal.cpp \
+    src/DAO.cpp \
+    libs/pugi/pugixml.cpp \
+    src/addentry.cpp \
+    src/login.cpp \
+    src/passdialog.cpp \
+    src/changepassword.cpp
 
 HEADERS += \
-    DAO.hpp \
-    principal.h \
-    Crypt.hpp \
-    pugi/pugiconfig.hpp \
-    pugi/pugixml.hpp \
-    login.h \
-    addentry.h \
-    customexceptions.hpp \
-    passdialog.h \
-    changepassword.h
+    headers/DAO.hpp \
+    headers/principal.h \
+    headers/Crypt.hpp \
+    libs/pugi/pugiconfig.hpp \
+    libs/pugi/pugixml.hpp \
+    libs/base-n/basen.hpp \
+    headers/login.h \
+    headers/addentry.h \
+    headers/customexceptions.hpp \
+    headers/passdialog.h \
+    headers/changepassword.h
 
 SUBDIRS += \
     PasswordManager2.pro
 
 FORMS += \
-    principal.ui \
-    addentry.ui \
-    login.ui \
-    passdialog.ui \
-    changepassword.ui
+    view/principal.ui \
+    view/addentry.ui \
+    view/login.ui \
+    view/passdialog.ui \
+    view/changepassword.ui
 
 DISTFILES +=
 

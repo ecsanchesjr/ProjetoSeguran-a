@@ -3,9 +3,9 @@
 
 #include <QFrame>
 #include <iostream>
-#include <DAO.hpp>
+#include <headers/DAO.hpp>
 #include <QCloseEvent>
-#include "passdialog.h"
+#include "headers/passdialog.h"
 class passDialog;
 class Principal;
 namespace Ui {

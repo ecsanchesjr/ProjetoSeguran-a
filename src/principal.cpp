@@ -1,7 +1,7 @@
-#include "principal.h"
+#include "headers/principal.h"
 #include "ui_principal.h"
-#include <login.h>
-#include <addentry.h>
+#include <headers/login.h>
+#include <headers/addentry.h>
 #include <QDesktopWidget>
 
 Principal::Principal(QWidget *parent) : QMainWindow(parent),

@@ -1,6 +1,6 @@
-#include "Crypt.hpp"
+#include "headers/Crypt.hpp"
 
-#include "basen.hpp"
+#include "libs/base-n/basen.hpp"
 
 const string Crypt::fileExtension = ".lock";
 const string Crypt::dirName = "res";

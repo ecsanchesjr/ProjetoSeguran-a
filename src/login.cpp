@@ -1,6 +1,6 @@
-#include "login.h"
+#include "headers/login.h"
 #include "ui_login.h"
-#include "customexceptions.hpp"
+#include "headers/customexceptions.hpp"
 #include <QDesktopWidget>
 #include <QPoint>
 
