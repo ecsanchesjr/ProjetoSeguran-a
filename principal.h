@@ -34,6 +34,19 @@ public:
     explicit Principal(QWidget *parent = 0);
     void redrawAll();
     ~Principal();
+
+
+
+    
+    //GAMBI DO CARALHO
+    void setPassword(string);
+
+
+
+
+
+
+
     std::string getUsername();
     std::string getPassword();
     DAO* getDao();

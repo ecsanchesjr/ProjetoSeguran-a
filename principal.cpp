@@ -305,6 +305,10 @@ void Principal::on_pushButton_3_clicked() //Deletar o usuário
     pD->show();
 }
 
+void Principal::setPassword(string pass){
+    this->password = pass;
+}
+
 void Principal::closeEvent(QCloseEvent *event)
 {
     event->ignore();

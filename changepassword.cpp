@@ -42,6 +42,8 @@ void ChangePassword::on_pushButton_clicked()
         principalref->getDao()->changeUserKey(newKey,currentKey);
         QMessageBox qbox;
         qbox.information(0,"Sucesso","Senha alterada com sucesso");
+        //GAMBI DO CARALHO
+        principalref->setPassword(newKey);
         this->hide();
 
     }
