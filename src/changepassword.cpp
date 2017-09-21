@@ -54,5 +54,10 @@ void ChangePassword::on_pushButton_clicked()
     catch(EmptyInputField &ex){
         principalref->displayErrorMessage(ex.what());
     }
+    catch(FileIntegrityNotAssured &ex){
+        principalref->displayErrorMessage(ex.what());
+        principalref->hide();
+        principalref->loginref->show();
+    }
 }
 

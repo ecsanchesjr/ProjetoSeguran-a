@@ -133,6 +133,8 @@ void passDialog::modify()
     catch (FileIntegrityNotAssured &ex)
     {
         principalref->displayErrorMessage(ex.what());
+        principalref->hide();
+        principalref->loginref->show();
     }
 }
 
@@ -164,6 +166,8 @@ void passDialog::go()
     catch (FileIntegrityNotAssured &ex)
     {
         principalref->displayErrorMessage(ex.what());
+        principalref->hide();
+        principalref->loginref->show();
     }
 }
 
@@ -204,6 +208,8 @@ void passDialog::remove()
     catch (FileIntegrityNotAssured &ex)
     {
         principalref->displayErrorMessage(ex.what());
+        principalref->hide();
+        principalref->loginref->show();
     }
 }
 
@@ -233,5 +239,7 @@ void passDialog::deleteUser()
     catch (FileIntegrityNotAssured &ex)
     {
         principalref->displayErrorMessage(ex.what());
+        principalref->hide();
+        principalref->loginref->show();
     }
 }
