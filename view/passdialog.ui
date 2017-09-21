@@ -32,7 +32,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Digite sua senha para confirmar a ação:</string>
+      <string>Type your password to confirm the request:</string>
      </property>
     </widget>
    </item>
@@ -42,7 +42,7 @@
    <item>
     <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>Confirmar</string>
+      <string>Confirm</string>
      </property>
     </widget>
    </item>

@@ -59,28 +59,28 @@
       <item>
        <widget class="QPushButton" name="pushButton_2">
         <property name="text">
-         <string>Adicionar nova Entrada</string>
+         <string>Add a new entry</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_3">
         <property name="text">
-         <string>Deletar Usuário</string>
+         <string>Delete this user</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_4">
         <property name="text">
-         <string>Alterar senha</string>
+         <string>Change your password</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
         <property name="text">
-         <string>Sair</string>
+         <string>Logout </string>
         </property>
        </widget>
       </item>

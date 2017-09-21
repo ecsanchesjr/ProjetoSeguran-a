@@ -20,42 +20,43 @@ public:
 class DuplicatedUser : public std::exception{
 public:
     virtual const char* what() const throw(){
-        return "User Already Exist";
+        return "User Already Exists";
     }
 };
 
 class EmptyInputField : public std::exception{
 public:
     virtual const char* what() const throw(){
-        return "Empty Input Field";
+        return "Empty Input Field, check the fields and try again";
     }
 };
 
 class DuplicatedEntry : public std::exception{
 public:
     virtual const char* what() const throw(){
-        return "Entry with the same name already exist";
+        return "An entry with this name already exists";
     }   
 };
 
 class InvalidKeyLength : public std::exception{
 public:
     virtual const char* what() const throw(){
-        return "The key length must be beetween 6 and 20.";
+        return "The key length must have beetween 6 and 20 characters.";
     }
 };
 
 class InvalidUserLength : public std::exception{
 public:
     virtual const char* what() const throw(){
-        return "The username length must be beetween 4 and 20.";
+        return "The username length must have beetween 4 and 20 characters.";
     }
 };
 
 class FileIntegrityNotAssured : public std::exception{
 public:
     virtual const char* what() const throw(){
-        return "File Integrity Not Assured!";
+        return "Integrity of the vault file not warranted, you may have suffered a hacker attack!\n"
+               "Please change your passwords!";
     }
 };
 

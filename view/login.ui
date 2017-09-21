@@ -50,7 +50,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Usuário</string>
+      <string>Username</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -69,7 +69,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Senha</string>
+      <string>Password</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -84,14 +84,14 @@
      <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Entrar</string>
+        <string>Sign in</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>Criar Usuário</string>
+        <string>Create New User</string>
        </property>
       </widget>
      </item>

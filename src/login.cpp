@@ -101,7 +101,9 @@ void login::on_pushButton_clicked()
     catch (FileIntegrityNotAssured &ex)
     {
         // TODO
-        //principalref->displayErrorMessage(ex.what());
+        QMessageBox messageBox;
+        messageBox.critical(0, "Error", ex.what());
+        messageBox.setFixedSize(500, 200);
     }
 }
 

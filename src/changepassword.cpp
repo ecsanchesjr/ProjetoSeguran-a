@@ -9,8 +9,8 @@ ChangePassword::ChangePassword(QWidget *parent) :
 {
     ui->setupUi(this);
     principalref=((Principal*)parent);
-    ui->label->setText("Olá "+QString::fromStdString(principalref->getUsername())+
-                       ", para alterar sua senha, insira as informações abaixo:");
+    ui->label->setText("Hello "+QString::fromStdString(principalref->getUsername())+
+                       ", to change your password, enter with the requested informations below:");
     int width = this->frameGeometry().width();
     int height = this->frameGeometry().height();
     QDesktopWidget btt;

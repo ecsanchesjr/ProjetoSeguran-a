@@ -35,7 +35,7 @@ void addEntry::on_pushButton_clicked()
     }
     else
     {
-        principalref->displayErrorMessage("Empty Input Field");
+        principalref->displayErrorMessage("Empty Input Field, check the fields and try again");
     }
 }
 

@@ -45,7 +45,7 @@
    <item>
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Nick:</string>
+      <string>Nickname:</string>
      </property>
     </widget>
    </item>
@@ -55,7 +55,7 @@
    <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Senha:</string>
+      <string>Password:</string>
      </property>
     </widget>
    </item>
@@ -65,7 +65,7 @@
    <item>
     <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>Adicionar</string>
+      <string>Add</string>
      </property>
     </widget>
    </item>

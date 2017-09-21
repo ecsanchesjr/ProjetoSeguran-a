@@ -14,7 +14,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     loginref = ((login *)parent);
     loginref->principalRef = this;
     loginref->clearFields();
-    ui->label->setText("Bem vindo " + QString::fromStdString(username));
+    ui->label->setText("Welcome " + QString::fromStdString(username));
     //Apagar isso
     std::cout << username << std::endl;
     std::cout << passwordBuffer << std::endl;
