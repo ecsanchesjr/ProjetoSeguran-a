@@ -66,9 +66,16 @@ void Principal::drawElements()
     {
         int i = 0; //Contador para auxiliar o preenchimento
         //cout << "get names and login" << endl;
+        try{
         vector<pair<string, string>> infos = dao->getNamesAndLogin(passwordBuffer);
+        infosBuffer=infos;
+        }
+        catch(InvalidKey &ex){
+
+        }
+
         passwordBuffer="";
-        for (pair<string, string> it : infos)
+        for (pair<string, string> it : infosBuffer)
         {
             //Layouts temporários para organização
             QVBoxLayout *templ = new QVBoxLayout();  //Layout dos campos
@@ -87,7 +94,8 @@ void Principal::drawElements()
             paneRefs.push_back(templ2);
 
             ui->gridLayout->setMargin(10);
-            fillBoxes(templ2, i); //Adiciona os layouts criados no grid
+            smartPadding(templ2,i);
+
             i++;
         }
     }
@@ -103,7 +111,17 @@ void Principal::drawElements()
         displayErrorMessage(ex.what());
     }
 }
-
+void Principal::smartPadding(QVBoxLayout *qlayout,int i){
+    if(this->frameGeometry().width()>=1280){
+        fillBoxes4(qlayout, i); //Adiciona os layouts criados no grid
+    }
+    else if(this->frameGeometry().width()>=960){
+        fillBoxes3(qlayout, i); //Adiciona os layouts criados no grid
+    }
+    else{
+        fillBoxes2(qlayout, i); //Adiciona os layouts criados no grid
+    }
+}
 void Principal::setBotoes(QHBoxLayout *qlayout, int i)
 {
     //Criação dos botões
@@ -138,7 +156,7 @@ void Principal::setCampos(QVBoxLayout *qlayout, pair<string, string> nickPass, i
     qlayout->addWidget(temp);
 }
 
-void Principal::fillBoxes(QVBoxLayout *qlayout, int i)
+void Principal::fillBoxes2(QVBoxLayout *qlayout, int i)
 {
     if (i % 2 == 0)
     {
@@ -147,6 +165,43 @@ void Principal::fillBoxes(QVBoxLayout *qlayout, int i)
     else
     {
         ui->gridLayout->addLayout(qlayout, i - 1, 1, Qt::AlignCenter);
+    }
+}
+
+void Principal::fillBoxes3(QVBoxLayout *qlayout, int i)
+{
+    if (i % 3 == 0)
+    {
+        std::cout<<"Entrado coluna 0"<<std::endl;
+        ui->gridLayout->addLayout(qlayout, (int)(i/3),0, Qt::AlignCenter);
+        std::cout<<(i%3)<<std::endl;
+    }
+    else if((i-1) % 3 == 0)
+    {
+        ui->gridLayout->addLayout(qlayout, (int)(i/3),1, Qt::AlignCenter);
+        std::cout<<(i%3)<<std::endl;
+    }
+    else if((i-2)%3==0){
+        ui->gridLayout->addLayout(qlayout, (int)(i/3),2, Qt::AlignCenter);
+        std::cout<<(i%3)<<std::endl;
+    }
+}
+
+void Principal::fillBoxes4(QVBoxLayout *qlayout, int i)
+{
+    if (i % 4 == 0)
+    {
+        ui->gridLayout->addLayout(qlayout, (int)(i/4),0, Qt::AlignCenter);
+    }
+    else if((i-1) % 4 == 0)
+    {
+        ui->gridLayout->addLayout(qlayout, (int)(i/4),1, Qt::AlignCenter);
+    }
+    else if((i-2)%4==0){
+        ui->gridLayout->addLayout(qlayout, (int)(i/4),3, Qt::AlignCenter);
+    }
+    else if((i-3)%4==0){
+        ui->gridLayout->addLayout(qlayout, (int)(i/4),4, Qt::AlignCenter);
     }
 }
 
@@ -345,3 +400,8 @@ void Principal::on_pushButton_4_clicked() //Altera a senha
     cP = new ChangePassword(this);
     cP->show();
 }
+
+void Principal::resizeEvent(QResizeEvent *event){
+    redrawAll();
+}
+

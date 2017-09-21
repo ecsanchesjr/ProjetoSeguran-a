@@ -72,12 +72,17 @@ private:
     QFrame* criaFrame(QHBoxLayout *qlayout);
     void setCampos(QVBoxLayout*, pair<string,string>, int  i);
     void setBotoes(QHBoxLayout*,int i);
-    void fillBoxes(QVBoxLayout*,int);
+    void fillBoxes2(QVBoxLayout*,int);
+    void fillBoxes3(QVBoxLayout*qlayout, int i);
     void drawElements();
     void clearAll();
     std::string username;
     std::string passwordBuffer; //Usar só por breves momentos
     DAO* dao= nullptr;
+    void fillBoxes4(QVBoxLayout *qlayout, int i);
+    vector<pair<string, string>> infosBuffer;
+    void smartPadding(QVBoxLayout *qlayout, int i);
+    void resizeEvent(QResizeEvent *event);
 private slots:
     void goHandler();
     void editHandler();
