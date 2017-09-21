@@ -247,36 +247,37 @@ void passDialog::deleteUser()
 }
 void passDialog::modifyAll(){
     std::string key = ui->lineEdit->text().toStdString();
-    try
+    for(unsigned int i=0;i<principalref->infosBuffer.size();i++)
     {
-        for(int i=0;i<principalref->infosBuffer.size();i++){
         std::string name = principalref->sitesRefs[i]->objectName().toStdString(),
                 login = principalref->nicksRefs[i]->text().toStdString(),
                 pass = principalref->senhasRefs[i]->text().toStdString(),
                 newname = principalref->sitesRefs[i]->text().toStdString();
-        principalref->getDao()->modifyEntry(name, login, pass, key, newname);
+        try{
+            principalref->getDao()->modifyEntry(name, login, pass, key, newname);
+
         }
-        principalref->setPassword(key);
-        principalref->redrawAll();
-        principalref->setPassword("");
-        this->hide();
+        catch (InvalidKey &ex)
+        {
+            principalref->displayErrorMessage(ex.what());
+        }
+        catch (EmptyInputField &ex)
+        {
+            principalref->displayErrorMessage(ex.what());
+        }
+        catch (DuplicatedEntry &ex)
+        {
+            principalref->displayErrorMessage("Error when adding "+ newname +"\n This entry already exists");
+        }
+        catch (FileIntegrityNotAssured &ex)
+        {
+            principalref->displayErrorMessage(ex.what());
+            principalref->hide();
+            principalref->loginref->show();
+        }
     }
-    catch (InvalidKey &ex)
-    {
-        principalref->displayErrorMessage(ex.what());
-    }
-    catch (EmptyInputField &ex)
-    {
-        principalref->displayErrorMessage(ex.what());
-    }
-    catch (DuplicatedEntry &ex)
-    {
-        principalref->displayErrorMessage(ex.what());
-    }
-    catch (FileIntegrityNotAssured &ex)
-    {
-        principalref->displayErrorMessage(ex.what());
-        principalref->hide();
-        principalref->loginref->show();
-    }
+    principalref->setPassword(key);
+    principalref->redrawAll();
+    principalref->setPassword("");
+    this->hide();
 }

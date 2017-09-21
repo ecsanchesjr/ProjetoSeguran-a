@@ -392,13 +392,29 @@ void Principal::on_pushButton_4_clicked() //Altera a senha
 }
 
 void Principal::resizeEvent(QResizeEvent *event){
+    event->ignore();
+    std::vector<QString> sitesRefsBuf;
+    std::vector<QString> nicksRefsBuf;
+    std::vector<QString> senhasRefsBuf;
+    unsigned int i=0;
+    for(i=0;i<sitesRefs.size();i++){
+        sitesRefsBuf.push_back(sitesRefs[i]->text());
+        nicksRefsBuf.push_back(nicksRefs[i]->text());
+        senhasRefsBuf.push_back(senhasRefs[i]->text());
+    }
     redrawAll();
+    for(i=0;i<sitesRefs.size();i++){
+        sitesRefs[i]->setText(sitesRefsBuf[i]);
+        nicksRefs[i]->setText(nicksRefsBuf[i]);
+        senhasRefs[i]->setText(senhasRefsBuf[i]);
+    }
 }
 
 
 void Principal::on_pushButton_5_clicked()
 {
     std::cout<<"Edit All"<<std::endl;
+    delete pD;
     pD=new passDialog(this,5);
     pD->show();
 }
