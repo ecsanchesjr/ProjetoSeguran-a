@@ -9,7 +9,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
     username = ((login *)parent)->getUsername();
-    password = ((login *)parent)->getPassword();
+    passwordBuffer = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();
     loginref = ((login *)parent);
     loginref->principalRef = this;
@@ -17,7 +17,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     ui->label->setText("Bem vindo " + QString::fromStdString(username));
     //Apagar isso
     std::cout << username << std::endl;
-    std::cout << password << std::endl;
+    std::cout << passwordBuffer << std::endl;
     //------------
     drawElements();
     //Ajuste da tela
@@ -66,7 +66,8 @@ void Principal::drawElements()
     {
         int i = 0; //Contador para auxiliar o preenchimento
         //cout << "get names and login" << endl;
-        vector<pair<string, string>> infos = dao->getNamesAndLogin(password);
+        vector<pair<string, string>> infos = dao->getNamesAndLogin(passwordBuffer);
+        passwordBuffer="";
         for (pair<string, string> it : infos)
         {
             //Layouts temporários para organização
@@ -270,7 +271,7 @@ std::string Principal::getUsername()
 }
 std::string Principal::getPassword()
 {
-    return password;
+    return passwordBuffer;
 }
 
 DAO *Principal::getDao()
@@ -309,7 +310,7 @@ void Principal::on_pushButton_3_clicked() //Deletar o usuário
 
 void Principal::setPassword(string pass)
 {
-    this->password = pass;
+    this->passwordBuffer = pass;
 }
 
 void Principal::closeEvent(QCloseEvent *event)

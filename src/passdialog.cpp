@@ -75,7 +75,9 @@ void passDialog::newEntry()
         std::string key = ui->lineEdit->text().toStdString();
 
         principalref->getDao()->createNewEntry(site, nick, pass, key);
+        principalref->setPassword(key);
         principalref->redrawAll();
+        principalref->setPassword("");
 
         addEntryPtr->hide();
         delete principalref->ae;
@@ -111,7 +113,9 @@ void passDialog::modify()
                     pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
                     newname = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
         principalref->getDao()->modifyEntry(name, login, pass, key, newname);
+        principalref->setPassword(key);
         principalref->redrawAll();
+        principalref->setPassword("");
         this->hide();
     }
     catch (InvalidKey &ex)
@@ -184,7 +188,9 @@ void passDialog::remove()
         (principalref->paneRefs).erase((principalref->paneRefs).begin() + std::stoi(straux.substr(4, 4)));
         delete (principalref->cFramesRefs)[std::stoi(straux.substr(4, 4))];
         (principalref->cFramesRefs).erase((principalref->cFramesRefs).begin() + std::stoi(straux.substr(4, 4)));
+        principalref->setPassword(temppass);
         principalref->redrawAll(); //Redesenha a tela
+        principalref->setPassword("");
         this->hide();
     }
     catch (InvalidKey &ex)

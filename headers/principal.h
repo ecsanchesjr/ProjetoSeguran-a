@@ -76,7 +76,7 @@ private:
     void drawElements();
     void clearAll();
     std::string username;
-    std::string password;
+    std::string passwordBuffer; //Usar só por breves momentos
     DAO* dao= nullptr;
 private slots:
     void goHandler();
