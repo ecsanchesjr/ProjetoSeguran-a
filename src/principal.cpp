@@ -15,9 +15,6 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
     loginref->principalRef = this;
     loginref->clearFields();
     ui->label->setText("Welcome " + QString::fromStdString(username));
-    //Apagar isso
-    std::cout << username << std::endl;
-    std::cout << passwordBuffer << std::endl;
     //------------
     drawElements();
     //Ajuste da tela
@@ -172,18 +169,16 @@ void Principal::fillBoxes3(QVBoxLayout *qlayout, int i)
 {
     if (i % 3 == 0)
     {
-        std::cout<<"Entrado coluna 0"<<std::endl;
         ui->gridLayout->addLayout(qlayout, (int)(i/3),0, Qt::AlignCenter);
-        std::cout<<(i%3)<<std::endl;
+
     }
     else if((i-1) % 3 == 0)
     {
         ui->gridLayout->addLayout(qlayout, (int)(i/3),1, Qt::AlignCenter);
-        std::cout<<(i%3)<<std::endl;
+
     }
     else if((i-2)%3==0){
         ui->gridLayout->addLayout(qlayout, (int)(i/3),2, Qt::AlignCenter);
-        std::cout<<(i%3)<<std::endl;
     }
 }
 
@@ -297,7 +292,6 @@ void Principal::removeHandler()
     if (!buttonWidget)
         return;
     indexPane = ((QPushButton *)buttonWidget)->objectName().toStdString();
-    std::cout << "Você removeu o pane " << indexPane.substr(4, 4) << endl;
     //Remove a entrada no arquivo
     delete pD;
     pD = new passDialog(this, 2);
@@ -305,11 +299,8 @@ void Principal::removeHandler()
 }
 void Principal::redrawAll()
 {
-    std::cout << "Merda antes de limpar" << std::endl;
     clearAll();
-    std::cout << "Merda depois de limpar" << std::endl;
     drawElements();
-    std::cout << "Depois de desenhar" << std::endl;
 }
 
 void Principal::on_pushButton_2_clicked() //Adicionar nova entrada
@@ -395,7 +386,6 @@ void Principal::closeFromLogin()
 
 void Principal::on_pushButton_4_clicked() //Altera a senha
 {
-    std::cout << "Alterar Senha" << std::endl;
     delete cP;
     cP = new ChangePassword(this);
     cP->show();

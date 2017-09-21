@@ -151,8 +151,6 @@ void passDialog::go()
         principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[1]));
         //atualiza o campo do password da entrada
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
-
-        std::cout << (principalref->sitesRefs)[std::stoi(straux.substr(4, 4))]->objectName().toStdString() << std::endl;
         this->hide();
     }
     catch (InvalidKey &ex)
