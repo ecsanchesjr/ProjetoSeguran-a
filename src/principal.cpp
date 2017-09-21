@@ -419,3 +419,9 @@ void Principal::on_pushButton_5_clicked()
     pD=new passDialog(this,5);
     pD->show();
 }
+
+void Principal::timerHandler(int index)
+{
+   senhasRefs[index]->clear();
+}
+

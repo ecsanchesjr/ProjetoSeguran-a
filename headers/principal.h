@@ -56,7 +56,6 @@ public:
     vector<pair<string, string>> infosBuffer;
     QTimer *timer=nullptr;
     QSignalMapper *smap =nullptr;
-
 private:
     Ui::Principal *ui;
     QLineEdit* criaCampo(QString texto, QString nomeObj);
@@ -85,6 +84,7 @@ private slots:
     void closeEvent(QCloseEvent *);
     void on_pushButton_4_clicked();
     void on_pushButton_5_clicked();
+    void timerHandler(int index);
 };
 
 #endif // PRINCIPAL_H
