@@ -8,6 +8,7 @@ Principal::Principal(QWidget *parent) : QMainWindow(parent),
                                         ui(new Ui::Principal)
 {
     ui->setupUi(this);
+    smap = new QSignalMapper(this);
     username = ((login *)parent)->getUsername();
     passwordBuffer = ((login *)parent)->getPassword();
     dao = ((login *)parent)->getDao();

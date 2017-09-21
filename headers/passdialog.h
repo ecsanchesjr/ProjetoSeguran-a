@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QCloseEvent>
 #include <headers/login.h>
+#include <QTimer>
 class addEntry;
 class Principal;
 namespace Ui
@@ -35,6 +36,7 @@ class passDialog : public QWidget
     void deleteUser();
     void closeEvent(QCloseEvent *);
     void modifyAll();
+    void timerHandler(int index);
 };
 
 #endif // PASSDIALOG_H

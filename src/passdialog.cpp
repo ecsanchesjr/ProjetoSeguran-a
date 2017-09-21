@@ -154,6 +154,13 @@ void passDialog::go()
         principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[1]));
         //atualiza o campo do password da entrada
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
+        principalref->timer = new QTimer(principalref);
+        std::cout<<stoi(straux.substr(4, 4))<<std::endl;
+        principalref->smap->setMapping(principalref->timer,stoi(straux.substr(4, 4)));
+        connect(principalref->timer,SIGNAL(timeout()),principalref->smap,SLOT(map()));
+        connect(principalref->smap,SIGNAL(mapped(int)),this,SLOT(timerHandler(int)));
+        principalref->timer->setSingleShot(true);
+        principalref->timer->start(5000);
         this->hide();
     }
     catch (InvalidKey &ex)
@@ -280,4 +287,10 @@ void passDialog::modifyAll(){
     principalref->redrawAll();
     principalref->setPassword("");
     this->hide();
+}
+
+void passDialog::timerHandler(int index)
+{
+   std::cout<<"limapndo index "<<index<<std::endl;
+   principalref->senhasRefs[index]->clear();
 }

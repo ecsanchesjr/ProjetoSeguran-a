@@ -18,6 +18,7 @@
 #include "headers/addentry.h"
 #include "headers/login.h"
 #include "headers/changepassword.h"
+#include <QSignalMapper>
 class passDialog;
 class addEntry;
 class login;
@@ -34,19 +35,7 @@ public:
     explicit Principal(QWidget *parent = 0);
     void redrawAll();
     ~Principal();
-
-
-
-    
-    //GAMBI DO CARALHO
     void setPassword(string);
-
-
-
-
-
-
-
     std::string getUsername();
     std::string getPassword();
     DAO* getDao();
@@ -65,6 +54,9 @@ public:
     void closeFromLogin();
     login* loginref;
     vector<pair<string, string>> infosBuffer;
+    QTimer *timer=nullptr;
+    QSignalMapper *smap =nullptr;
+
 private:
     Ui::Principal *ui;
     QLineEdit* criaCampo(QString texto, QString nomeObj);
