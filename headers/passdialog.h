@@ -34,6 +34,7 @@ class passDialog : public QWidget
     void newEntry();
     void deleteUser();
     void closeEvent(QCloseEvent *);
+    void modifyAll();
 };
 
 #endif // PASSDIALOG_H

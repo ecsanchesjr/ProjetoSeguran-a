@@ -395,3 +395,10 @@ void Principal::resizeEvent(QResizeEvent *event){
     redrawAll();
 }
 
+
+void Principal::on_pushButton_5_clicked()
+{
+    std::cout<<"Edit All"<<std::endl;
+    pD=new passDialog(this,5);
+    pD->show();
+}

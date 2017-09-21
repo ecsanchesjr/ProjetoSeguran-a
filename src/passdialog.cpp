@@ -3,7 +3,7 @@
 #include <QDesktopWidget>
 
 passDialog::passDialog(QWidget *parent, int op) : QWidget(),
-                                                  ui(new Ui::passDialog)
+    ui(new Ui::passDialog)
 {
     ui->setupUi(this);
     ui->lineEdit->setEchoMode(QLineEdit::Password);
@@ -24,6 +24,9 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
     {
         connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(deleteUser()));
     }
+    else if(op==5){
+        connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(modifyAll()));
+    }
     //Ajuste da tela
     int width = this->frameGeometry().width();
     int height = this->frameGeometry().height();
@@ -34,7 +37,7 @@ passDialog::passDialog(QWidget *parent, int op) : QWidget(),
 }
 
 passDialog::passDialog(QWidget *parent, QWidget *addEntryWin, string site, string login, string pass) : QWidget(),
-                                                                                                        ui(new Ui::passDialog)
+    ui(new Ui::passDialog)
 {
     principalref = (Principal *)parent;
     ui->setupUi(this);
@@ -108,10 +111,10 @@ void passDialog::modify()
     {
         std::string straux = principalref->indexPane;
         std::string key = ui->lineEdit->text().toStdString(),
-                    name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->objectName().toStdString(),
-                    login = principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
-                    pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
-                    newname = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
+                name = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->objectName().toStdString(),
+                login = principalref->nicksRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
+                pass = principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->text().toStdString(),
+                newname = principalref->sitesRefs[std::stoi(straux.substr(4, 4))]->text().toStdString();
         principalref->getDao()->modifyEntry(name, login, pass, key, newname);
         principalref->setPassword(key);
         principalref->redrawAll();
@@ -231,6 +234,42 @@ void passDialog::deleteUser()
         principalref->displayErrorMessage(ex.what());
     }
     catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (FileIntegrityNotAssured &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+        principalref->hide();
+        principalref->loginref->show();
+    }
+
+}
+void passDialog::modifyAll(){
+    std::string key = ui->lineEdit->text().toStdString();
+    try
+    {
+        for(int i=0;i<principalref->infosBuffer.size();i++){
+        std::string name = principalref->sitesRefs[i]->objectName().toStdString(),
+                login = principalref->nicksRefs[i]->text().toStdString(),
+                pass = principalref->senhasRefs[i]->text().toStdString(),
+                newname = principalref->sitesRefs[i]->text().toStdString();
+        principalref->getDao()->modifyEntry(name, login, pass, key, newname);
+        }
+        principalref->setPassword(key);
+        principalref->redrawAll();
+        principalref->setPassword("");
+        this->hide();
+    }
+    catch (InvalidKey &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (EmptyInputField &ex)
+    {
+        principalref->displayErrorMessage(ex.what());
+    }
+    catch (DuplicatedEntry &ex)
     {
         principalref->displayErrorMessage(ex.what());
     }

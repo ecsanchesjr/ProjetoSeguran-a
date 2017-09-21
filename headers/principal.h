@@ -64,6 +64,7 @@ public:
     addEntry *ae= nullptr;
     void closeFromLogin();
     login* loginref;
+    vector<pair<string, string>> infosBuffer;
 private:
     Ui::Principal *ui;
     QLineEdit* criaCampo(QString texto, QString nomeObj);
@@ -80,7 +81,6 @@ private:
     std::string passwordBuffer; //Usar só por breves momentos
     DAO* dao= nullptr;
     void fillBoxes4(QVBoxLayout *qlayout, int i);
-    vector<pair<string, string>> infosBuffer;
     void smartPadding(QVBoxLayout *qlayout, int i);
     void resizeEvent(QResizeEvent *event);
 private slots:
@@ -92,6 +92,7 @@ private slots:
     void on_pushButton_3_clicked();
     void closeEvent(QCloseEvent *);
     void on_pushButton_4_clicked();
+    void on_pushButton_5_clicked();
 };
 
 #endif // PRINCIPAL_H
