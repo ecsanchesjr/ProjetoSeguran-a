@@ -78,7 +78,7 @@ class Crypt
     vector<string> static readData(string &);
 
     // gerar key derivada da senha do usuario
-    SecByteBlock static generateKey(string &);
+    SecByteBlock static generateKey(string &, string &);
 
     // retorna o texto decryptado, porém gera uma excecao em senha errada
     string static decryptate(SecByteBlock, string);
