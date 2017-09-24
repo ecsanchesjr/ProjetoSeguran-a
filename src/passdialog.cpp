@@ -176,6 +176,7 @@ void passDialog::go()
         principalref->displayErrorMessage(ex.what());
         principalref->hide();
         principalref->loginref->show();
+        this->hide();
     }
 }
 
@@ -218,6 +219,7 @@ void passDialog::remove()
         principalref->displayErrorMessage(ex.what());
         principalref->hide();
         principalref->loginref->show();
+        this->hide();
     }
 }
 
@@ -249,6 +251,7 @@ void passDialog::deleteUser()
         principalref->displayErrorMessage(ex.what());
         principalref->hide();
         principalref->loginref->show();
+        this->hide();
     }
 
 }
@@ -267,6 +270,7 @@ void passDialog::modifyAll(){
         catch (InvalidKey &ex)
         {
             principalref->displayErrorMessage(ex.what());
+            break;
         }
         catch (EmptyInputField &ex)
         {
@@ -281,6 +285,7 @@ void passDialog::modifyAll(){
             principalref->displayErrorMessage(ex.what());
             principalref->hide();
             principalref->loginref->show();
+            this->hide();
         }
     }
     principalref->setPassword(key);
