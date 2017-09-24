@@ -304,6 +304,11 @@ void Principal::removeHandler()
 }
 void Principal::redrawAll()
 {
+    for(unsigned int i=0;i<timerrefs.size();i++){
+        timerrefs[i]->stop();
+        delete timerrefs[i];
+    }
+    timerrefs.clear();
     clearAll();
     drawElements();
 }
