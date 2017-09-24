@@ -257,6 +257,7 @@ void passDialog::deleteUser()
 }
 void passDialog::modifyAll(){
     std::string key = ui->lineEdit->text().toStdString();
+    bool hacked = false;
     for(unsigned int i=0;i<principalref->infosBuffer.size();i++)
     {
         std::string name = principalref->sitesRefs[i]->objectName().toStdString(),
@@ -285,12 +286,15 @@ void passDialog::modifyAll(){
             principalref->displayErrorMessage(ex.what());
             principalref->hide();
             principalref->loginref->show();
-            this->hide();
+            hacked = true;
+            break;
         }
     }
-    principalref->setPassword(key);
-    principalref->redrawAll();
-    principalref->setPassword("");
+    if(!hacked){
+         principalref->setPassword(key);
+         principalref->redrawAll();
+    }
     this->hide();
+    principalref->setPassword("");
 }
 
