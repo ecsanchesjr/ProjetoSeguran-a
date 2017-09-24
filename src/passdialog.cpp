@@ -102,6 +102,10 @@ void passDialog::newEntry()
     catch (FileIntegrityNotAssured &ex)
     {
         principalref->displayErrorMessage(ex.what());
+        this->hide();
+        principalref->ae->hide();
+        principalref->hide();
+        principalref->loginref->show();
     }
 }
 
