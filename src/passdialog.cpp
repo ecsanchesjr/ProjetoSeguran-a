@@ -155,6 +155,7 @@ void passDialog::go()
         //atualiza o campo do password da entrada
         principalref->senhasRefs[std::stoi(straux.substr(4, 4))]->setText(QString::fromStdString(entry[2]));
         principalref->timer = new QTimer(principalref);
+        principalref->timerrefs.push_back(principalref->timer);
         principalref->smap->setMapping(principalref->timer,stoi(straux.substr(4, 4)));
         connect(principalref->timer,SIGNAL(timeout()),principalref->smap,SLOT(map()));
         connect(principalref->smap,SIGNAL(mapped(int)),principalref,SLOT(timerHandler(int)));

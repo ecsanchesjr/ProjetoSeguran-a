@@ -56,6 +56,7 @@ public:
     vector<pair<string, string>> infosBuffer;
     QTimer *timer=nullptr;
     QSignalMapper *smap =nullptr;
+    vector<QTimer*> timerrefs;
 private:
     Ui::Principal *ui;
     QLineEdit* criaCampo(QString texto, QString nomeObj);

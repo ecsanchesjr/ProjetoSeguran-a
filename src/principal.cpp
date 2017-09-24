@@ -255,6 +255,10 @@ QPushButton *Principal::criaBotao(QString texto, QString nomeObj, int typeCampo)
 
 Principal::~Principal()
 {
+    for(unsigned int i=0;i<timerrefs.size();i++){
+        timerrefs[i]->stop();
+        delete timerrefs[i];
+    }
     clearAll();
     delete dao;
     delete pD;
@@ -335,6 +339,11 @@ void Principal::displayErrorMessage(const string &error)
 
 void Principal::on_pushButton_clicked() //Sair
 {
+    for(unsigned int i=0;i<timerrefs.size();i++){
+        timerrefs[i]->stop();
+        delete timerrefs[i];
+    }
+    timerrefs.clear();
     clearAll();
     delete dao;
     delete pD;
