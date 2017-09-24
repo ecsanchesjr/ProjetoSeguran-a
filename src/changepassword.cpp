@@ -58,6 +58,7 @@ void ChangePassword::on_pushButton_clicked()
         principalref->displayErrorMessage(ex.what());
         principalref->hide();
         principalref->loginref->show();
+        this->hide();
     }
 }
 
