@@ -59,7 +59,7 @@ string Crypt::getData(string &key)
             data.push_back(aux);
         }
         // data ainda está encriptada
-        data[1] = decryptate(generateKey(key), data[1]);
+        data[1] = decryptate(generateKey(userName,key), data[1]);
         return (data[1]);
     }
     else
@@ -73,7 +73,7 @@ void Crypt::writeData(string &data, string &key, string &userName)
     ofstream outputStream("./" + dirName + "/" + userName + fileExtension);
     if (outputStream.is_open())
     {
-        data = encryptate(generateKey(key), data);
+        data = encryptate(generateKey(userName,key), data);
         data = encodeTo64(data);
         outputStream << hash<string>{}(data);
         outputStream << "\n";
@@ -154,7 +154,7 @@ bool Crypt::validateUser(string &user, string &key)
         {
             throw FileIntegrityNotAssured();
         }
-        decryptate(generateKey(key), readData(user)[1]);
+        decryptate(generateKey(user,key), readData(user)[1]);
         return (true);
     }
     catch (CryptoPP::Exception ex)
@@ -187,13 +187,13 @@ vector<string> Crypt::readData(string &file)
     return (data);
 }
 
-SecByteBlock Crypt::generateKey(string &key)
+SecByteBlock Crypt::generateKey(string &userName, string &key)
 {
     SecByteBlock derivedKey(keySize);
-
+    string keyUser=userName+key;
     PKCS5_PBKDF2_HMAC<SHA256> kdf;
     kdf.DeriveKey(derivedKey.data(), derivedKey.size(),
-                  0x00, (byte *)key.data(), key.size(),
+                  0x00, (byte *)keyUser.data(), keyUser.size(),
                   NULL, 0x00, iterations);
 
     return (derivedKey);
