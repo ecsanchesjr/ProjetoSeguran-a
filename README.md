@@ -35,5 +35,4 @@ O projeto será implementado utilizando a linguagem de programação C++, utiliz
 * Biblioteca [pugixml](https://github.com/zeux/pugixml), porém está no repositório.
 * Biblioteca [base-n](https://github.com/azawadzki/base-n), porém está no repositório.
 
-# EM ANDAMENTO
 
